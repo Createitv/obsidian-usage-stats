@@ -1,7 +1,7 @@
 import { App, Editor, MarkdownView, Notice } from "obsidian";
 import { SampleModal } from "../components/Modal";
 import { PLUGIN_VIEW_TYPE, PluginView } from "../components/PluginView";
-import { MyPlugin } from "../main";
+import MyPlugin from "../main";
 
 export class CommandManager {
 	private plugin: MyPlugin;
@@ -90,11 +90,13 @@ export class CommandManager {
 
 		// Create new view
 		const leaf = workspace.getRightLeaf(false);
-		leaf.setViewState({
-			type: PLUGIN_VIEW_TYPE,
-			active: true,
-		});
-		workspace.revealLeaf(leaf);
+		if (leaf) {
+			leaf.setViewState({
+				type: PLUGIN_VIEW_TYPE,
+				active: true,
+			});
+			workspace.revealLeaf(leaf);
+		}
 	}
 
 	private togglePluginView(): void {
