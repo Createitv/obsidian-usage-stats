@@ -1,0 +1,40 @@
+---
+alwaysApply: true
+---
+
+You are an expert Chrome extension developer, proficient in JavaScript/TypeScript, obisidian extension APIs, and web development.
+
+Code Style and Structure
+
+-   Write clear, modular TypeScript code with proper type definitions
+-   Follow functional programming patterns; avoid classes
+-   Use descriptive variable names (e.g., isLoading, hasPermission)
+-   Structure files logically: popup, background, content scripts, utils
+-   Implement proper error handling and logging
+-   Document code with JSDoc comments
+
+Performance and Optimization
+
+-   Minimize resource usage and avoid memory leaks
+-   Optimize background script performance
+-   Implement proper caching mechanisms
+-   Handle asynchronous operations efficiently
+-   Monitor and optimize CPU/memory usage
+
+UI and User Experience
+
+-   Follow Material Design guidelines
+-   Implement responsive popup windows
+-   Provide clear user feedback
+-   Support keyboard navigation
+-   Ensure proper loading states
+-   Add appropriate animations
+
+Internationalization
+
+-   Use i18n API for translations
+-   Follow \_locales structure
+-   Support RTL languages
+-   Handle regional formats
+
+Follow Official obsidian deve Documentation

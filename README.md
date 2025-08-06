@@ -1,81 +1,158 @@
-English | [中文](https://github.com/RavenHogWarts/obsidian-plugin-starter/blob/master/README-zh.md)
+# Obsidian Plugin Starter
 
-# Obsidian Sample Plugin
-This is a sample plugin for Obsidian (https://obsidian.md).
+一个现代化的 Obsidian 插件模板，具有模块化架构和丰富的视图界面功能。
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+## 功能特性
 
-[![GitHub stars](https://img.shields.io/github/stars/RavenHogWarts/obsidian-plugin-starter?style=flat&label=Stars)](https://github.com/RavenHogWarts/obsidian-plugin-starter/stargazers)
-[![Total Downloads](https://img.shields.io/github/downloads/RavenHogWarts/obsidian-plugin-starter/total?style=flat&label=Total%20Downloads)](https://github.com/RavenHogWarts/obsidian-plugin-starter/releases)
-[![Latest Downloads](https://img.shields.io/github/downloads/RavenHogWarts/obsidian-plugin-starter/latest/total?style=flat&label=Latest%20Downloads)](https://github.com/RavenHogWarts/obsidian-plugin-starter/releases/latest)
-[![GitHub License](https://img.shields.io/github/license/RavenHogWarts/obsidian-plugin-starter?style=flat&label=License)](https://github.com/RavenHogWarts/obsidian-plugin-starter/blob/master/LICENSE)
-[![GitHub Issues](https://img.shields.io/github/issues/RavenHogWarts/obsidian-plugin-starter?style=flat&label=Issues)](https://github.com/RavenHogWarts/obsidian-plugin-starter/issues)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/RavenHogWarts/obsidian-plugin-starter?style=flat&label=Last%20Commit)](https://github.com/RavenHogWarts/obsidian-plugin-starter/commits/master)
+### 🎯 核心功能
 
-## Installation
-### Community plugin market installation
+-   **模块化架构**: 清晰的代码组织结构，易于维护和扩展
+-   **插件视图**: 完整的侧边栏视图界面，支持多视图管理
+-   **现代化 UI**: 基于 Obsidian 设计系统的美观界面
+-   **国际化支持**: 内置 i18n 支持，可轻松添加多语言
 
-[Click to install](obsidian://show-plugin?id=obsidian-plugin-starter), or:
+### 🖥️ 视图功能
 
-1. Open Obsidian and go to `Settings > Community Plugins`.
-2. Search for "Obsidian Plugin Starter".
-3. Click "Install".
+-   **多视图管理**: 创建、编辑、删除多个视图
+-   **实时编辑**: 直接在界面中编辑视图内容
+-   **视图切换**: 快速在不同视图间切换
+-   **数据持久化**: 自动保存视图数据
 
-### Manual Installation
+### ⚙️ 设置系统
 
-1. Download the latest release
-2. Copy `main.js`, `styles.css`, and `manifest.json` to your vault's plugins folder: `<vault>/.obsidian/plugins/obsidian-plugin-starter/`
-3. Reload Obsidian
-4. Enable the plugin in Settings → Community Plugins
+-   **完整设置界面**: 分类清晰的设置选项
+-   **实时预览**: 设置更改立即生效
+-   **默认值管理**: 智能的默认设置处理
 
-### BRAT (Recommended for Beta Users)
+### 🎮 命令系统
 
-1. Install [BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin
-2. Click "Add Beta plugin" in BRAT settings
-3. Enter `RavenHogWarts/obsidian-plugin-starter`
-4. Enable the plugin
+-   **多种命令类型**: 简单命令、编辑器命令、复杂命令
+-   **条件执行**: 基于应用状态的智能命令执行
+-   **快捷键支持**: 完整的键盘快捷键支持
 
-## Development
+## 项目结构
 
-- Clone this repo
-- Make sure your NodeJS is at least v16 (`node --version`)
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode
-- `npm run build` to build the plugin
-- `npm run build:local` to build the plugin and copy it to your vault's plugins folder(need create a .env file in the project root and add the line: VAULT_PATH=/path/to/your/vault)
-- `npm run version` to bump the version number and update the manifest.json, version.json, package.json
-- `npm run release` to build the plugin and bump the version number
-
-## Support
-
-If you encounter any issues or have suggestions:
-- [Open an issue](https://github.com/RavenHogWarts/obsidian-plugin-starter/issues) on GitHub
-- [Join the discussion](https://github.com/RavenHogWarts/obsidian-plugin-starter/discussions) for questions and ideas
-
-If you find this plugin helpful, you can support the development through:
-- WeChat/Alipay: [QR Code](https://s2.loli.net/2024/05/06/lWBj3ObszUXSV2f.png)
-
-## License
-
-This project is licensed under the xxx LICENSE - see the [LICENSE](LICENSE) file for details.
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=RavenHogWarts/obsidian-plugin-starter&type=Timeline)](https://www.star-history.com/#RavenHogWarts/obsidian-plugin-starter&Timeline)
-
-# Files to Modify
-
-Execute the following command to remove the `.vscode` folder from Git tracking while keeping the local files:
 ```
-git rm -r --cached .vscode
+src/
+├── main.ts                 # 主插件文件
+├── types.ts               # 类型定义
+├── index.ts               # 导出索引
+├── components/            # UI 组件
+│   ├── PluginView.ts     # 插件视图组件
+│   ├── Modal.ts          # 模态框组件
+│   └── SettingsTab.ts    # 设置标签页
+├── commands/              # 命令管理
+│   └── CommandManager.ts  # 命令管理器
+└── i18n/                 # 国际化
+    ├── i18n.ts           # i18n 核心
+    ├── types.ts          # i18n 类型
+    └── locales/          # 语言文件
+        ├── en.ts         # 英文
+        ├── zh.ts         # 中文
+        └── zh-TW.ts      # 繁体中文
 ```
 
-When developing or customizing the plugin, the following files may need to be modified:
+## 开发指南
 
-- [config.yml](./.github/ISSUE_TEMPLATE/config.yml)
-- [release.yml](./.github/workflows/release.yml)
-- [manifest.json](./manifest.json)
-- [manifest-beta.json](./manifest-beta.json)
-- [package.json](./package.json)
-- [CONTRIBUTING.md](./CONTRIBUTING.md)
+### 添加新功能
+
+1. **添加新组件**:
+
+    ```typescript
+    // src/components/NewComponent.ts
+    export class NewComponent {
+    	// 组件实现
+    }
+    ```
+
+2. **添加新命令**:
+
+    ```typescript
+    // src/commands/CommandManager.ts
+    this.plugin.addCommand({
+    	id: "new-command",
+    	name: "New Command",
+    	callback: () => {
+    		// 命令实现
+    	},
+    });
+    ```
+
+3. **添加新设置**:
+    ```typescript
+    // src/types.ts
+    interface MyPluginSettings {
+    	newSetting: string;
+    }
+    ```
+
+### 样式定制
+
+所有样式都在 `style/` 目录中：
+
+-   `styles.css`: 基础样式
+-   `view-styles.css`: 视图相关样式
+
+### 国际化
+
+在 `src/i18n/locales/` 中添加新的语言文件：
+
+```typescript
+// src/i18n/locales/ja.ts
+export default {
+	"plugin.name": "プラグイン名",
+	"plugin.description": "プラグインの説明",
+};
+```
+
+## 使用方法
+
+### 安装插件
+
+1. 下载插件文件
+2. 将插件文件夹放入 Obsidian 插件目录
+3. 在 Obsidian 中启用插件
+
+### 基本操作
+
+1. **打开插件视图**: 点击左侧工具栏的骰子图标
+2. **添加新视图**: 在插件视图中点击 "Add New View" 按钮
+3. **编辑视图**: 点击视图列表中的项目进行编辑
+4. **删除视图**: 点击视图项目右侧的 "×" 按钮
+
+### 命令面板
+
+-   `Open Plugin View`: 打开插件视图
+-   `Toggle Plugin View`: 切换插件视图显示
+-   `Add New View`: 添加新视图
+-   `Open sample modal (simple)`: 打开简单模态框
+-   `Sample editor command`: 执行编辑器命令
+
+## 技术栈
+
+-   **TypeScript**: 类型安全的 JavaScript
+-   **Obsidian API**: 官方插件 API
+-   **CSS Variables**: 主题适配的样式系统
+-   **模块化架构**: 清晰的代码组织
+
+## 贡献指南
+
+1. Fork 项目
+2. 创建功能分支
+3. 提交更改
+4. 推送到分支
+5. 创建 Pull Request
+
+## 许可证
+
+MIT License
+
+## 更新日志
+
+### v1.0.0
+
+-   初始版本
+-   模块化架构重构
+-   完整的视图界面功能
+-   现代化 UI 设计
+-   国际化支持

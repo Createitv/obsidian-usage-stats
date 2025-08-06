@@ -13,9 +13,7 @@
 		"release:pre": "npm run build && npm run version && npm run changelog:u",
 		"release:tag": "node scripts/release-tag.mjs",
 		"lint": "eslint . --ext .ts,.tsx",
-		"lint:fix": "eslint . --ext .ts,.tsx --fix",
-		"test": "jest",
-		"test:watch": "jest --watch"
+		"lint:fix": "eslint . --ext .ts,.tsx --fix"
 	},
 	"keywords": [
 		"Obsidian Plugin"
@@ -37,7 +35,6 @@
 		"esbuild": "0.25.5",
 		"eslint": "^8.57.1",
 		"fs-extra": "^11.3.0",
-		"jest": "^30.0.5",
 		"obsidian": "latest",
 		"postcss": "^8.5.6",
 		"postcss-nesting": "^13.0.2",
