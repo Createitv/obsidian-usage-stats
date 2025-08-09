@@ -54,9 +54,7 @@ export class DataManager extends Component {
 			// Validate and migrate data if necessary
 			this.data = this.validateAndMigrateData(parsedData);
 		} catch (error) {
-			console.log(
-				"No existing data file found, starting with default data"
-			);
+			// No existing data file found, starting with default data
 			this.data = this.getDefaultData();
 		}
 	}
@@ -77,6 +75,11 @@ export class DataManager extends Component {
 	}
 
 	public async addTimeEntry(entry: TimeEntry): Promise<void> {
+		// 检查是否启用了跟踪功能
+		if (!this.settings.enableTracking) {
+			return;
+		}
+
 		const dateKey = this.getDateKey(entry.startTime);
 
 		// Initialize daily stats if not exists
@@ -191,9 +194,19 @@ export class DataManager extends Component {
 		}
 
 		if (keysToDelete.length > 0) {
-			console.log(`Cleaned up ${keysToDelete.length} days of old data`);
 			await this.saveData();
 		}
+	}
+
+	/**
+	 * 清理所有跟踪数据（保留设置）
+	 */
+	public async clearAllTrackingData(): Promise<void> {
+		// 清空所有跟踪数据，但保留其他设置
+		this.data.dailyStats = {};
+		this.data.lastUpdated = Date.now();
+
+		await this.saveData();
 	}
 
 	// Export functionality

@@ -15,6 +15,7 @@ import {
 } from "./types";
 import { t } from "../i18n/i18n";
 import { AuthStorage } from "../storage/AuthStorage";
+import { LocalStorageUtil, AuthStorageData } from "../utils/localStorage";
 
 // Declare electron API types for better TypeScript support
 declare global {
@@ -36,7 +37,7 @@ export class AuthService extends Component {
 	private authState: AuthState;
 	private statusChangeCallbacks: Array<(status: AuthStatus) => void> = [];
 	private authStorage: AuthStorage;
-	private temporaryCodeVerifier: string | null = null; // 临时存储 code verifier
+	private temporaryCodeVerifier: string | null = "1234567890"; // 临时存储 code verifier
 
 	constructor(authStorage: AuthStorage) {
 		super();
@@ -51,8 +52,6 @@ export class AuthService extends Component {
 
 		// 使用新的 AuthStorage 系统
 		this.authStorage = authStorage;
-
-		console.log("AuthService: Initialized with AuthStorage system");
 	}
 
 	async onload(): Promise<void> {
@@ -61,7 +60,7 @@ export class AuthService extends Component {
 	}
 
 	onunload(): void {
-		// this.cleanup();
+		this.cleanup();
 	}
 
 	// Public API
@@ -99,9 +98,6 @@ export class AuthService extends Component {
 
 			await this.storeCodeVerifier(pkceParams.codeVerifier);
 
-			// Verify it was stored
-			const storedVerifier = await this.getStoredCodeVerifier();
-
 			const authUrl = this.buildAuthorizationUrl(pkceParams);
 
 			// Open browser for authorization
@@ -115,20 +111,12 @@ export class AuthService extends Component {
 		}
 	}
 
+	// 处理OAuth回调
 	public async handleCallback(code: string, state?: string): Promise<void> {
 		try {
 			const codeVerifier = await this.getStoredCodeVerifier();
-			console.log(
-				"[UsageStats/Auth] Code verifier found:",
-				!!codeVerifier
-			);
 
-			if (codeVerifier) {
-				console.log(
-					"[UsageStats/Auth] Code verifier length:",
-					codeVerifier.length
-				);
-			} else {
+			if (!codeVerifier) {
 				console.error("[UsageStats/Auth] No code verifier found!");
 			}
 
@@ -142,13 +130,9 @@ export class AuthService extends Component {
 				code,
 				codeVerifier
 			);
-			console.log("AuthService: Token response received:", {
-				hasAccessToken: !!tokenResponse.access_token,
-				hasRefreshToken: !!tokenResponse.refresh_token,
-				expiresIn: tokenResponse.expires_in,
-			});
 
 			await this.handleTokenResponse(tokenResponse);
+			// return
 
 			// Clear stored verifier
 			await this.clearCodeVerifier();
@@ -159,11 +143,7 @@ export class AuthService extends Component {
 			// Verify cache integrity after all data is stored
 			const cacheValid = await this.verifyCacheIntegrity();
 
-			if (cacheValid) {
-				console.log(
-					"AuthService: ✅ All authentication data cached successfully"
-				);
-			} else {
+			if (!cacheValid) {
 				console.warn(
 					"AuthService: ⚠️ Cache verification failed - some data may not be stored"
 				);
@@ -171,9 +151,6 @@ export class AuthService extends Component {
 
 			this.notifyStatusChange(AuthStatus.AUTHENTICATED);
 			new Notice(t("auth.loginSuccess"));
-			console.log(
-				"AuthService: Callback handling completed successfully"
-			);
 		} catch (error) {
 			console.error("OAuth callback failed:", error);
 			this.notifyStatusChange(AuthStatus.ERROR);
@@ -210,6 +187,7 @@ export class AuthService extends Component {
 
 		try {
 			const tokenResponse = await this.refreshAccessToken();
+
 			await this.handleTokenResponse(tokenResponse);
 			return true;
 		} catch (error) {
@@ -304,13 +282,6 @@ export class AuthService extends Component {
 			code_verifier: codeVerifier,
 		};
 
-		console.log("AuthService: Request body:", {
-			...requestBody,
-			client_secret: "***hidden***",
-			code: code.substring(0, 10) + "...",
-			code_verifier: codeVerifier.substring(0, 10) + "...",
-		});
-
 		const response = await fetch(OAUTH_CONFIG.TOKEN_URL, {
 			method: "POST",
 			headers: {
@@ -321,22 +292,13 @@ export class AuthService extends Component {
 
 		if (!response.ok) {
 			const errorText = await response.text();
-			console.error(
-				"AuthService: Token exchange failed with status:",
-				response.status
-			);
-			console.error("AuthService: Error response:", errorText);
+
 			throw new AuthError(
 				`Token exchange failed (${response.status}): ${errorText}`
 			);
 		}
 
 		const tokenData = await response.json();
-		console.log(
-			"AuthService: Token exchange successful, received data keys:",
-			tokenData
-		);
-
 		return tokenData;
 	}
 
@@ -369,8 +331,6 @@ export class AuthService extends Component {
 	private async handleTokenResponse(
 		tokenResponse: OAuthTokenResponse
 	): Promise<void> {
-		console.log("AuthService: Processing token response...");
-
 		const expiresAt = Date.now() + tokenResponse.expires_in * 1000;
 
 		// Update internal auth state
@@ -386,29 +346,90 @@ export class AuthService extends Component {
 		// Set auth token for HTTP client
 		this.httpClient.setAuthToken(tokenResponse.access_token);
 
-		// Store complete token response immediately
-		const saveSuccess = await this.authStorage.saveTokenResponse(
-			tokenResponse
-		);
+		// 存储到localStorage
+		const authDataForStorage: AuthStorageData = {
+			isAuthenticated: true,
+			accessToken: tokenResponse.access_token,
+			refreshToken:
+				tokenResponse.refresh_token ||
+				this.authState.refreshToken ||
+				undefined,
+			expiresAt,
+			userInfo: this.authState.userInfo
+				? {
+						id: this.authState.userInfo.id,
+						email: this.authState.userInfo.email,
+						nickname:
+							this.authState.userInfo.nickname ||
+							this.authState.userInfo.email,
+						created_at: this.authState.userInfo.created_at,
+						updated_at: this.authState.userInfo.updated_at,
+				  }
+				: null,
+		};
 
-		if (saveSuccess) {
-			console.log(
-				"AuthService: ✅ Complete token data stored successfully"
-			);
-
-			// Verify and log token details
-			const tokenInfo = await this.authStorage.getTokenInfo();
-			if (tokenInfo) {
-				console.log("AuthService: Stored token details:", {
-					tokenType: tokenInfo.tokenType,
-					scope: tokenInfo.scope,
-					hasRefreshToken: !!tokenInfo.refreshToken,
-					expiresAt: tokenInfo.expiresAt?.toISOString(),
-					isExpired: tokenInfo.isExpired,
-				});
-			}
+		const localStorageSuccess =
+			LocalStorageUtil.setAuthData(authDataForStorage);
+		if (localStorageSuccess) {
+			console.log("✅ Auth data saved to localStorage successfully");
 		} else {
-			console.error("AuthService: ❌ Failed to store token data");
+			console.warn("⚠️ Failed to save auth data to localStorage");
+		}
+
+		// 直接保存到data.json的扁平结构中
+		await this.saveTokenToDataJson(tokenResponse);
+	}
+
+	/**
+	 * 将token数据保存到data.json，自动适配结构化格式或扁平格式
+	 */
+	private async saveTokenToDataJson(
+		tokenResponse: OAuthTokenResponse
+	): Promise<void> {
+		try {
+			// 获取当前的 data.json 内容
+			const currentData =
+				(await this.authStorage.getPlugin().loadData()) || {};
+
+			// 计算过期时间
+			const tokenExpiresAt = Date.now() + tokenResponse.expires_in * 1000;
+
+			// 准备token数据
+			const tokenData = {
+				isAuthenticated: true,
+				accessToken: tokenResponse.access_token,
+				refreshToken: tokenResponse.refresh_token,
+				tokenExpiresAt: tokenExpiresAt,
+				tokenType: tokenResponse.token_type,
+				tokenScope: tokenResponse.scope,
+				lastLoginTime: Date.now(),
+			};
+
+			let updatedData;
+
+			// 检测数据格式并相应保存
+			if (currentData?.settings) {
+				// 结构化格式：保持现有结构，将token数据保存到根级别
+				updatedData = {
+					...currentData,
+					...tokenData, // token数据保存到根级别
+					lastUpdated: Date.now(),
+				};
+			} else {
+				// 扁平格式：直接合并
+				updatedData = {
+					...currentData,
+					...tokenData,
+				};
+			}
+
+			// 保存回 data.json
+			await this.authStorage.getPlugin().saveData(updatedData);
+		} catch (error) {
+			console.error(
+				"AuthService: ❌ Failed to save token to data.json:",
+				error
+			);
 		}
 	}
 
@@ -418,26 +439,10 @@ export class AuthService extends Component {
 				"/user/data"
 			);
 			if (response.success && response.data) {
-				console.log("AuthService: User info received:", {
-					email: response.data.email,
-					nickname: response.data.nickname,
-				});
-
 				// Update auth state
 				this.authState.userInfo = response.data;
 
 				// Store user info immediately for caching
-				await this.storeUserInfo(response.data);
-
-				// Verify user info was stored using new storage system
-				const verifyAuthData = await this.authStorage.getAuthData();
-
-				if (verifyAuthData?.userInfo) {
-					console.log("AuthService: Cached user info verified:", {
-						email: verifyAuthData.userInfo.email,
-						nickname: verifyAuthData.userInfo.nickname,
-					});
-				}
 			} else {
 				console.warn(
 					"AuthService: Failed to get user info from API response"
@@ -501,42 +506,72 @@ export class AuthService extends Component {
 	// Storage methods
 	public async loadStoredAuth(): Promise<void> {
 		try {
-			console.log(
-				"AuthService: Loading stored auth from new storage system..."
-			);
+			// 优先从localStorage读取认证数据
+			const localStorageData = LocalStorageUtil.getAuthData();
 
-			// 首先尝试从新的存储系统加载
-			const authData = await this.authStorage.getAuthData();
-
-			if (authData && authData.isAuthenticated && authData.accessToken) {
-				console.log(
-					"AuthService: Found auth data in new storage system"
-				);
+			// 如果localStorage有有效数据，使用localStorage数据
+			if (localStorageData && LocalStorageUtil.hasValidAuthData()) {
+				console.log("📦 Loading auth data from localStorage");
 
 				this.authState = {
-					isAuthenticated: authData.isAuthenticated,
-					accessToken: authData.accessToken,
-					refreshToken: authData.refreshToken || null,
-					expiresAt: authData.tokenExpiresAt || null,
-					userInfo: authData.userInfo || null,
+					isAuthenticated: localStorageData.isAuthenticated,
+					accessToken: localStorageData.accessToken || null,
+					refreshToken: localStorageData.refreshToken || null,
+					expiresAt: localStorageData.expiresAt || null,
+					userInfo: localStorageData.userInfo || null,
 				};
 
-				this.httpClient.setAuthToken(authData.accessToken);
+				if (localStorageData.accessToken) {
+					this.httpClient.setAuthToken(localStorageData.accessToken);
+				}
 
 				// Check if token needs refresh
 				if (this.isTokenExpired()) {
-					console.log(
-						"AuthService: Token expired, attempting refresh..."
-					);
 					await this.refreshTokenIfNeeded();
 				} else {
-					console.log(
-						"AuthService: Token valid, notifying authenticated status"
-					);
+					this.notifyStatusChange(AuthStatus.AUTHENTICATED);
+				}
+				return;
+			}
+
+			// 如果localStorage没有数据，从data.json加载认证数据（支持结构化和扁平格式）
+			console.log("📄 Loading auth data from data.json");
+			const currentData =
+				(await this.authStorage.getPlugin().loadData()) || {};
+
+			// 检查是否有认证数据
+			if (currentData.isAuthenticated && currentData.accessToken) {
+				// 构建用户信息对象
+				const userInfo = currentData.userEmail
+					? {
+							id: currentData.userEmail,
+							email: currentData.userEmail,
+							nickname:
+								currentData.userNickname ||
+								currentData.userEmail,
+							created_at: "",
+							updated_at: "",
+					  }
+					: null;
+
+				this.authState = {
+					isAuthenticated: currentData.isAuthenticated,
+					accessToken: currentData.accessToken,
+					refreshToken: currentData.refreshToken || null,
+					expiresAt: currentData.tokenExpiresAt || null,
+					userInfo: userInfo,
+				};
+
+				this.httpClient.setAuthToken(currentData.accessToken);
+
+				// Check if token needs refresh
+				if (this.isTokenExpired()) {
+					await this.refreshTokenIfNeeded();
+				} else {
 					this.notifyStatusChange(AuthStatus.AUTHENTICATED);
 				}
 			} else {
-				console.log("AuthService: No stored auth data found");
+				// No stored auth data found
 			}
 		} catch (error) {
 			console.error("AuthService: Failed to load stored auth:", error);
@@ -544,28 +579,9 @@ export class AuthService extends Component {
 		}
 	}
 
-	private async storeUserInfo(userInfo: OAuthUserInfo): Promise<void> {
-		try {
-			console.log("AuthService: Storing user info...");
-
-			// 更新内存状态
-			this.authState.userInfo = userInfo;
-
-			// 保存到新存储系统
-			await this.authStorage.saveAuthData({
-				userInfo: userInfo,
-			});
-
-			console.log("AuthService: ✅ User info stored successfully");
-		} catch (error) {
-			console.error("AuthService: Failed to store user info:", error);
-		}
-	}
-
 	private async storeCodeVerifier(verifier: string): Promise<void> {
 		// Store code verifier in memory temporarily during OAuth flow
 		this.temporaryCodeVerifier = verifier;
-		console.log("AuthService: Code verifier stored in memory");
 	}
 
 	private async getStoredCodeVerifier(): Promise<string | null> {
@@ -576,17 +592,49 @@ export class AuthService extends Component {
 	private async clearCodeVerifier(): Promise<void> {
 		// Clear the temporarily stored code verifier
 		this.temporaryCodeVerifier = null;
-		console.log("AuthService: Code verifier cleared from memory");
 	}
 
 	private async clearStoredAuth(): Promise<void> {
 		try {
-			console.log("AuthService: Clearing stored auth data...");
+			// 清除localStorage中的认证数据
+			const localStorageCleared = LocalStorageUtil.clearAuthData();
+			if (localStorageCleared) {
+				console.log("🗑️ Auth data cleared from localStorage");
+			} else {
+				console.warn("⚠️ Failed to clear auth data from localStorage");
+			}
 
-			// 清除存储系统的数据
-			await this.authStorage.clearAuthData();
+			// 获取当前数据
+			const currentData =
+				(await this.authStorage.getPlugin().loadData()) || {};
 
-			console.log("AuthService: ✅ Auth data cleared successfully");
+			// 清除认证相关字段
+			const tokenFields = [
+				"accessToken",
+				"refreshToken",
+				"tokenExpiresAt",
+				"tokenType",
+				"tokenScope",
+				"lastLoginTime",
+				"userEmail",
+				"userNickname",
+			];
+			const updatedData = { ...currentData };
+
+			// 清除token字段
+			tokenFields.forEach((field) => {
+				delete updatedData[field];
+			});
+
+			// 更新认证状态
+			updatedData.isAuthenticated = false;
+
+			// 如果是结构化格式，也更新lastUpdated
+			if (currentData?.settings) {
+				updatedData.lastUpdated = Date.now();
+			}
+
+			await this.authStorage.getPlugin().saveData(updatedData);
 		} catch (error) {
 			console.error("AuthService: Failed to clear stored auth:", error);
 		}
@@ -598,25 +646,38 @@ export class AuthService extends Component {
 	 */
 	public async verifyCacheIntegrity(): Promise<boolean> {
 		try {
-			console.log(
-				"AuthService: Verifying cache integrity with new storage system..."
+			// 检查localStorage中的认证数据
+			const localStorageValid = LocalStorageUtil.hasValidAuthData();
+
+			// 直接从data.json验证认证数据完整性
+			const currentData =
+				(await this.authStorage.getPlugin().loadData()) || {};
+
+			// 检查必需字段是否存在
+			const hasRequiredFields = !!(
+				currentData.isAuthenticated &&
+				currentData.accessToken &&
+				currentData.userEmail
 			);
 
-			// 使用新存储系统的验证方法
-			const isValid = await this.authStorage.verifyIntegrity();
+			// 检查token是否过期
+			const isNotExpired =
+				!currentData.tokenExpiresAt ||
+				Date.now() < currentData.tokenExpiresAt - 60000; // 1分钟缓冲
 
-			// 获取存储统计信息用于日志
-			const stats = await this.authStorage.getStorageStats();
+			const dataJsonValid = hasRequiredFields && isNotExpired;
 
-			console.log("AuthService: Storage stats:", stats);
-			console.log(
-				"AuthService: Cache integrity:",
-				isValid ? "✅ VALID" : "❌ INVALID"
-			);
+			// 如果localStorage或data.json任一有效，则认为缓存完整
+			const isValid = localStorageValid || dataJsonValid;
+
+			console.log("🔍 Cache integrity check:", {
+				localStorage: localStorageValid,
+				dataJson: dataJsonValid,
+				overall: isValid,
+			});
 
 			return isValid;
 		} catch (error) {
-			console.error("AuthService: Cache verification failed:", error);
 			return false;
 		}
 	}

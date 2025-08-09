@@ -5,12 +5,7 @@
 export { AuthService } from "./AuthService";
 export { ApiService } from "./ApiService";
 export { HttpClient } from "./HttpClient";
-export {
-	OAUTH_CONFIG,
-	API_ENDPOINTS,
-	STORAGE_KEYS,
-	OAUTH_SCOPES,
-} from "./config";
+export { OAUTH_CONFIG, API_ENDPOINTS, OAUTH_SCOPES } from "./config";
 
 export type {
 	OAuthTokenResponse,

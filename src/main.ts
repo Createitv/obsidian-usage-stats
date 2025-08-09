@@ -11,7 +11,6 @@ import {
 	TrackingSession,
 } from "./core/types";
 // import { TimeTracker } from "./core/TimeTracker";
-import { DataManager } from "./storage/DataManager";
 import { StatusBarManager } from "./ui/StatusBarManager";
 import { t, i18n } from "./i18n/i18n";
 import {
@@ -22,6 +21,7 @@ import {
 	OAuthUserInfo,
 } from "./api";
 import { AuthStorage } from "./storage/AuthStorage";
+import { DataManager } from "./storage/DataManager";
 
 export default class UsageStatsPlugin extends Plugin {
 	settings: UsageStatsSettings;
@@ -39,7 +39,6 @@ export default class UsageStatsPlugin extends Plugin {
 		await this.loadSettings();
 
 		// Initialize new AuthStorage system
-		console.log("Plugin: Initializing AuthStorage system...");
 		this.authStorage = new AuthStorage(this);
 
 		// Initialize AuthService with new storage system only
@@ -48,25 +47,16 @@ export default class UsageStatsPlugin extends Plugin {
 		await this.authService.onload(); // 确保AuthService初始化完成
 
 		// Verify cache integrity on startup and attempt recovery if needed
-		console.log("Plugin startup: Checking authentication status...");
-
 		// First check if AuthService thinks we're authenticated
 		const isAuthServiceAuth = this.authService.isAuthenticated();
-		console.log(
-			"Plugin startup: AuthService authenticated:",
-			isAuthServiceAuth
-		);
 
 		// Check if we have any stored auth data in the new storage format
 		const authStorageStats = await this.authStorage.getStorageStats();
-		console.log("Plugin startup: Auth storage stats:", authStorageStats);
 
 		// Final verification
 		if (this.authService.isAuthenticated()) {
 			const cacheValid = await this.authService.verifyCacheIntegrity();
-			if (cacheValid) {
-				console.log("Plugin startup: ✅ Authentication cache is valid");
-			} else {
+			if (!cacheValid) {
 				console.warn(
 					"Plugin startup: ⚠️ Authentication cache integrity check failed"
 				);
@@ -75,15 +65,9 @@ export default class UsageStatsPlugin extends Plugin {
 
 		// Listen for auth status changes
 		this.authService.onAuthStatusChange(async (status) => {
-			console.log("Auth status changed:", status);
-
 			// Force save settings when auth status changes (important for dev mode)
 			if (status === "authenticated") {
-				console.log(
-					"Auth status: Forcing settings save for persistence..."
-				);
 				await this.updateUserInfoInSettings();
-				await this.forceSaveAllData();
 			}
 
 			// Give a small delay to ensure all updates are complete
@@ -119,166 +103,6 @@ export default class UsageStatsPlugin extends Plugin {
 
 		// Initialize commands manager
 		this.commandManager = new UsageStatsCommandManager(this);
-		this.commandManager.registerCommands();
-
-		// Add debug command to check auth status
-		this.addCommand({
-			id: "check-auth-status",
-			name: "Check Authentication Status",
-			callback: async () => {
-				console.log("[UsageStats] === Authentication Status Check ===");
-
-				// Check plugin settings
-				console.log("Plugin settings auth status:", {
-					isAuthenticated: this.settings.isAuthenticated,
-					userEmail: this.settings.userEmail,
-					userNickname: this.settings.userNickname,
-				});
-
-				// Check AuthService status
-				console.log("AuthService status:", {
-					isAuthenticated: this.authService.isAuthenticated(),
-					userInfo: this.authService.getUserInfo(),
-				});
-
-				// Check stored data
-				const allData = await this.loadData();
-				console.log("Stored data keys:", Object.keys(allData || {}));
-				console.log("AuthStorage exists:", !!allData?.authStorage);
-
-				if (allData?.authStorage) {
-					console.log(
-						"AuthStorage keys:",
-						Object.keys(allData.authStorage)
-					);
-					console.log(
-						"Has access token:",
-						!!allData.authStorage.oauth_access_token
-					);
-					console.log(
-						"Has refresh token:",
-						!!allData.authStorage.oauth_refresh_token
-					);
-					console.log(
-						"Has user info:",
-						!!allData.authStorage.oauth_user_info
-					);
-				}
-
-				// Verify cache integrity
-				const cacheValid =
-					await this.authService.verifyCacheIntegrity();
-				console.log(
-					"Cache integrity check:",
-					cacheValid ? "✅ VALID" : "❌ INVALID"
-				);
-			},
-		});
-
-		// Add development mode cache recovery command
-		this.addCommand({
-			id: "dev-recover-auth-cache",
-			name: "Dev: Recover Authentication Cache",
-			callback: async () => {
-				console.log("[UsageStats] === Development Cache Recovery ===");
-
-				try {
-					// Force reload auth from storage
-					await this.authService.loadStoredAuth();
-
-					// Update plugin settings
-					await this.updateUserInfoInSettings();
-
-					// Force save everything
-					await this.forceSaveAllData();
-
-					// Verify recovery
-					const isAuth = this.authService.isAuthenticated();
-					const userInfo = this.authService.getUserInfo();
-
-					console.log("Recovery result:", {
-						isAuthenticated: isAuth,
-						userEmail: userInfo?.email || "none",
-						hasUserInfo: !!userInfo,
-					});
-
-					if (isAuth) {
-						new Notice(
-							"✅ Authentication cache recovered successfully!"
-						);
-						// Refresh settings page
-						this.refreshSettingsPage();
-					} else {
-						new Notice("❌ Failed to recover authentication cache");
-					}
-				} catch (error) {
-					console.error("Cache recovery failed:", error);
-					new Notice(
-						"❌ Cache recovery failed - check console for details"
-					);
-				}
-			},
-		});
-
-		// Add command to display complete token information
-		this.addCommand({
-			id: "debug-token-info",
-			name: "Debug: Show Complete Token Information",
-			callback: async () => {
-				console.log("[UsageStats] === Complete Token Information ===");
-
-				try {
-					// Get token details from storage
-					const tokenInfo = await this.authStorage.getTokenInfo();
-					const storageStats =
-						await this.authStorage.getStorageStats();
-
-					if (tokenInfo) {
-						console.log("🔑 Token Details:", {
-							tokenType: tokenInfo.tokenType,
-							scope: tokenInfo.scope,
-							hasAccessToken: !!tokenInfo.accessToken,
-							hasRefreshToken: !!tokenInfo.refreshToken,
-							expiresAt: tokenInfo.expiresAt?.toISOString(),
-							isExpired: tokenInfo.isExpired,
-							accessTokenLength:
-								tokenInfo.accessToken?.length || 0,
-							refreshTokenLength:
-								tokenInfo.refreshToken?.length || 0,
-						});
-
-						console.log("📊 Storage Stats:", storageStats);
-
-						if (tokenInfo.originalResponse) {
-							console.log("📄 Original Token Response:", {
-								token_type:
-									tokenInfo.originalResponse.token_type,
-								scope: tokenInfo.originalResponse.scope,
-								expires_in:
-									tokenInfo.originalResponse.expires_in,
-								received_at: new Date(
-									tokenInfo.originalResponse.received_at
-								).toISOString(),
-							});
-						}
-
-						new Notice(
-							`Token Type: ${tokenInfo.tokenType}, Scope: ${
-								tokenInfo.scope
-							}, Expires: ${tokenInfo.expiresAt?.toLocaleString()}`
-						);
-					} else {
-						console.log("❌ No token information found");
-						new Notice("❌ No token information found");
-					}
-				} catch (error) {
-					console.error("Failed to get token info:", error);
-					new Notice("❌ Failed to get token info - check console");
-				}
-			},
-		});
-
-		// 注意：模拟token测试命令已删除，JSON存储功能已经稳定
 
 		// Register view
 		this.registerView(
@@ -317,9 +141,10 @@ export default class UsageStatsPlugin extends Plugin {
 
 	private setupEventListeners(): void {
 		// Listen to status bar quick actions
-		window.addEventListener("usage-stats-action", (event: CustomEvent) => {
-			this.commandManager.handleStatusBarAction(event.detail.action);
-		});
+		window.addEventListener(
+			"usage-stats-action",
+			(event: CustomEvent) => {}
+		);
 
 		// TODO: 重新实现TimeTracker时，恢复事件监听
 		// this.timeTracker.addEventListener((event) => { ... });
@@ -328,10 +153,20 @@ export default class UsageStatsPlugin extends Plugin {
 	// Settings management
 	async loadSettings() {
 		const savedData = await this.loadData();
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, savedData);
+
+		// Handle different data structures
+		let settingsData;
+		if (savedData?.settings) {
+			// New structure: { version, lastUpdated, dailyStats, settings: {...} }
+			settingsData = savedData.settings;
+		} else {
+			// Old structure: settings directly in root
+			settingsData = savedData;
+		}
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, settingsData);
 
 		// If no language preference saved, use the i18n detected language
-		if (!savedData?.language) {
+		if (!settingsData?.language) {
 			this.settings.language = i18n.getLocale();
 		}
 
@@ -340,42 +175,25 @@ export default class UsageStatsPlugin extends Plugin {
 	}
 
 	async saveSettings() {
-		await this.saveData(this.settings);
-	}
+		// Load existing data to preserve other sections (including token data)
+		const existingData = await this.loadData();
 
-	/**
-	 * Force save all plugin data (useful in dev mode to ensure persistence)
-	 */
-	async forceSaveAllData(): Promise<void> {
-		try {
-			console.log("ForceSave: Saving all plugin data...");
-
-			// Save plugin settings
-			await this.saveSettings();
-
-			// Get current data and verify it includes auth storage
-			const currentData = await this.loadData();
-			console.log(
-				"ForceSave: Current data keys:",
-				Object.keys(currentData || {})
-			);
-			console.log(
-				"ForceSave: Has authStorage:",
-				!!currentData?.authStorage
-			);
-
-			if (currentData?.authStorage) {
-				console.log(
-					"ForceSave: AuthStorage keys:",
-					Object.keys(currentData.authStorage)
-				);
-			}
-
-			// Force another save to ensure persistence
-			await this.saveData(currentData);
-			console.log("ForceSave: ✅ All data saved successfully");
-		} catch (error) {
-			console.error("ForceSave: ❌ Failed to save data:", error);
+		// Maintain the structured format if it exists
+		if (existingData?.settings) {
+			// Preserve existing structure
+			const updatedData = {
+				...existingData,
+				settings: this.settings,
+				lastUpdated: Date.now(),
+			};
+			await this.saveData(updatedData);
+		} else {
+			// For flat structure, merge settings with existing data to preserve token fields
+			const updatedData = {
+				...existingData, // 保留现有数据，包括token信息
+				...this.settings, // 覆盖设置数据
+			};
+			await this.saveData(updatedData);
 		}
 	}
 
@@ -477,6 +295,10 @@ export default class UsageStatsPlugin extends Plugin {
 		await this.dataManager.cleanupOldData();
 	}
 
+	public async clearAllTrackingData(): Promise<void> {
+		await this.dataManager.clearAllTrackingData();
+	}
+
 	public showExportModal(): void {
 		new Notice("Export modal feature not yet implemented");
 	}
@@ -524,23 +346,12 @@ export default class UsageStatsPlugin extends Plugin {
 			this.registerObsidianProtocolHandler(
 				"oauth/callback",
 				async (params) => {
-					console.log(
-						"[UsageStats] Protocol handler triggered with params:",
-						params
-					);
 					const action = params.action || "";
 
 					// Check if this is an OAuth callback
 					if (action === "oauth/callback") {
 						const code = params.code;
 						const state = params.state;
-
-						console.log(
-							"[UsageStats] Processing OAuth callback - state:",
-							state,
-							"code:",
-							code
-						);
 
 						if (code) {
 							try {
@@ -580,9 +391,7 @@ export default class UsageStatsPlugin extends Plugin {
 		try {
 			// Handle the OAuth callback through AuthService
 			await this.authService.handleCallback(code, state);
-
-			// Update plugin settings with user info
-			await this.updateUserInfoInSettings();
+			return;
 
 			// Auto-start sync if it's enabled
 			if (this.settings.enableSyncToCloud && this.settings.autoSync) {
@@ -590,9 +399,6 @@ export default class UsageStatsPlugin extends Plugin {
 			}
 
 			// Verify cache integrity after authentication
-			console.log(
-				"Main plugin: Verifying authentication cache after OAuth..."
-			);
 			const cacheValid = await this.authService.verifyCacheIntegrity();
 			if (!cacheValid) {
 				console.error(
@@ -600,30 +406,11 @@ export default class UsageStatsPlugin extends Plugin {
 				);
 			}
 
-			// Force save all data to ensure persistence in dev mode
-			await this.forceSaveAllData();
-
-			// Try to sync current data immediately after authentication
-			try {
-				if (this.settings.enableSyncToCloud) {
-					await this.syncNow();
-					new Notice(t("auth.loginAndSyncSuccess"));
-				} else {
-					new Notice(t("auth.loginSuccess"));
-				}
-			} catch (syncError) {
-				console.warn("Initial sync after login failed:", syncError);
-				new Notice(t("auth.loginSuccess"));
-			}
-
 			// Refresh settings page if open
 			this.refreshSettingsPage();
 
 			// Force a status notification to trigger UI updates
 			setTimeout(() => {
-				console.log(
-					"Force triggering auth status update for UI refresh"
-				);
 				this.refreshSettingsPage();
 
 				// Dispatch a custom event to notify about auth status change
@@ -636,8 +423,6 @@ export default class UsageStatsPlugin extends Plugin {
 					})
 				);
 			}, 200);
-
-			console.log("OAuth callback handled successfully");
 		} catch (error) {
 			console.error("OAuth callback failed:", error);
 			throw error;
@@ -660,9 +445,6 @@ export default class UsageStatsPlugin extends Plugin {
 				if (pluginTabs && pluginTabs[this.manifest.id]) {
 					const ourTab = pluginTabs[this.manifest.id];
 					if (ourTab instanceof UsageStatsSettingsTab) {
-						console.log(
-							"Found and refreshing active settings page"
-						);
 						ourTab.display();
 						return;
 					}
@@ -672,16 +454,66 @@ export default class UsageStatsPlugin extends Plugin {
 			console.warn("Could not directly refresh settings page:", error);
 		}
 
-		console.log("Settings will be updated when settings page is reopened");
+		// Settings will be updated when settings page is reopened
 	}
 
 	// Authentication methods
 	public isAuthenticated(): boolean {
-		return this.authService.isAuthenticated();
+		// 直接从data.json中的设置读取认证状态，包括token检查
+		const hasBasicAuth =
+			!!this.settings.isAuthenticated && !!this.settings.userEmail;
+		const hasValidToken =
+			!!this.settings.accessToken &&
+			(!this.settings.tokenExpiresAt ||
+				Date.now() < this.settings.tokenExpiresAt - 60000);
+
+		const dataJsonAuth = hasBasicAuth && hasValidToken;
+		return dataJsonAuth;
 	}
 
 	public getUserInfo(): OAuthUserInfo | null {
-		return this.authService.getUserInfo();
+		// 直接从data.json中的设置读取用户信息
+		if (this.settings.isAuthenticated && this.settings.userEmail) {
+			const userInfoFromDataJson: OAuthUserInfo = {
+				id: this.settings.userEmail, // 使用 email 作为 id
+				email: this.settings.userEmail,
+				nickname: this.settings.userNickname || this.settings.userEmail,
+				created_at: "", // 暂时留空
+				updated_at: "", // 暂时留空
+			};
+			return userInfoFromDataJson;
+		}
+		return null;
+	}
+
+	// 获取token信息（直接从data.json读取）
+	public getTokenInfo(): {
+		accessToken?: string;
+		refreshToken?: string;
+		tokenType?: string;
+		scope?: string;
+		expiresAt?: Date;
+		isExpired: boolean;
+	} | null {
+		if (!this.settings.accessToken) {
+			return null;
+		}
+
+		const expiresAt = this.settings.tokenExpiresAt
+			? new Date(this.settings.tokenExpiresAt)
+			: undefined;
+		const isExpired = this.settings.tokenExpiresAt
+			? Date.now() >= this.settings.tokenExpiresAt - 60000
+			: false;
+
+		return {
+			accessToken: this.settings.accessToken,
+			refreshToken: this.settings.refreshToken,
+			tokenType: this.settings.tokenType,
+			scope: this.settings.tokenScope,
+			expiresAt,
+			isExpired,
+		};
 	}
 
 	// 公共方法：获取 AuthService 实例
@@ -699,23 +531,12 @@ export default class UsageStatsPlugin extends Plugin {
 		const userInfo = this.authService.getUserInfo();
 		const isAuth = this.authService.isAuthenticated();
 
-		console.log("Updating user info in settings:", {
-			userInfo,
-			isAuthenticated: isAuth,
-		});
-
 		if (userInfo && isAuth) {
 			this.settings.isAuthenticated = true;
 			this.settings.userEmail = userInfo.email;
 			this.settings.userNickname = userInfo.nickname || userInfo.email;
 
 			await this.saveSettings();
-
-			console.log("User info updated in settings:", {
-				email: userInfo.email,
-				nickname: userInfo.nickname || userInfo.email,
-				settingsUpdated: true,
-			});
 		} else {
 			console.warn(
 				"Failed to update user info - missing userInfo or not authenticated"

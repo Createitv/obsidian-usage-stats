@@ -12,9 +12,6 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 
 		// Listen for auth status changes
 		window.addEventListener("obsidian-usage-stats-auth-changed", () => {
-			console.log(
-				"Settings tab: Received auth change event, refreshing display"
-			);
 			this.display();
 		});
 	}
@@ -23,7 +20,8 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		await this.refreshUserInfoFromStorage();
+		// 首先从data.json和存储系统中同步用户信息
+		await this.syncUserInfoFromAllSources();
 
 		// Page title
 		containerEl.createEl("h1", { text: t("settings.title") });
@@ -45,41 +43,16 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 	}
 
 	/**
-	 * 从持久化存储中刷新用户信息
+	 * 直接从data.json中读取用户信息
 	 */
-	private async refreshUserInfoFromStorage(): Promise<void> {
+	private async syncUserInfoFromAllSources(): Promise<void> {
 		try {
-			console.log(
-				"SettingsTab: Loading user info from persistent storage..."
-			);
+			// 1. 重新加载插件设置（从 data.json）
+			await this.plugin.loadSettings();
 
-			// 通过 AuthService 重新加载存储的认证信息
-			await this.plugin.getAuthService().loadStoredAuth();
-
-			// 获取最新的用户信息
-			const userInfo = this.plugin.getAuthService().getUserInfo();
-			const isAuthenticated = this.plugin
-				.getAuthService()
-				.isAuthenticated();
-
-			console.log("SettingsTab: Loaded user info:", {
-				isAuthenticated,
-				userEmail: userInfo?.email || "none",
-				userNickname: userInfo?.nickname || "none",
-			});
-
-			// 如果认证状态发生变化，更新插件设置中的用户信息
-			if (isAuthenticated && userInfo) {
-				await this.plugin.updateUserInfoInSettings();
-				console.log(
-					"SettingsTab: ✅ User info updated in plugin settings"
-				);
-			}
+			// 2. 直接使用 data.json 中的认证信息，不依赖 AuthService
 		} catch (error) {
-			console.error(
-				"SettingsTab: Failed to refresh user info from storage:",
-				error
-			);
+			// console.error("SettingsTab: Failed to sync user info:", error);
 		}
 	}
 
@@ -96,7 +69,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.enableTracking = value;
 						await this.plugin.saveSettings();
-						this.plugin.updateTracking();
+						// this.plugin.updateTracking(); // TODO: 重新实现TimeTracker时恢复
 					})
 			);
 
@@ -150,7 +123,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.idleThreshold = value;
 						await this.plugin.saveSettings();
-						this.plugin.updateTrackerSettings();
+						// this.plugin.updateTrackerSettings(); // TODO: 重新实现TimeTracker时恢复
 					})
 			)
 			.addText((text) =>
@@ -165,7 +138,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 						) {
 							this.plugin.settings.idleThreshold = numValue;
 							await this.plugin.saveSettings();
-							this.plugin.updateTrackerSettings();
+							// this.plugin.updateTrackerSettings(); // TODO: 重新实现TimeTracker时恢复
 						}
 					})
 			);
@@ -180,7 +153,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.trackInactiveTime = value;
 						await this.plugin.saveSettings();
-						this.plugin.updateTrackerSettings();
+						// this.plugin.updateTrackerSettings(); // TODO: 重新实现TimeTracker时恢复
 					})
 			);
 
@@ -210,7 +183,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.enableTagTracking = value;
 						await this.plugin.saveSettings();
-						this.plugin.updateTrackerSettings();
+						// this.plugin.updateTrackerSettings(); // TODO: 重新实现TimeTracker时恢复
 					})
 			);
 
@@ -224,7 +197,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.enableFolderTracking = value;
 						await this.plugin.saveSettings();
-						this.plugin.updateTrackerSettings();
+						// this.plugin.updateTrackerSettings(); // TODO: 重新实现TimeTracker时恢复
 					})
 			);
 
@@ -242,7 +215,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 							.map((f) => f.trim())
 							.filter((f) => f.length > 0);
 						await this.plugin.saveSettings();
-						this.plugin.updateTrackerSettings();
+						// this.plugin.updateTrackerSettings(); // TODO: 重新实现TimeTracker时恢复
 					})
 			);
 
@@ -260,7 +233,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 							.map((f) => f.trim())
 							.filter((f) => f.length > 0);
 						await this.plugin.saveSettings();
-						this.plugin.updateTrackerSettings();
+						// this.plugin.updateTrackerSettings(); // TODO: 重新实现TimeTracker时恢复
 					})
 			);
 	}
@@ -574,53 +547,28 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 				this.plugin.settings.language
 			}`,
 		});
-		debugContent.createEl("p", {
-			text: `${t(
-				"debug.trackingActive"
-			)}: ${this.plugin.isTrackingActive()}`,
-		});
-
-		// Show current statistics
-		const todayStats = this.plugin.getTodayStats();
-		debugContent.createEl("p", {
-			text: `${t("debug.todaySessions")}: ${todayStats.entries.length}`,
-		});
-		debugContent.createEl("p", {
-			text: `${t("debug.todayTotalTime")}: ${this.formatDebugTime(
-				todayStats.totalTime
-			)}`,
-		});
 	}
 
 	private async renderAuthSection(containerEl: HTMLElement): Promise<void> {
 		const authContainer = containerEl.createDiv("auth-section");
 
-		// 获取最新的认证状态和用户信息
-		const isAuthenticated = this.plugin.isAuthenticated();
-		const userInfo = this.plugin.getUserInfo();
-
-		console.log(
-			"Rendering auth section - isAuthenticated:",
-			isAuthenticated
-		);
-		console.log("Rendering auth section - userInfo:", userInfo);
-
-		// 同时从存储中获取详细的认证信息
-		try {
-			const authStorage = this.plugin.getAuthStorage();
-			const tokenInfo = await authStorage.getTokenInfo();
-			const storageStats = await authStorage.getStorageStats();
-
-			console.log("Auth section - storage stats:", storageStats);
-			console.log("Auth section - token info available:", !!tokenInfo);
-		} catch (error) {
-			console.error("Failed to get auth storage info:", error);
-		}
+		// 直接从插件设置中获取认证状态和用户信息（来自data.json）
+		const isAuthenticated =
+			this.plugin.settings.isAuthenticated &&
+			!!this.plugin.settings.userEmail;
+		const userInfo = isAuthenticated
+			? {
+					email: this.plugin.settings.userEmail!,
+					nickname:
+						this.plugin.settings.userNickname ||
+						this.plugin.settings.userEmail!,
+			  }
+			: null;
 
 		if (isAuthenticated) {
 			// User is logged in
 
-			// User profile info
+			// User profile info (从data.json读取)
 			if (userInfo) {
 				const profileContainer =
 					authContainer.createDiv("user-profile");
@@ -636,48 +584,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 						text: `${t("user.nickname")}: ${userInfo.nickname}`,
 					});
 				}
-
-				// 显示存储状态信息
-				try {
-					const authStorage = this.plugin.getAuthStorage();
-					const tokenInfo = await authStorage.getTokenInfo();
-					const storageStats = await authStorage.getStorageStats();
-
-					if (tokenInfo) {
-						const storageInfoContainer =
-							profileContainer.createDiv("storage-info");
-						storageInfoContainer.createEl("div", {
-							cls: "storage-detail",
-							text: `Token类型: ${tokenInfo.tokenType || "N/A"}`,
-						});
-						storageInfoContainer.createEl("div", {
-							cls: "storage-detail",
-							text: `权限范围: ${tokenInfo.scope || "N/A"}`,
-						});
-						storageInfoContainer.createEl("div", {
-							cls: "storage-detail",
-							text: `Token状态: ${
-								tokenInfo.isExpired ? "已过期" : "有效"
-							}`,
-						});
-						if (tokenInfo.expiresAt) {
-							storageInfoContainer.createEl("div", {
-								cls: "storage-detail",
-								text: `过期时间: ${tokenInfo.expiresAt.toLocaleString()}`,
-							});
-						}
-
-						console.log(
-							"Storage status info rendered successfully"
-						);
-					}
-				} catch (error) {
-					console.error("Failed to render storage info:", error);
-				}
-
-				console.log("User profile info rendered successfully");
 			} else {
-				console.warn("User is authenticated but userInfo is null");
 				authContainer.createEl("div", {
 					cls: "auth-status auth-status-warning",
 					text: "认证成功但无法获取用户信息，请重新登录",
@@ -699,33 +606,6 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 								this.display(); // Refresh settings page
 							}
 						})
-				);
-
-			// Refresh user info button
-			new Setting(authContainer)
-				.setName("刷新用户信息")
-				.setDesc("从持久化存储重新加载最新的用户信息和token状态")
-				.addButton((button) =>
-					button.setButtonText("刷新信息").onClick(async () => {
-						button.setDisabled(true);
-						button.setButtonText("刷新中...");
-						try {
-							// 重新加载用户信息
-							await this.refreshUserInfoFromStorage();
-							// 重新渲染整个设置页面
-							await this.display();
-							new Notice("✅ 用户信息已刷新");
-						} catch (error) {
-							console.error(
-								"Failed to refresh user info:",
-								error
-							);
-							new Notice("❌ 刷新失败，请查看控制台");
-						} finally {
-							button.setDisabled(false);
-							button.setButtonText("刷新信息");
-						}
-					})
 				);
 
 			// Connection test button

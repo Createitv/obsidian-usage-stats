@@ -36,17 +36,22 @@ export interface UsageStatsSettings {
 	syncInterval: number; // in minutes
 	lastSyncTime: number;
 
-	// OAuth settings (stored separately for security)
+	// OAuth settings (stored in data.json)
 	isAuthenticated?: boolean;
 	userEmail?: string;
 	userNickname?: string;
 
-	// Auth storage for tokens (separate from main settings)
-	authStorage?: Record<string, string>;
+	// Token数据（直接存储在data.json中）
+	accessToken?: string;
+	refreshToken?: string;
+	tokenExpiresAt?: number;
+	tokenType?: string;
+	tokenScope?: string;
+	lastLoginTime?: number;
 }
 
 export const DEFAULT_SETTINGS: UsageStatsSettings = {
-	enableTracking: true,
+	enableTracking: false, // 默认禁用数据跟踪
 	enableView: true,
 	language: "en",
 
@@ -73,6 +78,14 @@ export const DEFAULT_SETTINGS: UsageStatsSettings = {
 	lastSyncTime: 0,
 
 	isAuthenticated: false,
+	userEmail: undefined,
+	userNickname: undefined,
+	accessToken: undefined,
+	refreshToken: undefined,
+	tokenExpiresAt: undefined,
+	tokenType: undefined,
+	tokenScope: undefined,
+	lastLoginTime: undefined,
 };
 
 // Time tracking data types

@@ -10,22 +10,12 @@ export interface AuthData {
 	// 认证状态
 	isAuthenticated: boolean;
 
-	// Token信息（完整存储）
+	// Token信息（简化存储）
 	accessToken?: string;
 	refreshToken?: string;
 	tokenExpiresAt?: number;
 	tokenType?: string;
 	tokenScope?: string;
-
-	// Token原始响应信息（用于调试和完整性）
-	tokenResponse?: {
-		access_token: string;
-		token_type: string;
-		expires_in: number;
-		refresh_token?: string;
-		scope: string;
-		received_at: number; // 接收时间
-	};
 
 	// 用户信息
 	userInfo?: OAuthUserInfo;
@@ -59,6 +49,13 @@ export class AuthStorage {
 	}
 
 	/**
+	 * 获取插件实例（用于直接访问data.json）
+	 */
+	public getPlugin(): Plugin {
+		return this.plugin;
+	}
+
+	/**
 	 * 获取认证数据
 	 */
 	async getAuthData(): Promise<AuthData | null> {
@@ -67,39 +64,21 @@ export class AuthStorage {
 				(await this.plugin.loadData()) as PluginStorageData;
 
 			if (!pluginData?.auth) {
-				console.log("AuthStorage: No auth data found");
 				return null;
 			}
 
-			// 版本兼容性检查
-			if (pluginData.auth.version !== this.STORAGE_VERSION) {
-				console.warn(
-					"AuthStorage: Version mismatch, may need migration"
-				);
-			}
-
-			console.log("AuthStorage: Auth data loaded successfully");
 			return pluginData.auth;
 		} catch (error) {
-			console.error("AuthStorage: Failed to load auth data:", error);
 			return null;
 		}
 	}
 
 	/**
-	 * 保存完整的token响应信息
+	 * 保存token响应信息（简化版）
 	 */
 	async saveTokenResponse(
 		tokenResponse: OAuthTokenResponse
 	): Promise<boolean> {
-		console.log(
-			"AuthStorage: 🔐 Processing token exchange JSON for persistent storage..."
-		);
-		console.log(
-			"AuthStorage: Original JSON response:",
-			JSON.stringify(tokenResponse, null, 2)
-		);
-
 		const tokenExpiresAt = Date.now() + tokenResponse.expires_in * 1000;
 
 		const tokenData: Partial<AuthData> = {
@@ -109,44 +88,9 @@ export class AuthStorage {
 			tokenExpiresAt,
 			tokenType: tokenResponse.token_type,
 			tokenScope: tokenResponse.scope,
-			tokenResponse: {
-				access_token: tokenResponse.access_token,
-				token_type: tokenResponse.token_type,
-				expires_in: tokenResponse.expires_in,
-				refresh_token: tokenResponse.refresh_token,
-				scope: tokenResponse.scope,
-				received_at: Date.now(),
-			},
 		};
 
-		console.log("AuthStorage: 📦 Structured token data for storage:", {
-			hasAccessToken: !!tokenData.accessToken,
-			hasRefreshToken: !!tokenData.refreshToken,
-			tokenType: tokenData.tokenType,
-			scope: tokenData.tokenScope,
-			expiresAt: new Date(tokenData.tokenExpiresAt!).toISOString(),
-			originalJsonPreserved: !!tokenData.tokenResponse,
-		});
-
-		console.log(
-			"AuthStorage: 💾 Saving to persistent storage (data.json)..."
-		);
 		const saveResult = await this.saveAuthData(tokenData);
-
-		if (saveResult) {
-			console.log(
-				"AuthStorage: ✅ Token exchange JSON successfully stored to persistent storage!"
-			);
-			console.log(
-				"AuthStorage: 📄 Complete token response preserved as:",
-				JSON.stringify(tokenData.tokenResponse, null, 2)
-			);
-		} else {
-			console.error(
-				"AuthStorage: ❌ Failed to save token exchange JSON to persistent storage"
-			);
-		}
-
 		return saveResult;
 	}
 
@@ -158,12 +102,11 @@ export class AuthStorage {
 			// 获取现有的插件数据
 			const pluginData =
 				((await this.plugin.loadData()) as PluginStorageData) || {
-					version: "1.0.0",
 					lastUpdated: Date.now(),
 				};
 
 			// 合并认证数据
-			const currentAuth = pluginData.auth || {
+			const currentAuth: AuthData = pluginData.auth || {
 				isAuthenticated: false,
 				version: this.STORAGE_VERSION,
 				loginCount: 0,
@@ -172,13 +115,12 @@ export class AuthStorage {
 			const updatedAuth: AuthData = {
 				...currentAuth,
 				...authData,
-				version: this.STORAGE_VERSION,
 				lastLoginTime: authData.isAuthenticated
 					? Date.now()
 					: currentAuth.lastLoginTime,
 				loginCount: authData.isAuthenticated
 					? (currentAuth.loginCount || 0) + 1
-					: currentAuth.loginCount,
+					: currentAuth.loginCount || 0,
 			};
 
 			// 更新插件数据
@@ -195,10 +137,6 @@ export class AuthStorage {
 				!!verifyData?.auth?.isAuthenticated ===
 				!!updatedAuth.isAuthenticated;
 
-			console.log(
-				"AuthStorage: Save result:",
-				saved ? "✅ Success" : "❌ Failed"
-			);
 			return saved;
 		} catch (error) {
 			console.error("AuthStorage: Failed to save auth data:", error);
@@ -220,7 +158,6 @@ export class AuthStorage {
 				pluginData.lastUpdated = Date.now();
 
 				await this.plugin.saveData(pluginData);
-				console.log("AuthStorage: Auth data cleared successfully");
 			}
 
 			return true;
@@ -237,7 +174,6 @@ export class AuthStorage {
 		const authData = await this.getAuthData();
 
 		if (!authData) {
-			console.log("AuthStorage: No auth data to verify");
 			return false;
 		}
 
@@ -253,17 +189,11 @@ export class AuthStorage {
 
 		const isValid = hasRequiredFields && isNotExpired;
 
-		console.log("AuthStorage: Integrity check:", {
-			hasRequiredFields,
-			isNotExpired,
-			isValid,
-		});
-
 		return isValid;
 	}
 
 	/**
-	 * 获取token详细信息
+	 * 获取token详细信息（简化版）
 	 */
 	async getTokenInfo(): Promise<{
 		accessToken?: string;
@@ -272,7 +202,6 @@ export class AuthStorage {
 		scope?: string;
 		expiresAt?: Date;
 		isExpired: boolean;
-		originalResponse?: any;
 	} | null> {
 		const authData = await this.getAuthData();
 
@@ -294,61 +223,11 @@ export class AuthStorage {
 			scope: authData.tokenScope,
 			expiresAt,
 			isExpired,
-			originalResponse: authData.tokenResponse,
 		};
 	}
 
 	/**
-	 * 验证JSON响应存储的完整性
-	 */
-	async verifyTokenResponseStorage(): Promise<{
-		hasOriginalJson: boolean;
-		originalResponse?: any;
-		accessTokenMatch: boolean;
-		tokenTypeMatch: boolean;
-		scopeMatch: boolean;
-		storageIntegrity: boolean;
-	}> {
-		const authData = await this.getAuthData();
-
-		if (!authData || !authData.tokenResponse) {
-			return {
-				hasOriginalJson: false,
-				accessTokenMatch: false,
-				tokenTypeMatch: false,
-				scopeMatch: false,
-				storageIntegrity: false,
-			};
-		}
-
-		const originalResponse = authData.tokenResponse;
-		const accessTokenMatch =
-			authData.accessToken === originalResponse.access_token;
-		const tokenTypeMatch =
-			authData.tokenType === originalResponse.token_type;
-		const scopeMatch = authData.tokenScope === originalResponse.scope;
-
-		console.log("AuthStorage: 🔍 Token response storage verification:", {
-			hasOriginalJson: true,
-			accessTokenMatch,
-			tokenTypeMatch,
-			scopeMatch,
-			originalJsonKeys: Object.keys(originalResponse),
-			receivedAt: new Date(originalResponse.received_at).toISOString(),
-		});
-
-		return {
-			hasOriginalJson: true,
-			originalResponse,
-			accessTokenMatch,
-			tokenTypeMatch,
-			scopeMatch,
-			storageIntegrity: accessTokenMatch && tokenTypeMatch && scopeMatch,
-		};
-	}
-
-	/**
-	 * 获取存储统计信息
+	 * 获取存储统计信息（简化版）
 	 */
 	async getStorageStats(): Promise<{
 		hasAuth: boolean;
