@@ -122,6 +122,56 @@ export class LocalStorageUtil {
 	}
 
 	/**
+	 * 获取accessToken
+	 */
+	static getAccessToken(): string | null {
+		try {
+			const authData = this.getAuthData();
+
+			if (
+				!authData ||
+				!authData.isAuthenticated ||
+				!authData.accessToken
+			) {
+				return null;
+			}
+
+			// 检查token是否过期
+			if (
+				authData.expiresAt &&
+				Date.now() >= authData.expiresAt - 60000
+			) {
+				console.warn("Access token has expired");
+				return null;
+			}
+
+			return authData.accessToken;
+		} catch (error) {
+			console.error(
+				"Failed to get access token from localStorage:",
+				error
+			);
+			return null;
+		}
+	}
+
+	/**
+	 * 获取Bearer token字符串（包含"Bearer "前缀）
+	 */
+	static getBearerToken(): string | null {
+		const accessToken = this.getAccessToken();
+		return accessToken ? `Bearer ${accessToken}` : null;
+	}
+
+	/**
+	 * 获取认证头对象
+	 */
+	static getAuthHeaders(): Record<string, string> {
+		const bearerToken = this.getBearerToken();
+		return bearerToken ? { Authorization: bearerToken } : {};
+	}
+
+	/**
 	 * 获取存储统计信息（用于调试）
 	 */
 	static getStorageStats(): {

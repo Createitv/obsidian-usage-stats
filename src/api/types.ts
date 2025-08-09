@@ -20,6 +20,33 @@ export interface OAuthUserInfo {
 	updated_at: string;
 }
 
+export interface PingResponse {
+	message: string;
+	latency: string;
+	timestamp: string;
+	status: string;
+	method?: string;
+	echo?: any;
+	user?: {
+		uuid: string;
+		scopes: {
+			read: boolean;
+			write: boolean;
+			upload: boolean;
+		};
+	};
+	server?: {
+		name: string;
+		version: string;
+		environment: string;
+	};
+	client?: {
+		userAgent: string;
+		hasAuth: boolean;
+		ip: string;
+	};
+}
+
 export interface OAuthTokenInfo {
 	id: string;
 	client_id: string;

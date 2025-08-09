@@ -535,7 +535,6 @@ export class AuthService extends Component {
 			}
 
 			// 如果localStorage没有数据，从data.json加载认证数据（支持结构化和扁平格式）
-			console.log("📄 Loading auth data from data.json");
 			const currentData =
 				(await this.authStorage.getPlugin().loadData()) || {};
 

@@ -22,6 +22,7 @@ import {
 } from "./api";
 import { AuthStorage } from "./storage/AuthStorage";
 import { DataManager } from "./storage/DataManager";
+import { PingResponse } from "./api/types";
 
 export default class UsageStatsPlugin extends Plugin {
 	settings: UsageStatsSettings;
@@ -558,7 +559,13 @@ export default class UsageStatsPlugin extends Plugin {
 	}
 
 	public async testConnection(): Promise<boolean> {
-		return this.apiService.testConnection();
+		try {
+			const pingResponse = await this.apiService.testConnection();
+			return pingResponse !== null && pingResponse.status === "healthy";
+		} catch (error) {
+			console.error("Connection test failed:", error);
+			return false;
+		}
 	}
 
 	// Sync methods

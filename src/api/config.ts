@@ -31,6 +31,7 @@ export const OAUTH_CONFIG: OAuthConfig = {
 export const API_ENDPOINTS = {
 	USER_DATA: "/user/data",
 	UPLOAD: "/upload",
+	PING: "/ping",
 } as const;
 
 // OAuth scopes

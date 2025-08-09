@@ -5,14 +5,16 @@
 import { Component, Notice } from "obsidian";
 import { HttpClient } from "./HttpClient";
 import { AuthService } from "./AuthService";
-import { API_ENDPOINTS } from "./config";
+import { API_ENDPOINTS, OAUTH_CONFIG } from "./config";
 import {
 	OAuthUserInfo,
 	UserDataUpdate,
 	UploadResponse,
 	ApiResponse,
 	AuthError,
+	PingResponse,
 } from "./types";
+import { pingWithAuth } from "../utils";
 import { TimeEntry, DailyStats } from "../core/types";
 import { t } from "../i18n/i18n";
 
@@ -38,7 +40,7 @@ export class ApiService extends Component {
 	constructor(authService: AuthService) {
 		super();
 		this.authService = authService;
-		this.httpClient = new HttpClient(""); // Base URL will be set from auth service
+		this.httpClient = new HttpClient(OAUTH_CONFIG.API_BASE_URL); // Base URL will be set from auth service
 	}
 
 	async onload(): Promise<void> {
@@ -254,18 +256,6 @@ export class ApiService extends Component {
 		return this.isSyncing;
 	}
 
-	public async testConnection(): Promise<boolean> {
-		try {
-			await this.ensureAuthenticated();
-
-			const response = await this.httpClient.get("/health");
-			return response.success;
-		} catch (error) {
-			console.error("Connection test failed:", error);
-			return false;
-		}
-	}
-
 	private async ensureAuthenticated(): Promise<void> {
 		if (!this.authService.isAuthenticated()) {
 			// Try to refresh token
@@ -337,5 +327,23 @@ export class ApiService extends Component {
 		}
 
 		return result;
+	}
+
+	public async testConnection(): Promise<PingResponse | null> {
+		try {
+			// 使用新的工具函数，自动从localStorage获取token
+			const result = await pingWithAuth();
+
+			if (result.success && result.data) {
+				console.log(`✅ Ping successful in ${result.latency}`);
+				return result.data as PingResponse;
+			}
+
+			console.warn(`❌ Ping failed: ${result.error}`);
+			return null;
+		} catch (error) {
+			console.error("Connection test failed:", error);
+			return null;
+		}
 	}
 }
