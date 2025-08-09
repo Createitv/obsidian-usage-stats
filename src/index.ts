@@ -17,7 +17,7 @@ export type {
 } from "./core/types";
 
 // Core components
-export { TimeTracker } from "./core/TimeTracker";
+// export { TimeTracker } from "./core/TimeTracker";
 export { DataManager } from "./storage/DataManager";
 
 // UI Components

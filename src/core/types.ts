@@ -29,7 +29,6 @@ export interface UsageStatsSettings {
 	// Privacy and data
 	dataRetentionDays: number;
 	enableDataExport: boolean;
-	autoBackup: boolean;
 
 	// Cloud sync settings
 	enableSyncToCloud: boolean;
@@ -52,7 +51,7 @@ export const DEFAULT_SETTINGS: UsageStatsSettings = {
 	language: "en",
 
 	idleThreshold: 300, // 5 minutes
-	autoSaveInterval: 30, // 30 seconds
+	autoSaveInterval: 30000, // minutes
 	trackInactiveTime: false,
 
 	enableTagTracking: true,
@@ -67,7 +66,6 @@ export const DEFAULT_SETTINGS: UsageStatsSettings = {
 
 	dataRetentionDays: 365,
 	enableDataExport: true,
-	autoBackup: true,
 
 	enableSyncToCloud: false,
 	autoSync: false,

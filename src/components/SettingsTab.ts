@@ -19,12 +19,17 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 		});
 	}
 
-	display(): void {
+	async display(): Promise<void> {
 		const { containerEl } = this;
 		containerEl.empty();
 
+		await this.refreshUserInfoFromStorage();
+
 		// Page title
 		containerEl.createEl("h1", { text: t("settings.title") });
+
+		// Data & Privacy Settings Section
+		await this.renderDataSettings(containerEl);
 
 		// General Settings Section
 		this.renderGeneralSettings(containerEl);
@@ -35,11 +40,47 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 		// Display Settings Section
 		this.renderDisplaySettings(containerEl);
 
-		// Data & Privacy Settings Section
-		this.renderDataSettings(containerEl);
-
 		// Advanced Settings Section
 		this.renderAdvancedSettings(containerEl);
+	}
+
+	/**
+	 * 从持久化存储中刷新用户信息
+	 */
+	private async refreshUserInfoFromStorage(): Promise<void> {
+		try {
+			console.log(
+				"SettingsTab: Loading user info from persistent storage..."
+			);
+
+			// 通过 AuthService 重新加载存储的认证信息
+			await this.plugin.getAuthService().loadStoredAuth();
+
+			// 获取最新的用户信息
+			const userInfo = this.plugin.getAuthService().getUserInfo();
+			const isAuthenticated = this.plugin
+				.getAuthService()
+				.isAuthenticated();
+
+			console.log("SettingsTab: Loaded user info:", {
+				isAuthenticated,
+				userEmail: userInfo?.email || "none",
+				userNickname: userInfo?.nickname || "none",
+			});
+
+			// 如果认证状态发生变化，更新插件设置中的用户信息
+			if (isAuthenticated && userInfo) {
+				await this.plugin.updateUserInfoInSettings();
+				console.log(
+					"SettingsTab: ✅ User info updated in plugin settings"
+				);
+			}
+		} catch (error) {
+			console.error(
+				"SettingsTab: Failed to refresh user info from storage:",
+				error
+			);
+		}
 	}
 
 	private renderGeneralSettings(containerEl: HTMLElement): void {
@@ -297,7 +338,7 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 			);
 	}
 
-	private renderDataSettings(containerEl: HTMLElement): void {
+	private async renderDataSettings(containerEl: HTMLElement): Promise<void> {
 		containerEl.createEl("h2", { text: t("settings.data") });
 
 		// Data retention
@@ -345,25 +386,11 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 					})
 			);
 
-		// Auto backup
-		new Setting(containerEl)
-			.setName(t("settings.autoBackup"))
-			.setDesc(t("settings.autoBackup.desc"))
-			.addToggle((toggle) =>
-				toggle
-					.setValue(this.plugin.settings.autoBackup)
-					.onChange(async (value) => {
-						this.plugin.settings.autoBackup = value;
-						await this.plugin.saveSettings();
-						this.plugin.updateDataManagerSettings();
-					})
-			);
-
 		// Cloud sync section header
 		containerEl.createEl("h3", { text: t("sync.cloudSync") });
 
 		// User authentication status
-		this.renderAuthSection(containerEl);
+		await this.renderAuthSection(containerEl);
 
 		// Cloud sync toggle
 		new Setting(containerEl)
@@ -565,26 +592,33 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 		});
 	}
 
-	private renderAuthSection(containerEl: HTMLElement): void {
+	private async renderAuthSection(containerEl: HTMLElement): Promise<void> {
 		const authContainer = containerEl.createDiv("auth-section");
+
+		// 获取最新的认证状态和用户信息
+		const isAuthenticated = this.plugin.isAuthenticated();
+		const userInfo = this.plugin.getUserInfo();
 
 		console.log(
 			"Rendering auth section - isAuthenticated:",
-			this.plugin.isAuthenticated()
+			isAuthenticated
 		);
-		console.log(
-			"Rendering auth section - userInfo:",
-			this.plugin.getUserInfo()
-		);
+		console.log("Rendering auth section - userInfo:", userInfo);
 
-		if (this.plugin.isAuthenticated()) {
+		// 同时从存储中获取详细的认证信息
+		try {
+			const authStorage = this.plugin.getAuthStorage();
+			const tokenInfo = await authStorage.getTokenInfo();
+			const storageStats = await authStorage.getStorageStats();
+
+			console.log("Auth section - storage stats:", storageStats);
+			console.log("Auth section - token info available:", !!tokenInfo);
+		} catch (error) {
+			console.error("Failed to get auth storage info:", error);
+		}
+
+		if (isAuthenticated) {
 			// User is logged in
-			const userInfo = this.plugin.getUserInfo();
-
-			authContainer.createEl("div", {
-				cls: "auth-status auth-status-authenticated",
-				text: t("auth.loginSuccess"),
-			});
 
 			// User profile info
 			if (userInfo) {
@@ -601,6 +635,44 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 						cls: "user-info",
 						text: `${t("user.nickname")}: ${userInfo.nickname}`,
 					});
+				}
+
+				// 显示存储状态信息
+				try {
+					const authStorage = this.plugin.getAuthStorage();
+					const tokenInfo = await authStorage.getTokenInfo();
+					const storageStats = await authStorage.getStorageStats();
+
+					if (tokenInfo) {
+						const storageInfoContainer =
+							profileContainer.createDiv("storage-info");
+						storageInfoContainer.createEl("div", {
+							cls: "storage-detail",
+							text: `Token类型: ${tokenInfo.tokenType || "N/A"}`,
+						});
+						storageInfoContainer.createEl("div", {
+							cls: "storage-detail",
+							text: `权限范围: ${tokenInfo.scope || "N/A"}`,
+						});
+						storageInfoContainer.createEl("div", {
+							cls: "storage-detail",
+							text: `Token状态: ${
+								tokenInfo.isExpired ? "已过期" : "有效"
+							}`,
+						});
+						if (tokenInfo.expiresAt) {
+							storageInfoContainer.createEl("div", {
+								cls: "storage-detail",
+								text: `过期时间: ${tokenInfo.expiresAt.toLocaleString()}`,
+							});
+						}
+
+						console.log(
+							"Storage status info rendered successfully"
+						);
+					}
+				} catch (error) {
+					console.error("Failed to render storage info:", error);
 				}
 
 				console.log("User profile info rendered successfully");
@@ -627,6 +699,33 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 								this.display(); // Refresh settings page
 							}
 						})
+				);
+
+			// Refresh user info button
+			new Setting(authContainer)
+				.setName("刷新用户信息")
+				.setDesc("从持久化存储重新加载最新的用户信息和token状态")
+				.addButton((button) =>
+					button.setButtonText("刷新信息").onClick(async () => {
+						button.setDisabled(true);
+						button.setButtonText("刷新中...");
+						try {
+							// 重新加载用户信息
+							await this.refreshUserInfoFromStorage();
+							// 重新渲染整个设置页面
+							await this.display();
+							new Notice("✅ 用户信息已刷新");
+						} catch (error) {
+							console.error(
+								"Failed to refresh user info:",
+								error
+							);
+							new Notice("❌ 刷新失败，请查看控制台");
+						} finally {
+							button.setDisabled(false);
+							button.setButtonText("刷新信息");
+						}
+					})
 				);
 
 			// Connection test button

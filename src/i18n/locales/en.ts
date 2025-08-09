@@ -127,8 +127,6 @@ const translations: BaseMessage = {
 	"settings.enableDataExport": "Enable data export",
 	"settings.enableDataExport.desc":
 		"Allow exporting usage data to various formats",
-	"settings.autoBackup": "Auto backup",
-	"settings.autoBackup.desc": "Automatically create backups of usage data",
 
 	"settings.enableSyncToCloud": "Enable cloud sync",
 	"settings.enableSyncToCloud.desc":

@@ -27,8 +27,6 @@ export class DataManager extends Component {
 	private saveTimer?: NodeJS.Timeout;
 	private readonly DATA_FILE_PATH =
 		".obsidian/plugins/obsidian-usage-stats/data.json";
-	private readonly BACKUP_DIR =
-		".obsidian/plugins/obsidian-usage-stats/backups";
 
 	constructor(vault: Vault, settings: UsageStatsSettings) {
 		super();
@@ -73,11 +71,6 @@ export class DataManager extends Component {
 
 			// Save main data file
 			await this.vault.adapter.write(this.DATA_FILE_PATH, content);
-
-			// Create backup if enabled
-			if (this.settings.autoBackup) {
-				await this.createBackup();
-			}
 		} catch (error) {
 			console.error("Failed to save usage statistics data:", error);
 		}
@@ -529,7 +522,7 @@ export class DataManager extends Component {
 		}, 5000); // Save after 5 seconds of inactivity
 	}
 
-	// Backup functionality
+	// Data directory management
 	private async ensureDataDirectory(): Promise<void> {
 		const dataDir = this.DATA_FILE_PATH.substring(
 			0,
@@ -540,46 +533,6 @@ export class DataManager extends Component {
 			await this.vault.adapter.mkdir(dataDir);
 		} catch (error) {
 			// Directory might already exist, which is fine
-		}
-	}
-
-	private async createBackup(): Promise<void> {
-		try {
-			const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-			const backupPath = `${this.BACKUP_DIR}/data-${timestamp}.json`;
-
-			// Ensure backup directory exists
-			await this.vault.adapter.mkdir(this.BACKUP_DIR);
-
-			// Copy current data file to backup
-			const content = JSON.stringify(this.data, null, 2);
-			await this.vault.adapter.write(backupPath, content);
-
-			// Clean up old backups (keep last 30)
-			await this.cleanupOldBackups();
-		} catch (error) {
-			console.error("Failed to create backup:", error);
-		}
-	}
-
-	private async cleanupOldBackups(): Promise<void> {
-		try {
-			const files = await this.vault.adapter.list(this.BACKUP_DIR);
-			const backupFiles = files.files
-				.filter(
-					(file) => file.startsWith("data-") && file.endsWith(".json")
-				)
-				.sort()
-				.reverse();
-
-			// Keep only the latest 30 backups
-			const filesToDelete = backupFiles.slice(30);
-
-			for (const file of filesToDelete) {
-				await this.vault.adapter.remove(`${this.BACKUP_DIR}/${file}`);
-			}
-		} catch (error) {
-			console.error("Failed to cleanup old backups:", error);
 		}
 	}
 

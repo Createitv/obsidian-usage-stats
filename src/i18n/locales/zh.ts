@@ -116,8 +116,6 @@ const translations: BaseMessage = {
 	"settings.dataRetentionDays.desc": "保留使用数据的时长（0 = 永久保留）",
 	"settings.enableDataExport": "启用数据导出",
 	"settings.enableDataExport.desc": "允许将使用数据导出为各种格式",
-	"settings.autoBackup": "自动备份",
-	"settings.autoBackup.desc": "自动创建使用数据的备份",
 
 	"settings.enableSyncToCloud": "启用云端同步",
 	"settings.enableSyncToCloud.desc": "同步数据到云服务（即将推出）",

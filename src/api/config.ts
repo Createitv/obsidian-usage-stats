@@ -33,15 +33,6 @@ export const API_ENDPOINTS = {
 	UPLOAD: "/upload",
 } as const;
 
-// Storage keys for OAuth data
-export const STORAGE_KEYS = {
-	ACCESS_TOKEN: "oauth_access_token",
-	REFRESH_TOKEN: "oauth_refresh_token",
-	CODE_VERIFIER: "oauth_code_verifier",
-	USER_INFO: "oauth_user_info",
-	TOKEN_EXPIRES_AT: "oauth_expires_at",
-} as const;
-
 // OAuth scopes
 export const OAUTH_SCOPES = {
 	READ: "read",

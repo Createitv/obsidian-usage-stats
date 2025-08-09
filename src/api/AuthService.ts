@@ -4,7 +4,7 @@
 
 import { Component, Notice } from "obsidian";
 import { HttpClient } from "./HttpClient";
-import { OAUTH_CONFIG, STORAGE_KEYS } from "./config";
+import { OAUTH_CONFIG } from "./config";
 import {
 	OAuthTokenResponse,
 	OAuthUserInfo,
@@ -14,6 +14,7 @@ import {
 	AuthError,
 } from "./types";
 import { t } from "../i18n/i18n";
+import { AuthStorage } from "../storage/AuthStorage";
 
 // Declare electron API types for better TypeScript support
 declare global {
@@ -34,13 +35,10 @@ export class AuthService extends Component {
 	private httpClient: HttpClient;
 	private authState: AuthState;
 	private statusChangeCallbacks: Array<(status: AuthStatus) => void> = [];
-	private storageAdapter: {
-		getItem: (key: string) => Promise<string | null>;
-		setItem: (key: string, value: string) => Promise<void>;
-		removeItem: (key: string) => Promise<void>;
-	};
+	private authStorage: AuthStorage;
+	private temporaryCodeVerifier: string | null = null; // 临时存储 code verifier
 
-	constructor(storageAdapter?: typeof AuthService.prototype.storageAdapter) {
+	constructor(authStorage: AuthStorage) {
 		super();
 		this.httpClient = new HttpClient(OAUTH_CONFIG.API_BASE_URL);
 		this.authState = {
@@ -51,16 +49,10 @@ export class AuthService extends Component {
 			userInfo: null,
 		};
 
-		// Use provided storage adapter or fall back to localStorage
-		this.storageAdapter = storageAdapter || {
-			getItem: async (key: string) => localStorage.getItem(key),
-			setItem: async (key: string, value: string) => {
-				localStorage.setItem(key, value);
-			},
-			removeItem: async (key: string) => {
-				localStorage.removeItem(key);
-			},
-		};
+		// 使用新的 AuthStorage 系统
+		this.authStorage = authStorage;
+
+		console.log("AuthService: Initialized with AuthStorage system");
 	}
 
 	async onload(): Promise<void> {
@@ -162,11 +154,9 @@ export class AuthService extends Component {
 			await this.clearCodeVerifier();
 
 			// Fetch user info
-			console.log("AuthService: Fetching user info...");
 			await this.fetchUserInfo();
 
 			// Verify cache integrity after all data is stored
-			console.log("AuthService: Verifying complete cache after OAuth...");
 			const cacheValid = await this.verifyCacheIntegrity();
 
 			if (cacheValid) {
@@ -314,10 +304,6 @@ export class AuthService extends Component {
 			code_verifier: codeVerifier,
 		};
 
-		console.log(
-			"AuthService: Token exchange request to:",
-			OAUTH_CONFIG.TOKEN_URL
-		);
 		console.log("AuthService: Request body:", {
 			...requestBody,
 			client_secret: "***hidden***",
@@ -332,11 +318,6 @@ export class AuthService extends Component {
 			},
 			body: JSON.stringify(requestBody),
 		});
-
-		console.log(
-			"AuthService: Token exchange response status:",
-			response.status
-		);
 
 		if (!response.ok) {
 			const errorText = await response.text();
@@ -388,8 +369,11 @@ export class AuthService extends Component {
 	private async handleTokenResponse(
 		tokenResponse: OAuthTokenResponse
 	): Promise<void> {
+		console.log("AuthService: Processing token response...");
+
 		const expiresAt = Date.now() + tokenResponse.expires_in * 1000;
 
+		// Update internal auth state
 		this.authState = {
 			isAuthenticated: true,
 			accessToken: tokenResponse.access_token,
@@ -399,22 +383,37 @@ export class AuthService extends Component {
 			userInfo: this.authState.userInfo,
 		};
 
+		// Set auth token for HTTP client
 		this.httpClient.setAuthToken(tokenResponse.access_token);
 
-		// Store token data immediately for caching
-		console.log("AuthService: Storing token data to cache...");
-		await this.storeAuthData();
-
-		// Verify token was stored
-		const storedToken = await this.storageAdapter.getItem(
-			STORAGE_KEYS.ACCESS_TOKEN
+		// Store complete token response immediately
+		const saveSuccess = await this.authStorage.saveTokenResponse(
+			tokenResponse
 		);
-		console.log("AuthService: Token cached successfully:", !!storedToken);
+
+		if (saveSuccess) {
+			console.log(
+				"AuthService: ✅ Complete token data stored successfully"
+			);
+
+			// Verify and log token details
+			const tokenInfo = await this.authStorage.getTokenInfo();
+			if (tokenInfo) {
+				console.log("AuthService: Stored token details:", {
+					tokenType: tokenInfo.tokenType,
+					scope: tokenInfo.scope,
+					hasRefreshToken: !!tokenInfo.refreshToken,
+					expiresAt: tokenInfo.expiresAt?.toISOString(),
+					isExpired: tokenInfo.isExpired,
+				});
+			}
+		} else {
+			console.error("AuthService: ❌ Failed to store token data");
+		}
 	}
 
 	private async fetchUserInfo(): Promise<void> {
 		try {
-			console.log("AuthService: Fetching user info from API...");
 			const response = await this.httpClient.get<OAuthUserInfo>(
 				"/user/data"
 			);
@@ -428,23 +427,15 @@ export class AuthService extends Component {
 				this.authState.userInfo = response.data;
 
 				// Store user info immediately for caching
-				console.log("AuthService: Storing user info to cache...");
 				await this.storeUserInfo(response.data);
 
-				// Verify user info was stored
-				const storedUserInfo = await this.storageAdapter.getItem(
-					STORAGE_KEYS.USER_INFO
-				);
-				console.log(
-					"AuthService: User info cached successfully:",
-					!!storedUserInfo
-				);
+				// Verify user info was stored using new storage system
+				const verifyAuthData = await this.authStorage.getAuthData();
 
-				if (storedUserInfo) {
-					const parsed = JSON.parse(storedUserInfo);
+				if (verifyAuthData?.userInfo) {
 					console.log("AuthService: Cached user info verified:", {
-						email: parsed.email,
-						nickname: parsed.nickname,
+						email: verifyAuthData.userInfo.email,
+						nickname: verifyAuthData.userInfo.nickname,
 					});
 				}
 			} else {
@@ -510,103 +501,95 @@ export class AuthService extends Component {
 	// Storage methods
 	public async loadStoredAuth(): Promise<void> {
 		try {
-			const accessToken = await this.storageAdapter.getItem(
-				STORAGE_KEYS.ACCESS_TOKEN
-			);
-			const refreshToken = await this.storageAdapter.getItem(
-				STORAGE_KEYS.REFRESH_TOKEN
-			);
-			const expiresAt = await this.storageAdapter.getItem(
-				STORAGE_KEYS.TOKEN_EXPIRES_AT
-			);
-			const userInfoStr = await this.storageAdapter.getItem(
-				STORAGE_KEYS.USER_INFO
+			console.log(
+				"AuthService: Loading stored auth from new storage system..."
 			);
 
-			if (accessToken) {
+			// 首先尝试从新的存储系统加载
+			const authData = await this.authStorage.getAuthData();
+
+			if (authData && authData.isAuthenticated && authData.accessToken) {
+				console.log(
+					"AuthService: Found auth data in new storage system"
+				);
+
 				this.authState = {
-					isAuthenticated: true,
-					accessToken,
-					refreshToken,
-					expiresAt: expiresAt ? parseInt(expiresAt) : null,
-					userInfo: userInfoStr ? JSON.parse(userInfoStr) : null,
+					isAuthenticated: authData.isAuthenticated,
+					accessToken: authData.accessToken,
+					refreshToken: authData.refreshToken || null,
+					expiresAt: authData.tokenExpiresAt || null,
+					userInfo: authData.userInfo || null,
 				};
 
-				this.httpClient.setAuthToken(accessToken);
+				this.httpClient.setAuthToken(authData.accessToken);
 
 				// Check if token needs refresh
 				if (this.isTokenExpired()) {
+					console.log(
+						"AuthService: Token expired, attempting refresh..."
+					);
 					await this.refreshTokenIfNeeded();
 				} else {
+					console.log(
+						"AuthService: Token valid, notifying authenticated status"
+					);
 					this.notifyStatusChange(AuthStatus.AUTHENTICATED);
 				}
+			} else {
+				console.log("AuthService: No stored auth data found");
 			}
 		} catch (error) {
-			console.error("Failed to load stored auth:", error);
-			// await this.clearStoredAuth();
-		}
-	}
-
-	private async storeAuthData(): Promise<void> {
-		// Store access token
-		if (this.authState.accessToken) {
-			await this.storageAdapter.setItem(
-				STORAGE_KEYS.ACCESS_TOKEN,
-				this.authState.accessToken
-			);
-		}
-
-		// Store refresh token if available
-		if (this.authState.refreshToken) {
-			await this.storageAdapter.setItem(
-				STORAGE_KEYS.REFRESH_TOKEN,
-				this.authState.refreshToken
-			);
-		}
-
-		// Store expiration time
-		if (this.authState.expiresAt) {
-			await this.storageAdapter.setItem(
-				STORAGE_KEYS.TOKEN_EXPIRES_AT,
-				this.authState.expiresAt.toString()
-			);
-		}
-
-		// Store user info if available
-		if (this.authState.userInfo) {
-			await this.storageAdapter.setItem(
-				STORAGE_KEYS.USER_INFO,
-				JSON.stringify(this.authState.userInfo)
-			);
+			console.error("AuthService: Failed to load stored auth:", error);
+			// 不再自动清除认证数据，让用户手动处理
 		}
 	}
 
 	private async storeUserInfo(userInfo: OAuthUserInfo): Promise<void> {
-		await this.storageAdapter.setItem(
-			STORAGE_KEYS.USER_INFO,
-			JSON.stringify(userInfo)
-		);
+		try {
+			console.log("AuthService: Storing user info...");
+
+			// 更新内存状态
+			this.authState.userInfo = userInfo;
+
+			// 保存到新存储系统
+			await this.authStorage.saveAuthData({
+				userInfo: userInfo,
+			});
+
+			console.log("AuthService: ✅ User info stored successfully");
+		} catch (error) {
+			console.error("AuthService: Failed to store user info:", error);
+		}
 	}
 
 	private async storeCodeVerifier(verifier: string): Promise<void> {
-		await this.storageAdapter.setItem(STORAGE_KEYS.CODE_VERIFIER, verifier);
+		// Store code verifier in memory temporarily during OAuth flow
+		this.temporaryCodeVerifier = verifier;
+		console.log("AuthService: Code verifier stored in memory");
 	}
 
 	private async getStoredCodeVerifier(): Promise<string | null> {
-		return this.storageAdapter.getItem(STORAGE_KEYS.CODE_VERIFIER);
+		// Return the temporarily stored code verifier
+		return this.temporaryCodeVerifier;
 	}
 
 	private async clearCodeVerifier(): Promise<void> {
-		await this.storageAdapter.removeItem(STORAGE_KEYS.CODE_VERIFIER);
+		// Clear the temporarily stored code verifier
+		this.temporaryCodeVerifier = null;
+		console.log("AuthService: Code verifier cleared from memory");
 	}
 
 	private async clearStoredAuth(): Promise<void> {
-		await this.storageAdapter.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
-		await this.storageAdapter.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
-		await this.storageAdapter.removeItem(STORAGE_KEYS.TOKEN_EXPIRES_AT);
-		await this.storageAdapter.removeItem(STORAGE_KEYS.USER_INFO);
-		await this.storageAdapter.removeItem(STORAGE_KEYS.CODE_VERIFIER);
-		console.log("123-012-093-0921-03 Ooer all cookies");
+		try {
+			console.log("AuthService: Clearing stored auth data...");
+
+			// 清除存储系统的数据
+			await this.authStorage.clearAuthData();
+
+			console.log("AuthService: ✅ Auth data cleared successfully");
+		} catch (error) {
+			console.error("AuthService: Failed to clear stored auth:", error);
+		}
 	}
 
 	/**
@@ -615,33 +598,20 @@ export class AuthService extends Component {
 	 */
 	public async verifyCacheIntegrity(): Promise<boolean> {
 		try {
-			console.log("AuthService: Verifying cache integrity...");
-
-			const accessToken = await this.storageAdapter.getItem(
-				STORAGE_KEYS.ACCESS_TOKEN
-			);
-			const userInfo = await this.storageAdapter.getItem(
-				STORAGE_KEYS.USER_INFO
-			);
-			const expiresAt = await this.storageAdapter.getItem(
-				STORAGE_KEYS.TOKEN_EXPIRES_AT
+			console.log(
+				"AuthService: Verifying cache integrity with new storage system..."
 			);
 
-			const cacheStatus = {
-				hasAccessToken: !!accessToken,
-				hasUserInfo: !!userInfo,
-				hasExpiresAt: !!expiresAt,
-				tokenLength: accessToken?.length || 0,
-				userEmail: userInfo ? JSON.parse(userInfo).email : null,
-			};
+			// 使用新存储系统的验证方法
+			const isValid = await this.authStorage.verifyIntegrity();
 
-			console.log("AuthService: Cache verification result:", cacheStatus);
+			// 获取存储统计信息用于日志
+			const stats = await this.authStorage.getStorageStats();
 
-			// Check if essential data is cached
-			const isValid = !!(accessToken && userInfo && expiresAt);
+			console.log("AuthService: Storage stats:", stats);
 			console.log(
 				"AuthService: Cache integrity:",
-				isValid ? "VALID" : "INVALID"
+				isValid ? "✅ VALID" : "❌ INVALID"
 			);
 
 			return isValid;

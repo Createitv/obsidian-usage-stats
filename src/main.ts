@@ -6,11 +6,11 @@ import { UsageStatsSettingsTab } from "./components/SettingsTab";
 import {
 	DEFAULT_SETTINGS,
 	UsageStatsSettings,
-	TrackingState,
 	DailyStats,
+	TrackingState,
 	TrackingSession,
 } from "./core/types";
-import { TimeTracker } from "./core/TimeTracker";
+// import { TimeTracker } from "./core/TimeTracker";
 import { DataManager } from "./storage/DataManager";
 import { StatusBarManager } from "./ui/StatusBarManager";
 import { t, i18n } from "./i18n/i18n";
@@ -21,83 +21,29 @@ import {
 	UsageDataPayload,
 	OAuthUserInfo,
 } from "./api";
+import { AuthStorage } from "./storage/AuthStorage";
 
 export default class UsageStatsPlugin extends Plugin {
 	settings: UsageStatsSettings;
 	private commandManager: UsageStatsCommandManager;
-	private timeTracker: TimeTracker;
+	// private timeTracker: TimeTracker;
 	private dataManager: DataManager;
 	private statusBarManager: StatusBarManager;
 	private statusBarEl: HTMLElement;
+	private authStorage: AuthStorage;
 	private authService: AuthService;
 	private apiService: ApiService;
-	private devSaveTimer?: NodeJS.Timeout;
+	// private devSaveTimer?: NodeJS.Timeout; // 已删除开发模式自动保存功能
 
 	async onload() {
 		await this.loadSettings();
 
-		// Initialize auth and API services with enhanced storage adapter
-		const storageAdapter = {
-			getItem: async (key: string) => {
-				try {
-					const authData = await this.loadData();
-					const value = authData?.authStorage?.[key] || null;
-					return value;
-				} catch (error) {
-					console.error(
-						`StorageAdapter: Failed to get ${key}:`,
-						error
-					);
-					return null;
-				}
-			},
-			setItem: async (key: string, value: string) => {
-				try {
-					const currentData = (await this.loadData()) || {};
-					if (!currentData.authStorage) {
-						currentData.authStorage = {};
-					}
-					currentData.authStorage[key] = value;
-					await this.saveData(currentData);
+		// Initialize new AuthStorage system
+		console.log("Plugin: Initializing AuthStorage system...");
+		this.authStorage = new AuthStorage(this);
 
-					// Verify the data was saved
-					const savedData = await this.loadData();
-					const verified = savedData?.authStorage?.[key] === value;
-					console.log(
-						`StorageAdapter: Set ${key}:`,
-						verified ? "✅" : "❌"
-					);
-
-					if (!verified) {
-						console.error(
-							`StorageAdapter: Failed to verify ${key} was saved`
-						);
-					}
-				} catch (error) {
-					console.error(
-						`StorageAdapter: Failed to set ${key}:`,
-						error
-					);
-				}
-			},
-			removeItem: async (key: string) => {
-				try {
-					const currentData = (await this.loadData()) || {};
-					if (currentData.authStorage) {
-						delete currentData.authStorage[key];
-						await this.saveData(currentData);
-						console.log(`StorageAdapter: Removed ${key}`);
-					}
-				} catch (error) {
-					console.error(
-						`StorageAdapter: Failed to remove ${key}:`,
-						error
-					);
-				}
-			},
-		};
-
-		this.authService = new AuthService(storageAdapter);
+		// Initialize AuthService with new storage system only
+		this.authService = new AuthService(this.authStorage);
 		this.addChild(this.authService);
 		await this.authService.onload(); // 确保AuthService初始化完成
 
@@ -111,33 +57,9 @@ export default class UsageStatsPlugin extends Plugin {
 			isAuthServiceAuth
 		);
 
-		// Check if we have any stored auth data
-		const storedData = await this.loadData();
-		const hasStoredAuth = !!storedData?.authStorage?.oauth_access_token;
-		console.log("Plugin startup: Has stored auth data:", hasStoredAuth);
-
-		// If we have stored auth but AuthService doesn't know about it, attempt recovery
-		if (hasStoredAuth && !isAuthServiceAuth) {
-			console.log("Plugin startup: 🔄 Attempting auth state recovery...");
-
-			try {
-				// Force AuthService to reload stored auth
-				await this.authService.loadStoredAuth();
-				const recoveredAuth = this.authService.isAuthenticated();
-
-				if (recoveredAuth) {
-					console.log(
-						"Plugin startup: ✅ Auth state recovered successfully!"
-					);
-				} else {
-					console.warn(
-						"Plugin startup: ❌ Auth state recovery failed"
-					);
-				}
-			} catch (error) {
-				console.error("Plugin startup: Auth recovery error:", error);
-			}
-		}
+		// Check if we have any stored auth data in the new storage format
+		const authStorageStats = await this.authStorage.getStorageStats();
+		console.log("Plugin startup: Auth storage stats:", authStorageStats);
 
 		// Final verification
 		if (this.authService.isAuthenticated()) {
@@ -180,12 +102,12 @@ export default class UsageStatsPlugin extends Plugin {
 		this.dataManager = new DataManager(this.app.vault, this.settings);
 		this.addChild(this.dataManager);
 
-		this.timeTracker = new TimeTracker(
-			this.app,
-			this.app.workspace,
-			this.settings
-		);
-		this.addChild(this.timeTracker);
+		// this.timeTracker = new TimeTracker(
+		// 	this.app,
+		// 	this.app.workspace,
+		// 	this.settings
+		// );
+		// this.addChild(this.timeTracker);
 
 		// Set up status bar
 		this.statusBarEl = this.addStatusBarItem();
@@ -195,7 +117,7 @@ export default class UsageStatsPlugin extends Plugin {
 		);
 		this.addChild(this.statusBarManager);
 
-		// Initialize command manager
+		// Initialize commands manager
 		this.commandManager = new UsageStatsCommandManager(this);
 		this.commandManager.registerCommands();
 
@@ -298,6 +220,66 @@ export default class UsageStatsPlugin extends Plugin {
 			},
 		});
 
+		// Add command to display complete token information
+		this.addCommand({
+			id: "debug-token-info",
+			name: "Debug: Show Complete Token Information",
+			callback: async () => {
+				console.log("[UsageStats] === Complete Token Information ===");
+
+				try {
+					// Get token details from storage
+					const tokenInfo = await this.authStorage.getTokenInfo();
+					const storageStats =
+						await this.authStorage.getStorageStats();
+
+					if (tokenInfo) {
+						console.log("🔑 Token Details:", {
+							tokenType: tokenInfo.tokenType,
+							scope: tokenInfo.scope,
+							hasAccessToken: !!tokenInfo.accessToken,
+							hasRefreshToken: !!tokenInfo.refreshToken,
+							expiresAt: tokenInfo.expiresAt?.toISOString(),
+							isExpired: tokenInfo.isExpired,
+							accessTokenLength:
+								tokenInfo.accessToken?.length || 0,
+							refreshTokenLength:
+								tokenInfo.refreshToken?.length || 0,
+						});
+
+						console.log("📊 Storage Stats:", storageStats);
+
+						if (tokenInfo.originalResponse) {
+							console.log("📄 Original Token Response:", {
+								token_type:
+									tokenInfo.originalResponse.token_type,
+								scope: tokenInfo.originalResponse.scope,
+								expires_in:
+									tokenInfo.originalResponse.expires_in,
+								received_at: new Date(
+									tokenInfo.originalResponse.received_at
+								).toISOString(),
+							});
+						}
+
+						new Notice(
+							`Token Type: ${tokenInfo.tokenType}, Scope: ${
+								tokenInfo.scope
+							}, Expires: ${tokenInfo.expiresAt?.toLocaleString()}`
+						);
+					} else {
+						console.log("❌ No token information found");
+						new Notice("❌ No token information found");
+					}
+				} catch (error) {
+					console.error("Failed to get token info:", error);
+					new Notice("❌ Failed to get token info - check console");
+				}
+			},
+		});
+
+		// 注意：模拟token测试命令已删除，JSON存储功能已经稳定
+
 		// Register view
 		this.registerView(
 			USAGE_STATS_VIEW_TYPE,
@@ -328,43 +310,19 @@ export default class UsageStatsPlugin extends Plugin {
 		// Clean up sync interval
 		this.stopAutoSync();
 
-		// Clean up dev auto-save
-		this.stopDevAutoSave();
-
 		// Clean up view
 		this.app.workspace.detachLeavesOfType(USAGE_STATS_VIEW_TYPE);
 		// console.log("Usage Statistics Plugin unloaded");
 	}
 
 	private setupEventListeners(): void {
-		// Listen to tracking events from TimeTracker
-		this.timeTracker.addEventListener((event) => {
-			switch (event.type) {
-				case "start":
-				case "stop":
-				case "pause":
-				case "resume":
-				case "active":
-				case "idle":
-					this.statusBarManager.updateTrackingState(
-						this.timeTracker.getState()
-					);
-					break;
-				case "file_change":
-					if (event.data?.entry) {
-						this.dataManager.addTimeEntry(event.data.entry);
-					}
-					this.statusBarManager.updateTrackingState(
-						this.timeTracker.getState()
-					);
-					break;
-			}
-		});
-
 		// Listen to status bar quick actions
 		window.addEventListener("usage-stats-action", (event: CustomEvent) => {
 			this.commandManager.handleStatusBarAction(event.detail.action);
 		});
+
+		// TODO: 重新实现TimeTracker时，恢复事件监听
+		// this.timeTracker.addEventListener((event) => { ... });
 	}
 
 	// Settings management
@@ -468,38 +426,29 @@ export default class UsageStatsPlugin extends Plugin {
 		}
 	}
 
-	// Tracking control methods
-	public startTracking(): void {
-		this.timeTracker.startTracking();
-	}
-
-	public stopTracking(): void {
-		this.timeTracker.stopTracking();
-	}
-
-	public pauseTracking(): void {
-		this.timeTracker.pauseTracking();
-	}
-
-	public resumeTracking(): void {
-		this.timeTracker.resumeTracking();
-	}
-
 	public isTrackingActive(): boolean {
-		return this.timeTracker.isTracking();
+		// TODO: 重新实现TimeTracker时恢复
+		return false; // this.timeTracker.isTracking();
 	}
 
 	public isTrackingPaused(): boolean {
-		const state = this.timeTracker.getState();
-		return state.isPaused;
+		// TODO: 重新实现TimeTracker时恢复
+		return false; // const state = this.timeTracker.getState(); return state.isPaused;
 	}
 
 	public getTrackingState(): TrackingState {
-		return this.timeTracker.getState();
+		// TODO: 重新实现TimeTracker时恢复
+		return {
+			isTracking: false,
+			lastActiveTime: Date.now(),
+			totalTodayTime: 0,
+			isPaused: false,
+		}; // this.timeTracker.getState();
 	}
 
 	public getCurrentSession(): TrackingSession | undefined {
-		return this.timeTracker.getCurrentSession();
+		// TODO: 重新实现TimeTracker时恢复
+		return undefined; // this.timeTracker.getCurrentSession();
 	}
 
 	// Data access methods
@@ -512,13 +461,16 @@ export default class UsageStatsPlugin extends Plugin {
 	}
 
 	public async resetTodayData(): Promise<void> {
-		// Implementation would reset today's data
+		// TODO: 实现重置今日数据功能
 		new Notice("Reset today data feature not yet implemented");
 	}
 
 	public async resetAllData(): Promise<void> {
-		// Implementation would reset all data
-		new Notice("Reset all data feature not yet implemented");
+		// TODO: 实现重置所有数据功能
+		// await this.dataManager.resetAllData();
+		// 同时清除认证数据
+		await this.authStorage.clearAuthData();
+		new Notice("Authentication data has been reset");
 	}
 
 	public async cleanupOldData(): Promise<void> {
@@ -530,21 +482,7 @@ export default class UsageStatsPlugin extends Plugin {
 	}
 
 	public getDataFilePath(): string {
-		return "/.obsidian/plugins/obsidian-usage-stats/data.json";
-	}
-
-	// Settings update methods
-	public updateTracking(): void {
-		this.timeTracker.updateSettings(this.settings);
-		if (this.settings.enableTracking) {
-			this.timeTracker.startTracking();
-		} else {
-			this.timeTracker.stopTracking();
-		}
-	}
-
-	public updateTrackerSettings(): void {
-		this.timeTracker.updateSettings(this.settings);
+		return "/.obsidian/plugins/obsidian-usage-stats/tracked_data.json";
 	}
 
 	public updateDataManagerSettings(): void {
@@ -706,37 +644,8 @@ export default class UsageStatsPlugin extends Plugin {
 		}
 	}
 
-	private async updateUserInfoInSettings(): Promise<void> {
-		const userInfo = this.authService.getUserInfo();
-		const isAuth = this.authService.isAuthenticated();
-
-		console.log("Updating user info in settings:", {
-			userInfo,
-			isAuthenticated: isAuth,
-		});
-
-		if (userInfo && isAuth) {
-			this.settings.isAuthenticated = true;
-			this.settings.userEmail = userInfo.email;
-			this.settings.userNickname = userInfo.nickname || userInfo.email;
-
-			await this.saveSettings();
-
-			console.log("User info updated in settings:", {
-				email: userInfo.email,
-				nickname: userInfo.nickname || userInfo.email,
-				settingsUpdated: true,
-			});
-		} else {
-			console.warn(
-				"Failed to update user info - missing userInfo or not authenticated"
-			);
-		}
-	}
-
 	private refreshSettingsPage(): void {
 		// Refresh the settings page if it's currently open
-		console.log("Attempting to refresh settings page...");
 
 		// Try to find and refresh the settings tab directly
 		try {
@@ -773,6 +682,45 @@ export default class UsageStatsPlugin extends Plugin {
 
 	public getUserInfo(): OAuthUserInfo | null {
 		return this.authService.getUserInfo();
+	}
+
+	// 公共方法：获取 AuthService 实例
+	public getAuthService() {
+		return this.authService;
+	}
+
+	// 公共方法：获取 AuthStorage 实例
+	public getAuthStorage() {
+		return this.authStorage;
+	}
+
+	// 公共方法：更新设置中的用户信息
+	public async updateUserInfoInSettings(): Promise<void> {
+		const userInfo = this.authService.getUserInfo();
+		const isAuth = this.authService.isAuthenticated();
+
+		console.log("Updating user info in settings:", {
+			userInfo,
+			isAuthenticated: isAuth,
+		});
+
+		if (userInfo && isAuth) {
+			this.settings.isAuthenticated = true;
+			this.settings.userEmail = userInfo.email;
+			this.settings.userNickname = userInfo.nickname || userInfo.email;
+
+			await this.saveSettings();
+
+			console.log("User info updated in settings:", {
+				email: userInfo.email,
+				nickname: userInfo.nickname || userInfo.email,
+				settingsUpdated: true,
+			});
+		} else {
+			console.warn(
+				"Failed to update user info - missing userInfo or not authenticated"
+			);
+		}
 	}
 
 	public async startAuthentication(): Promise<void> {
@@ -823,14 +771,6 @@ export default class UsageStatsPlugin extends Plugin {
 		if (this.syncIntervalId) {
 			clearInterval(this.syncIntervalId);
 			this.syncIntervalId = undefined;
-		}
-	}
-
-	private stopDevAutoSave(): void {
-		if (this.devSaveTimer) {
-			clearInterval(this.devSaveTimer);
-			this.devSaveTimer = undefined;
-			console.log("Dev auto-save: Stopped");
 		}
 	}
 
