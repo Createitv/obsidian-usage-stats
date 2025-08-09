@@ -1,0 +1,529 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": 1754643915462,
+  "dailyStats": {
+    "2025-08-08": {
+      "date": "2025-08-08",
+      "totalTime": 1471436,
+      "activeTime": 339434,
+      "idleTime": 1132002,
+      "entries": [
+        {
+          "id": "session-1754642439682-gapdyicsl",
+          "startTime": 1754642439682,
+          "endTime": 1754642460544,
+          "duration": 20862,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754642439682-gapdyicsl"
+          }
+        },
+        {
+          "id": "session-1754642460623-8md8a3p7q",
+          "startTime": 1754642460623,
+          "endTime": 1754642467829,
+          "duration": 7206,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754642460623-8md8a3p7q"
+          }
+        },
+        {
+          "id": "session-1754642468985-9qy7lkzgb",
+          "startTime": 1754642468985,
+          "endTime": 1754642475642,
+          "duration": 6657,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754642468985-9qy7lkzgb"
+          }
+        },
+        {
+          "id": "session-1754642475675-rr5n1sqsc",
+          "startTime": 1754642475675,
+          "endTime": 1754643462946,
+          "duration": 987271,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754642475675-rr5n1sqsc"
+          }
+        },
+        {
+          "id": "session-1754643464147-f6zwyud1z",
+          "startTime": 1754643464147,
+          "endTime": 1754643542782,
+          "duration": 78635,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754643464147-f6zwyud1z"
+          }
+        },
+        {
+          "id": "session-1754643542871-tcj8trtuq",
+          "startTime": 1754643542871,
+          "endTime": 1754643560796,
+          "duration": 17925,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643542871-tcj8trtuq"
+          }
+        },
+        {
+          "id": "session-1754643560893-p9fq88m8e",
+          "startTime": 1754643560893,
+          "endTime": 1754643577571,
+          "duration": 16678,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643560893-p9fq88m8e"
+          }
+        },
+        {
+          "id": "session-1754643577676-yqnds7kj6",
+          "startTime": 1754643577676,
+          "endTime": 1754643593157,
+          "duration": 15481,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643577676-yqnds7kj6"
+          }
+        },
+        {
+          "id": "session-1754643593215-pnp562s87",
+          "startTime": 1754643593215,
+          "endTime": 1754643617562,
+          "duration": 24347,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643593215-pnp562s87"
+          }
+        },
+        {
+          "id": "session-1754643617763-hh2qqoexo",
+          "startTime": 1754643617763,
+          "endTime": 1754643633706,
+          "duration": 15943,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643617763-hh2qqoexo"
+          }
+        },
+        {
+          "id": "session-1754643633788-g8k2c81wx",
+          "startTime": 1754643633788,
+          "endTime": 1754643650507,
+          "duration": 16719,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754643633788-g8k2c81wx"
+          }
+        },
+        {
+          "id": "session-1754643650623-1mo17bwdv",
+          "startTime": 1754643650623,
+          "endTime": 1754643685404,
+          "duration": 34781,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643650623-1mo17bwdv"
+          }
+        },
+        {
+          "id": "session-1754643685452-yzpaqq5ac",
+          "startTime": 1754643685452,
+          "endTime": 1754643701700,
+          "duration": 16248,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643685452-yzpaqq5ac"
+          }
+        },
+        {
+          "id": "session-1754643701759-roevqgmon",
+          "startTime": 1754643701759,
+          "endTime": 1754643717908,
+          "duration": 16149,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643701759-roevqgmon"
+          }
+        },
+        {
+          "id": "session-1754643718019-f39phr876",
+          "startTime": 1754643718019,
+          "endTime": 1754643734363,
+          "duration": 16344,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643718019-f39phr876"
+          }
+        },
+        {
+          "id": "session-1754643734440-fcriij4vi",
+          "startTime": 1754643734440,
+          "endTime": 1754643751235,
+          "duration": 16795,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754643734440-fcriij4vi"
+          }
+        },
+        {
+          "id": "session-1754643751309-q20xtr332",
+          "startTime": 1754643751309,
+          "endTime": 1754643767709,
+          "duration": 16400,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643751309-q20xtr332"
+          }
+        },
+        {
+          "id": "session-1754643767802-hlr5c7rr6",
+          "startTime": 1754643767802,
+          "endTime": 1754643782872,
+          "duration": 15070,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643767802-hlr5c7rr6"
+          }
+        },
+        {
+          "id": "session-1754643782944-ser89pa13",
+          "startTime": 1754643782944,
+          "endTime": 1754643788690,
+          "duration": 5746,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643782944-ser89pa13"
+          }
+        },
+        {
+          "id": "session-1754643788725-zpm3s63eh",
+          "startTime": 1754643788725,
+          "endTime": 1754643797072,
+          "duration": 8347,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643788725-zpm3s63eh"
+          }
+        },
+        {
+          "id": "session-1754643797133-ifx7zu7rx",
+          "startTime": 1754643797133,
+          "endTime": 1754643799721,
+          "duration": 2588,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643797133-ifx7zu7rx"
+          }
+        },
+        {
+          "id": "session-1754643799804-m0hu6smcm",
+          "startTime": 1754643799804,
+          "endTime": 1754643810681,
+          "duration": 10877,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643799804-m0hu6smcm"
+          }
+        },
+        {
+          "id": "session-1754643810682-iwmw7d72x",
+          "startTime": 1754643810682,
+          "endTime": 1754643811492,
+          "duration": 810,
+          "filePath": "Apple Notes/大西线/大西线.md",
+          "fileName": "大西线.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643810682-iwmw7d72x"
+          }
+        },
+        {
+          "id": "session-1754643811492-9dqzpmm1c",
+          "startTime": 1754643811492,
+          "endTime": 1754643815442,
+          "duration": 3950,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643811492-9dqzpmm1c"
+          }
+        },
+        {
+          "id": "session-1754643815475-tbt6xabbj",
+          "startTime": 1754643815475,
+          "endTime": 1754643831098,
+          "duration": 15623,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643815475-tbt6xabbj"
+          }
+        },
+        {
+          "id": "session-1754643831145-1mc7nelep",
+          "startTime": 1754643831145,
+          "endTime": 1754643852236,
+          "duration": 21091,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643831145-1mc7nelep"
+          }
+        },
+        {
+          "id": "session-1754643852275-lq2m5y6i5",
+          "startTime": 1754643852275,
+          "endTime": 1754643865392,
+          "duration": 13117,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643852275-lq2m5y6i5"
+          }
+        },
+        {
+          "id": "session-1754643865428-n1deye9du",
+          "startTime": 1754643865428,
+          "endTime": 1754643881041,
+          "duration": 15613,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643865428-n1deye9du"
+          }
+        },
+        {
+          "id": "session-1754643881079-2nh41owys",
+          "startTime": 1754643881079,
+          "endTime": 1754643892799,
+          "duration": 11720,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754643881079-2nh41owys"
+          }
+        },
+        {
+          "id": "session-1754643892924-vkotfamp7",
+          "startTime": 1754643892924,
+          "endTime": 1754643909732,
+          "duration": 16808,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643892924-vkotfamp7"
+          }
+        },
+        {
+          "id": "session-1754643909823-tfuoprrbt",
+          "startTime": 1754643909823,
+          "endTime": 1754643915458,
+          "duration": 5635,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643909823-tfuoprrbt"
+          }
+        }
+      ],
+      "categoryStats": [
+        {
+          "category": "大西线",
+          "totalTime": 1471436,
+          "percentage": 100,
+          "count": 31
+        }
+      ],
+      "fileStats": [
+        {
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "totalTime": 1470626,
+          "percentage": 99.94495173422425,
+          "lastAccessed": 1754643915458,
+          "accessCount": 30
+        },
+        {
+          "filePath": "Apple Notes/大西线/大西线.md",
+          "fileName": "大西线.md",
+          "totalTime": 810,
+          "percentage": 0.0550482657757456,
+          "lastAccessed": 1754643811492,
+          "accessCount": 1
+        }
+      ],
+      "tagStats": []
+    }
+  },
+  "settings": {
+    "enableTracking": true,
+    "enableView": true,
+    "language": "en",
+    "idleThreshold": 300,
+    "autoSaveInterval": 30,
+    "trackInactiveTime": false,
+    "enableTagTracking": true,
+    "enableFolderTracking": true,
+    "trackedFolders": [],
+    "excludedFolders": [
+      ".trash",
+      ".obsidian"
+    ],
+    "defaultChartType": "pie",
+    "timeFormat": "24h",
+    "showStatusBar": true,
+    "statusBarFormat": "{{time}} - {{category}}",
+    "dataRetentionDays": 365,
+    "enableDataExport": true,
+    "autoBackup": true,
+    "enableSyncToCloud": false
+  }
+}

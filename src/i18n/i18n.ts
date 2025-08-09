@@ -14,9 +14,19 @@ export class I18n {
 	protected flatTranslations: Record<string, Record<string, string>> = {};
 
 	private constructor() {
-		const lang = getLanguage();
+		// First check for saved language preference
+		const savedLang = window.localStorage.getItem("language");
+		const systemLang = getLanguage();
 
-		this.currentLocale = this.translations[lang] ? lang : "en";
+		// Priority: saved preference > system language > fallback to 'en'
+		let targetLang = "en";
+		if (savedLang && this.translations[savedLang]) {
+			targetLang = savedLang;
+		} else if (this.translations[systemLang]) {
+			targetLang = systemLang;
+		}
+
+		this.currentLocale = targetLang;
 		this.flattenTranslations();
 	}
 
@@ -69,10 +79,13 @@ export class I18n {
 		if (this.translations[locale]) {
 			this.currentLocale = locale;
 			window.localStorage.setItem("language", locale);
+			// Re-flatten translations for the new locale
+			this.flattenTranslations();
 		} else {
 			console.warn(`Locale not found: ${locale}, falling back to 'en'`);
 			this.currentLocale = "en";
 			window.localStorage.setItem("language", "en");
+			this.flattenTranslations();
 		}
 	}
 

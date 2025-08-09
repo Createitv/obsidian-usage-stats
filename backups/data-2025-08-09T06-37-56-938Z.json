@@ -1,0 +1,3750 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": 1754721476919,
+  "dailyStats": {
+    "2025-08-08": {
+      "date": "2025-08-08",
+      "totalTime": 2167167,
+      "activeTime": 586913,
+      "idleTime": 1580254,
+      "entries": [
+        {
+          "id": "session-1754642439682-gapdyicsl",
+          "startTime": 1754642439682,
+          "endTime": 1754642460544,
+          "duration": 20862,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754642439682-gapdyicsl"
+          }
+        },
+        {
+          "id": "session-1754642460623-8md8a3p7q",
+          "startTime": 1754642460623,
+          "endTime": 1754642467829,
+          "duration": 7206,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754642460623-8md8a3p7q"
+          }
+        },
+        {
+          "id": "session-1754642468985-9qy7lkzgb",
+          "startTime": 1754642468985,
+          "endTime": 1754642475642,
+          "duration": 6657,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754642468985-9qy7lkzgb"
+          }
+        },
+        {
+          "id": "session-1754642475675-rr5n1sqsc",
+          "startTime": 1754642475675,
+          "endTime": 1754643462946,
+          "duration": 987271,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754642475675-rr5n1sqsc"
+          }
+        },
+        {
+          "id": "session-1754643464147-f6zwyud1z",
+          "startTime": 1754643464147,
+          "endTime": 1754643542782,
+          "duration": 78635,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754643464147-f6zwyud1z"
+          }
+        },
+        {
+          "id": "session-1754643542871-tcj8trtuq",
+          "startTime": 1754643542871,
+          "endTime": 1754643560796,
+          "duration": 17925,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643542871-tcj8trtuq"
+          }
+        },
+        {
+          "id": "session-1754643560893-p9fq88m8e",
+          "startTime": 1754643560893,
+          "endTime": 1754643577571,
+          "duration": 16678,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643560893-p9fq88m8e"
+          }
+        },
+        {
+          "id": "session-1754643577676-yqnds7kj6",
+          "startTime": 1754643577676,
+          "endTime": 1754643593157,
+          "duration": 15481,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643577676-yqnds7kj6"
+          }
+        },
+        {
+          "id": "session-1754643593215-pnp562s87",
+          "startTime": 1754643593215,
+          "endTime": 1754643617562,
+          "duration": 24347,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643593215-pnp562s87"
+          }
+        },
+        {
+          "id": "session-1754643617763-hh2qqoexo",
+          "startTime": 1754643617763,
+          "endTime": 1754643633706,
+          "duration": 15943,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643617763-hh2qqoexo"
+          }
+        },
+        {
+          "id": "session-1754643633788-g8k2c81wx",
+          "startTime": 1754643633788,
+          "endTime": 1754643650507,
+          "duration": 16719,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754643633788-g8k2c81wx"
+          }
+        },
+        {
+          "id": "session-1754643650623-1mo17bwdv",
+          "startTime": 1754643650623,
+          "endTime": 1754643685404,
+          "duration": 34781,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643650623-1mo17bwdv"
+          }
+        },
+        {
+          "id": "session-1754643685452-yzpaqq5ac",
+          "startTime": 1754643685452,
+          "endTime": 1754643701700,
+          "duration": 16248,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643685452-yzpaqq5ac"
+          }
+        },
+        {
+          "id": "session-1754643701759-roevqgmon",
+          "startTime": 1754643701759,
+          "endTime": 1754643717908,
+          "duration": 16149,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643701759-roevqgmon"
+          }
+        },
+        {
+          "id": "session-1754643718019-f39phr876",
+          "startTime": 1754643718019,
+          "endTime": 1754643734363,
+          "duration": 16344,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643718019-f39phr876"
+          }
+        },
+        {
+          "id": "session-1754643734440-fcriij4vi",
+          "startTime": 1754643734440,
+          "endTime": 1754643751235,
+          "duration": 16795,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754643734440-fcriij4vi"
+          }
+        },
+        {
+          "id": "session-1754643751309-q20xtr332",
+          "startTime": 1754643751309,
+          "endTime": 1754643767709,
+          "duration": 16400,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643751309-q20xtr332"
+          }
+        },
+        {
+          "id": "session-1754643767802-hlr5c7rr6",
+          "startTime": 1754643767802,
+          "endTime": 1754643782872,
+          "duration": 15070,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643767802-hlr5c7rr6"
+          }
+        },
+        {
+          "id": "session-1754643782944-ser89pa13",
+          "startTime": 1754643782944,
+          "endTime": 1754643788690,
+          "duration": 5746,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643782944-ser89pa13"
+          }
+        },
+        {
+          "id": "session-1754643788725-zpm3s63eh",
+          "startTime": 1754643788725,
+          "endTime": 1754643797072,
+          "duration": 8347,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643788725-zpm3s63eh"
+          }
+        },
+        {
+          "id": "session-1754643797133-ifx7zu7rx",
+          "startTime": 1754643797133,
+          "endTime": 1754643799721,
+          "duration": 2588,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643797133-ifx7zu7rx"
+          }
+        },
+        {
+          "id": "session-1754643799804-m0hu6smcm",
+          "startTime": 1754643799804,
+          "endTime": 1754643810681,
+          "duration": 10877,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643799804-m0hu6smcm"
+          }
+        },
+        {
+          "id": "session-1754643810682-iwmw7d72x",
+          "startTime": 1754643810682,
+          "endTime": 1754643811492,
+          "duration": 810,
+          "filePath": "Apple Notes/大西线/大西线.md",
+          "fileName": "大西线.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643810682-iwmw7d72x"
+          }
+        },
+        {
+          "id": "session-1754643811492-9dqzpmm1c",
+          "startTime": 1754643811492,
+          "endTime": 1754643815442,
+          "duration": 3950,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643811492-9dqzpmm1c"
+          }
+        },
+        {
+          "id": "session-1754643815475-tbt6xabbj",
+          "startTime": 1754643815475,
+          "endTime": 1754643831098,
+          "duration": 15623,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643815475-tbt6xabbj"
+          }
+        },
+        {
+          "id": "session-1754643831145-1mc7nelep",
+          "startTime": 1754643831145,
+          "endTime": 1754643852236,
+          "duration": 21091,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643831145-1mc7nelep"
+          }
+        },
+        {
+          "id": "session-1754643852275-lq2m5y6i5",
+          "startTime": 1754643852275,
+          "endTime": 1754643865392,
+          "duration": 13117,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643852275-lq2m5y6i5"
+          }
+        },
+        {
+          "id": "session-1754643865428-n1deye9du",
+          "startTime": 1754643865428,
+          "endTime": 1754643881041,
+          "duration": 15613,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643865428-n1deye9du"
+          }
+        },
+        {
+          "id": "session-1754643881079-2nh41owys",
+          "startTime": 1754643881079,
+          "endTime": 1754643892799,
+          "duration": 11720,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754643881079-2nh41owys"
+          }
+        },
+        {
+          "id": "session-1754643892924-vkotfamp7",
+          "startTime": 1754643892924,
+          "endTime": 1754643909732,
+          "duration": 16808,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643892924-vkotfamp7"
+          }
+        },
+        {
+          "id": "session-1754643909823-tfuoprrbt",
+          "startTime": 1754643909823,
+          "endTime": 1754643915458,
+          "duration": 5635,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643909823-tfuoprrbt"
+          }
+        },
+        {
+          "id": "session-1754643915526-raee7jqk0",
+          "startTime": 1754643915526,
+          "endTime": 1754643937609,
+          "duration": 22083,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643915526-raee7jqk0"
+          }
+        },
+        {
+          "id": "session-1754643937702-fmxsx0bnx",
+          "startTime": 1754643937702,
+          "endTime": 1754643949306,
+          "duration": 11604,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643937702-fmxsx0bnx"
+          }
+        },
+        {
+          "id": "session-1754643949406-dclwsty63",
+          "startTime": 1754643949406,
+          "endTime": 1754643956134,
+          "duration": 6728,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643949406-dclwsty63"
+          }
+        },
+        {
+          "id": "session-1754643956192-a2j1sner9",
+          "startTime": 1754643956192,
+          "endTime": 1754643958018,
+          "duration": 1826,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643956192-a2j1sner9"
+          }
+        },
+        {
+          "id": "session-1754643958057-hnialsgri",
+          "startTime": 1754643958057,
+          "endTime": 1754643974831,
+          "duration": 16774,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643958057-hnialsgri"
+          }
+        },
+        {
+          "id": "session-1754643974928-3fk4qr45u",
+          "startTime": 1754643974928,
+          "endTime": 1754643982373,
+          "duration": 7445,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643974928-3fk4qr45u"
+          }
+        },
+        {
+          "id": "session-1754643982439-h90hssvw5",
+          "startTime": 1754643982439,
+          "endTime": 1754644020146,
+          "duration": 37707,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754643982439-h90hssvw5"
+          }
+        },
+        {
+          "id": "session-1754644020225-e78s3tj6x",
+          "startTime": 1754644020225,
+          "endTime": 1754644070275,
+          "duration": 50050,
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754644020225-e78s3tj6x"
+          }
+        },
+        {
+          "id": "session-1754644070276-3vpiup2o5",
+          "startTime": 1754644070276,
+          "endTime": 1754644070452,
+          "duration": 176,
+          "filePath": "Apple Notes/大西线/攻略.md",
+          "fileName": "攻略.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754644070276-3vpiup2o5"
+          }
+        },
+        {
+          "id": "session-1754644070472-u6uu3ounj",
+          "startTime": 1754644070472,
+          "endTime": 1754644075158,
+          "duration": 4686,
+          "filePath": "Apple Notes/大西线/攻略.md",
+          "fileName": "攻略.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754644070472-u6uu3ounj"
+          }
+        },
+        {
+          "id": "session-1754644485055-rf68pfg2x",
+          "startTime": 1754644485055,
+          "endTime": 1754644495347,
+          "duration": 10292,
+          "filePath": "Apple Notes/大西线/notion.md",
+          "fileName": "notion.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754644485055-rf68pfg2x"
+          }
+        },
+        {
+          "id": "session-1754644495407-vb7mm0xmh",
+          "startTime": 1754644495407,
+          "endTime": 1754644570047,
+          "duration": 74640,
+          "filePath": "Apple Notes/大西线/notion.md",
+          "fileName": "notion.md",
+          "folderPath": "Apple Notes/大西线",
+          "tags": [],
+          "category": "大西线",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754644495407-vb7mm0xmh"
+          }
+        },
+        {
+          "id": "session-1754644570048-oktcepftw",
+          "startTime": 1754644570048,
+          "endTime": 1754644925848,
+          "duration": 355800,
+          "filePath": "2025-07-23.md",
+          "fileName": "2025-07-23.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754644570048-oktcepftw"
+          }
+        },
+        {
+          "id": "session-1754644925937-jxffsswyj",
+          "startTime": 1754644925937,
+          "endTime": 1754644958462,
+          "duration": 32525,
+          "filePath": "2025-07-23.md",
+          "fileName": "2025-07-23.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754644925937-jxffsswyj"
+          }
+        },
+        {
+          "id": "session-1754644958521-cnkia9403",
+          "startTime": 1754644958521,
+          "endTime": 1754644977560,
+          "duration": 19039,
+          "filePath": "2025-07-23.md",
+          "fileName": "2025-07-23.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754644958521-cnkia9403"
+          }
+        },
+        {
+          "id": "session-1754644977740-zf74lrl6g",
+          "startTime": 1754644977740,
+          "endTime": 1754645008336,
+          "duration": 30596,
+          "filePath": "2025-07-23.md",
+          "fileName": "2025-07-23.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754644977740-zf74lrl6g"
+          }
+        },
+        {
+          "id": "session-1754645008388-ihivsmqzh",
+          "startTime": 1754645008388,
+          "endTime": 1754645022148,
+          "duration": 13760,
+          "filePath": "2025-07-23.md",
+          "fileName": "2025-07-23.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754645008388-ihivsmqzh"
+          }
+        }
+      ],
+      "categoryStats": [
+        {
+          "category": "大西线",
+          "totalTime": 1715447,
+          "percentage": 79.15619793029333,
+          "count": 43
+        },
+        {
+          "category": "/",
+          "totalTime": 451720,
+          "percentage": 20.843802069706673,
+          "count": 5
+        }
+      ],
+      "fileStats": [
+        {
+          "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+          "fileName": "电信电缆沟规划图_2025.md",
+          "totalTime": 1624843,
+          "percentage": 74.97544028678917,
+          "lastAccessed": 1754644070275,
+          "accessCount": 38
+        },
+        {
+          "filePath": "Apple Notes/大西线/大西线.md",
+          "fileName": "大西线.md",
+          "totalTime": 810,
+          "percentage": 0.03737598440729303,
+          "lastAccessed": 1754643811492,
+          "accessCount": 1
+        },
+        {
+          "filePath": "Apple Notes/大西线/攻略.md",
+          "fileName": "攻略.md",
+          "totalTime": 4862,
+          "percentage": 0.22434819282501073,
+          "lastAccessed": 1754644075158,
+          "accessCount": 2
+        },
+        {
+          "filePath": "Apple Notes/大西线/notion.md",
+          "fileName": "notion.md",
+          "totalTime": 84932,
+          "percentage": 3.9190334662718658,
+          "lastAccessed": 1754644570047,
+          "accessCount": 2
+        },
+        {
+          "filePath": "2025-07-23.md",
+          "fileName": "2025-07-23.md",
+          "totalTime": 451720,
+          "percentage": 20.843802069706673,
+          "lastAccessed": 1754645022148,
+          "accessCount": 5
+        }
+      ],
+      "tagStats": []
+    },
+    "2025-08-09": {
+      "date": "2025-08-09",
+      "totalTime": 9048581,
+      "activeTime": 1564202,
+      "idleTime": 7484379,
+      "entries": [
+        {
+          "id": "session-1754711415511-txfnc2msa",
+          "startTime": 1754711415511,
+          "endTime": 1754711428335,
+          "duration": 12824,
+          "filePath": "04-07.md",
+          "fileName": "04-07.md",
+          "folderPath": "/",
+          "tags": [
+            "冬天玩雪好去处",
+            "大悟无人谷",
+            "奔赴一场雪的快乐",
+            "notion",
+            "notion入门",
+            "notion技巧",
+            "notion模版",
+            "冬天玩雪好去处",
+            "大悟无人谷",
+            "奔赴一场雪的快乐"
+          ],
+          "category": "冬天玩雪好去处",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754711415511-txfnc2msa"
+          }
+        },
+        {
+          "id": "session-1754711428477-w5xhe0oob",
+          "startTime": 1754711428477,
+          "endTime": 1754711451538,
+          "duration": 23061,
+          "filePath": "04-07.md",
+          "fileName": "04-07.md",
+          "folderPath": "/",
+          "tags": [
+            "冬天玩雪好去处",
+            "大悟无人谷",
+            "奔赴一场雪的快乐",
+            "notion",
+            "notion入门",
+            "notion技巧",
+            "notion模版",
+            "冬天玩雪好去处",
+            "大悟无人谷",
+            "奔赴一场雪的快乐"
+          ],
+          "category": "冬天玩雪好去处",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754711428477-w5xhe0oob"
+          }
+        },
+        {
+          "id": "session-1754711471431-q1nqgt37x",
+          "startTime": 1754711471431,
+          "endTime": 1754711477247,
+          "duration": 5816,
+          "filePath": "Demo.md",
+          "fileName": "Demo.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754711471431-q1nqgt37x"
+          }
+        },
+        {
+          "id": "session-1754711477293-evc67ycq6",
+          "startTime": 1754711477293,
+          "endTime": 1754711729604,
+          "duration": 252311,
+          "filePath": "Demo.md",
+          "fileName": "Demo.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754711477293-evc67ycq6"
+          }
+        },
+        {
+          "id": "session-1754711984889-l77dsjsvn",
+          "startTime": 1754711984890,
+          "endTime": 1754713380869,
+          "duration": 1395979,
+          "filePath": "Folders/elevenlab-ai.md",
+          "fileName": "elevenlab-ai.md",
+          "folderPath": "Folders",
+          "tags": [],
+          "category": "Folders",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754711984889-l77dsjsvn"
+          }
+        },
+        {
+          "id": "session-1754713381005-madlz47n3",
+          "startTime": 1754713381005,
+          "endTime": 1754713394920,
+          "duration": 13915,
+          "filePath": "Folders/elevenlab-ai.md",
+          "fileName": "elevenlab-ai.md",
+          "folderPath": "Folders",
+          "tags": [],
+          "category": "Folders",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713381005-madlz47n3"
+          }
+        },
+        {
+          "id": "session-1754713394920-07js752ly",
+          "startTime": 1754713394920,
+          "endTime": 1754713399742,
+          "duration": 4822,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713394920-07js752ly"
+          }
+        },
+        {
+          "id": "session-1754713399798-pdyyleiqd",
+          "startTime": 1754713399798,
+          "endTime": 1754713423511,
+          "duration": 23713,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713399798-pdyyleiqd"
+          }
+        },
+        {
+          "id": "session-1754713423562-qm0f7sesb",
+          "startTime": 1754713423562,
+          "endTime": 1754713443954,
+          "duration": 20392,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713423562-qm0f7sesb"
+          }
+        },
+        {
+          "id": "session-1754713444012-6o7po3qt1",
+          "startTime": 1754713444012,
+          "endTime": 1754713467878,
+          "duration": 23866,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754713444012-6o7po3qt1"
+          }
+        },
+        {
+          "id": "session-1754713467934-7bhuq7xdv",
+          "startTime": 1754713467934,
+          "endTime": 1754713475479,
+          "duration": 7545,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713467934-7bhuq7xdv"
+          }
+        },
+        {
+          "id": "session-1754713475545-admtwnbpd",
+          "startTime": 1754713475545,
+          "endTime": 1754713477895,
+          "duration": 2350,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713475545-admtwnbpd"
+          }
+        },
+        {
+          "id": "session-1754713477972-yhalss41m",
+          "startTime": 1754713477972,
+          "endTime": 1754713481570,
+          "duration": 3598,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713477972-yhalss41m"
+          }
+        },
+        {
+          "id": "session-1754713481630-a060yfr3x",
+          "startTime": 1754713481630,
+          "endTime": 1754713485557,
+          "duration": 3927,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713481630-a060yfr3x"
+          }
+        },
+        {
+          "id": "session-1754713485625-6euftk7x3",
+          "startTime": 1754713485625,
+          "endTime": 1754713509204,
+          "duration": 23579,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754713485625-6euftk7x3"
+          }
+        },
+        {
+          "id": "session-1754713509295-ed35rksv0",
+          "startTime": 1754713509295,
+          "endTime": 1754713520441,
+          "duration": 11146,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713509295-ed35rksv0"
+          }
+        },
+        {
+          "id": "session-1754713520511-e5q13fuh2",
+          "startTime": 1754713520511,
+          "endTime": 1754713541974,
+          "duration": 21463,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713520511-e5q13fuh2"
+          }
+        },
+        {
+          "id": "session-1754713542025-biyjcjmpk",
+          "startTime": 1754713542025,
+          "endTime": 1754713546579,
+          "duration": 4554,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713542025-biyjcjmpk"
+          }
+        },
+        {
+          "id": "session-1754713546640-ejukw1oex",
+          "startTime": 1754713546640,
+          "endTime": 1754713570474,
+          "duration": 23834,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713546640-ejukw1oex"
+          }
+        },
+        {
+          "id": "session-1754713570558-f91ejnhpu",
+          "startTime": 1754713570558,
+          "endTime": 1754713840588,
+          "duration": 270030,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713570558-f91ejnhpu"
+          }
+        },
+        {
+          "id": "session-1754713840630-32izwru31",
+          "startTime": 1754713840630,
+          "endTime": 1754713982228,
+          "duration": 141598,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713840630-32izwru31"
+          }
+        },
+        {
+          "id": "session-1754713982320-dys5gho2b",
+          "startTime": 1754713982320,
+          "endTime": 1754713997780,
+          "duration": 15460,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754713982320-dys5gho2b"
+          }
+        },
+        {
+          "id": "session-1754713997885-jr9j8f9hp",
+          "startTime": 1754713997885,
+          "endTime": 1754714009376,
+          "duration": 11491,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754713997885-jr9j8f9hp"
+          }
+        },
+        {
+          "id": "session-1754714009445-iwns5flma",
+          "startTime": 1754714009445,
+          "endTime": 1754714019404,
+          "duration": 9959,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714009445-iwns5flma"
+          }
+        },
+        {
+          "id": "session-1754714019468-0odxuima4",
+          "startTime": 1754714019468,
+          "endTime": 1754714036100,
+          "duration": 16632,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714019468-0odxuima4"
+          }
+        },
+        {
+          "id": "session-1754714036177-b2tqt1yp3",
+          "startTime": 1754714036177,
+          "endTime": 1754714047749,
+          "duration": 11572,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714036177-b2tqt1yp3"
+          }
+        },
+        {
+          "id": "session-1754714047819-tbiw8pszg",
+          "startTime": 1754714047819,
+          "endTime": 1754714059289,
+          "duration": 11470,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714047819-tbiw8pszg"
+          }
+        },
+        {
+          "id": "session-1754714059378-qj47adts0",
+          "startTime": 1754714059378,
+          "endTime": 1754714080455,
+          "duration": 21077,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714059378-qj47adts0"
+          }
+        },
+        {
+          "id": "session-1754714080524-va0xitqxx",
+          "startTime": 1754714080524,
+          "endTime": 1754714096140,
+          "duration": 15616,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714080524-va0xitqxx"
+          }
+        },
+        {
+          "id": "session-1754714096211-xyk2wkw34",
+          "startTime": 1754714096211,
+          "endTime": 1754714219545,
+          "duration": 123334,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714096211-xyk2wkw34"
+          }
+        },
+        {
+          "id": "session-1754714219610-4xuo8t3op",
+          "startTime": 1754714219610,
+          "endTime": 1754714239764,
+          "duration": 20154,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714219610-4xuo8t3op"
+          }
+        },
+        {
+          "id": "session-1754714239847-d5eyzp3ok",
+          "startTime": 1754714239847,
+          "endTime": 1754714246442,
+          "duration": 6595,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714239847-d5eyzp3ok"
+          }
+        },
+        {
+          "id": "session-1754714246563-h3mdmnjvc",
+          "startTime": 1754714246563,
+          "endTime": 1754714254716,
+          "duration": 8153,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714246563-h3mdmnjvc"
+          }
+        },
+        {
+          "id": "session-1754714254779-74gpiesr1",
+          "startTime": 1754714254779,
+          "endTime": 1754714267953,
+          "duration": 13174,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714254779-74gpiesr1"
+          }
+        },
+        {
+          "id": "session-1754714268120-oyxyj4hes",
+          "startTime": 1754714268120,
+          "endTime": 1754714280726,
+          "duration": 12606,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714268120-oyxyj4hes"
+          }
+        },
+        {
+          "id": "session-1754714280817-ybgqxtbl6",
+          "startTime": 1754714280817,
+          "endTime": 1754714291131,
+          "duration": 10314,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714280817-ybgqxtbl6"
+          }
+        },
+        {
+          "id": "session-1754714291255-9e6adwbri",
+          "startTime": 1754714291255,
+          "endTime": 1754714308415,
+          "duration": 17160,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714291255-9e6adwbri"
+          }
+        },
+        {
+          "id": "session-1754714308465-h761gfkav",
+          "startTime": 1754714308465,
+          "endTime": 1754714337969,
+          "duration": 29504,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714308465-h761gfkav"
+          }
+        },
+        {
+          "id": "session-1754714338025-hovp2e8ix",
+          "startTime": 1754714338025,
+          "endTime": 1754714347131,
+          "duration": 9106,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714338025-hovp2e8ix"
+          }
+        },
+        {
+          "id": "session-1754714347249-4brf2i18c",
+          "startTime": 1754714347249,
+          "endTime": 1754714348212,
+          "duration": 963,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714347249-4brf2i18c"
+          }
+        },
+        {
+          "id": "session-1754714348267-xxzfhlts1",
+          "startTime": 1754714348267,
+          "endTime": 1754714350709,
+          "duration": 2442,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714348267-xxzfhlts1"
+          }
+        },
+        {
+          "id": "session-1754714350776-4qy4rqxuu",
+          "startTime": 1754714350776,
+          "endTime": 1754714361343,
+          "duration": 10567,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714350776-4qy4rqxuu"
+          }
+        },
+        {
+          "id": "session-1754714361409-3t7jqugy8",
+          "startTime": 1754714361409,
+          "endTime": 1754714396518,
+          "duration": 35109,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714361409-3t7jqugy8"
+          }
+        },
+        {
+          "id": "session-1754714396580-yj1bftfoz",
+          "startTime": 1754714396580,
+          "endTime": 1754714410142,
+          "duration": 13562,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714396580-yj1bftfoz"
+          }
+        },
+        {
+          "id": "session-1754714410233-ibrid9450",
+          "startTime": 1754714410233,
+          "endTime": 1754714414342,
+          "duration": 4109,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714410233-ibrid9450"
+          }
+        },
+        {
+          "id": "session-1754714414395-l13x716al",
+          "startTime": 1754714414395,
+          "endTime": 1754714419591,
+          "duration": 5196,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714414395-l13x716al"
+          }
+        },
+        {
+          "id": "session-1754714419634-wrtbkxfu4",
+          "startTime": 1754714419634,
+          "endTime": 1754714423199,
+          "duration": 3565,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714419634-wrtbkxfu4"
+          }
+        },
+        {
+          "id": "session-1754714423355-t8bdau80v",
+          "startTime": 1754714423355,
+          "endTime": 1754714456449,
+          "duration": 33094,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714423355-t8bdau80v"
+          }
+        },
+        {
+          "id": "session-1754714456535-cgqsrb2ly",
+          "startTime": 1754714456535,
+          "endTime": 1754714482261,
+          "duration": 25726,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714456535-cgqsrb2ly"
+          }
+        },
+        {
+          "id": "session-1754714482326-jdagr34ph",
+          "startTime": 1754714482326,
+          "endTime": 1754714492021,
+          "duration": 9695,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714482326-jdagr34ph"
+          }
+        },
+        {
+          "id": "session-1754714492123-42bhzmxz6",
+          "startTime": 1754714492123,
+          "endTime": 1754714496600,
+          "duration": 4477,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714492123-42bhzmxz6"
+          }
+        },
+        {
+          "id": "session-1754714496659-37sd2zyfc",
+          "startTime": 1754714496659,
+          "endTime": 1754714532453,
+          "duration": 35794,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714496659-37sd2zyfc"
+          }
+        },
+        {
+          "id": "session-1754714532553-f5sulos3h",
+          "startTime": 1754714532553,
+          "endTime": 1754714550833,
+          "duration": 18280,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714532553-f5sulos3h"
+          }
+        },
+        {
+          "id": "session-1754714550908-mavzsfc3y",
+          "startTime": 1754714550908,
+          "endTime": 1754714559292,
+          "duration": 8384,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714550908-mavzsfc3y"
+          }
+        },
+        {
+          "id": "session-1754714559367-pvnyezllm",
+          "startTime": 1754714559367,
+          "endTime": 1754714563561,
+          "duration": 4194,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714559367-pvnyezllm"
+          }
+        },
+        {
+          "id": "session-1754714563622-877k51jzv",
+          "startTime": 1754714563622,
+          "endTime": 1754714565081,
+          "duration": 1459,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714563622-877k51jzv"
+          }
+        },
+        {
+          "id": "session-1754714565158-5sdlrcjnh",
+          "startTime": 1754714565158,
+          "endTime": 1754714630058,
+          "duration": 64900,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714565158-5sdlrcjnh"
+          }
+        },
+        {
+          "id": "session-1754714630136-nusvs1jsg",
+          "startTime": 1754714630136,
+          "endTime": 1754714642027,
+          "duration": 11891,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714630136-nusvs1jsg"
+          }
+        },
+        {
+          "id": "session-1754714642109-9ych6khve",
+          "startTime": 1754714642109,
+          "endTime": 1754714675733,
+          "duration": 33624,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714642109-9ych6khve"
+          }
+        },
+        {
+          "id": "session-1754714675788-cgke4hg0u",
+          "startTime": 1754714675788,
+          "endTime": 1754714680831,
+          "duration": 5043,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714675788-cgke4hg0u"
+          }
+        },
+        {
+          "id": "session-1754714681004-c5gs1aq4y",
+          "startTime": 1754714681004,
+          "endTime": 1754714686085,
+          "duration": 5081,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714681004-c5gs1aq4y"
+          }
+        },
+        {
+          "id": "session-1754714686131-744u9mdjc",
+          "startTime": 1754714686131,
+          "endTime": 1754714699824,
+          "duration": 13693,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714686131-744u9mdjc"
+          }
+        },
+        {
+          "id": "session-1754714699903-38s1xvjya",
+          "startTime": 1754714699903,
+          "endTime": 1754714717910,
+          "duration": 18007,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714699903-38s1xvjya"
+          }
+        },
+        {
+          "id": "session-1754714717982-8uikiuxbu",
+          "startTime": 1754714717982,
+          "endTime": 1754714726577,
+          "duration": 8595,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714717982-8uikiuxbu"
+          }
+        },
+        {
+          "id": "session-1754714726667-60a31mgow",
+          "startTime": 1754714726667,
+          "endTime": 1754714763170,
+          "duration": 36503,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714726667-60a31mgow"
+          }
+        },
+        {
+          "id": "session-1754714763511-8hjre33br",
+          "startTime": 1754714763511,
+          "endTime": 1754714793712,
+          "duration": 30201,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714763511-8hjre33br"
+          }
+        },
+        {
+          "id": "session-1754714793908-8a1cyg021",
+          "startTime": 1754714793908,
+          "endTime": 1754714794684,
+          "duration": 776,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714793908-8a1cyg021"
+          }
+        },
+        {
+          "id": "session-1754714794726-m6jnt4i4x",
+          "startTime": 1754714794726,
+          "endTime": 1754714808514,
+          "duration": 13788,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714794726-m6jnt4i4x"
+          }
+        },
+        {
+          "id": "session-1754714808570-18ok5grea",
+          "startTime": 1754714808570,
+          "endTime": 1754714825275,
+          "duration": 16705,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714808570-18ok5grea"
+          }
+        },
+        {
+          "id": "session-1754714825325-jtwcpaqk1",
+          "startTime": 1754714825325,
+          "endTime": 1754714855926,
+          "duration": 30601,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714825325-jtwcpaqk1"
+          }
+        },
+        {
+          "id": "session-1754714855964-1hryga6j5",
+          "startTime": 1754714855964,
+          "endTime": 1754714916924,
+          "duration": 60960,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754714855964-1hryga6j5"
+          }
+        },
+        {
+          "id": "session-1754714917014-m0x09s82n",
+          "startTime": 1754714917014,
+          "endTime": 1754714933267,
+          "duration": 16253,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714917014-m0x09s82n"
+          }
+        },
+        {
+          "id": "session-1754714933343-un7gdhitz",
+          "startTime": 1754714933343,
+          "endTime": 1754715034623,
+          "duration": 101280,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754714933343-un7gdhitz"
+          }
+        },
+        {
+          "id": "session-1754715034751-g2jza4azy",
+          "startTime": 1754715034751,
+          "endTime": 1754715102912,
+          "duration": 68161,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754715034751-g2jza4azy"
+          }
+        },
+        {
+          "id": "session-1754715103020-0az9ashjx",
+          "startTime": 1754715103020,
+          "endTime": 1754718332611,
+          "duration": 3229591,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754715103020-0az9ashjx"
+          }
+        },
+        {
+          "id": "session-1754718332704-ziiugosc9",
+          "startTime": 1754718332704,
+          "endTime": 1754719065571,
+          "duration": 732867,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754718332704-ziiugosc9"
+          }
+        },
+        {
+          "id": "session-1754719343272-yk51g7jm6",
+          "startTime": 1754719343272,
+          "endTime": 1754719525787,
+          "duration": 182515,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754719343272-yk51g7jm6"
+          }
+        },
+        {
+          "id": "session-1754719526030-qgwz7t4se",
+          "startTime": 1754719526030,
+          "endTime": 1754719530164,
+          "duration": 4134,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754719526030-qgwz7t4se"
+          }
+        },
+        {
+          "id": "session-1754719530225-ojhre8r5i",
+          "startTime": 1754719530225,
+          "endTime": 1754719588480,
+          "duration": 58255,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754719530225-ojhre8r5i"
+          }
+        },
+        {
+          "id": "session-1754719588644-1shg1s1zh",
+          "startTime": 1754719588644,
+          "endTime": 1754719720703,
+          "duration": 132059,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754719588644-1shg1s1zh"
+          }
+        },
+        {
+          "id": "session-1754719720870-47i26zkjb",
+          "startTime": 1754719720870,
+          "endTime": 1754719740457,
+          "duration": 19587,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754719720870-47i26zkjb"
+          }
+        },
+        {
+          "id": "session-1754719756541-kbhzbckjp",
+          "startTime": 1754719756541,
+          "endTime": 1754720157787,
+          "duration": 401246,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754719756541-kbhzbckjp"
+          }
+        },
+        {
+          "id": "session-1754720505252-rgqysck2v",
+          "startTime": 1754720505252,
+          "endTime": 1754720511799,
+          "duration": 6547,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720505252-rgqysck2v"
+          }
+        },
+        {
+          "id": "session-1754720511847-tse8nghgw",
+          "startTime": 1754720511847,
+          "endTime": 1754720546794,
+          "duration": 34947,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720511847-tse8nghgw"
+          }
+        },
+        {
+          "id": "session-1754720553589-ekaj8gj3w",
+          "startTime": 1754720553589,
+          "endTime": 1754720558485,
+          "duration": 4896,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720553589-ekaj8gj3w"
+          }
+        },
+        {
+          "id": "session-1754720558555-vmde4udi3",
+          "startTime": 1754720558555,
+          "endTime": 1754720561274,
+          "duration": 2719,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720558555-vmde4udi3"
+          }
+        },
+        {
+          "id": "session-1754720561344-c2vmmkzg7",
+          "startTime": 1754720561344,
+          "endTime": 1754720585404,
+          "duration": 24060,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720561344-c2vmmkzg7"
+          }
+        },
+        {
+          "id": "session-1754720585499-icp4h85ok",
+          "startTime": 1754720585499,
+          "endTime": 1754720610248,
+          "duration": 24749,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720585499-icp4h85ok"
+          }
+        },
+        {
+          "id": "session-1754720610372-txh0koy36",
+          "startTime": 1754720610372,
+          "endTime": 1754720614064,
+          "duration": 3692,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720610372-txh0koy36"
+          }
+        },
+        {
+          "id": "session-1754720614115-mj5zra0nn",
+          "startTime": 1754720614115,
+          "endTime": 1754720624734,
+          "duration": 10619,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720614115-mj5zra0nn"
+          }
+        },
+        {
+          "id": "session-1754720624806-fr8zhgo8h",
+          "startTime": 1754720624806,
+          "endTime": 1754720637098,
+          "duration": 12292,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720624806-fr8zhgo8h"
+          }
+        },
+        {
+          "id": "session-1754720637172-mz9xugltv",
+          "startTime": 1754720637172,
+          "endTime": 1754720646815,
+          "duration": 9643,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720637172-mz9xugltv"
+          }
+        },
+        {
+          "id": "session-1754720646886-k2xs8ersz",
+          "startTime": 1754720646886,
+          "endTime": 1754720652683,
+          "duration": 5797,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720646886-k2xs8ersz"
+          }
+        },
+        {
+          "id": "session-1754720652765-8ss3amvf3",
+          "startTime": 1754720652765,
+          "endTime": 1754720655991,
+          "duration": 3226,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720652765-8ss3amvf3"
+          }
+        },
+        {
+          "id": "session-1754720656052-5b9gqvgo4",
+          "startTime": 1754720656052,
+          "endTime": 1754720661271,
+          "duration": 5219,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720656052-5b9gqvgo4"
+          }
+        },
+        {
+          "id": "session-1754720661345-vu26664rh",
+          "startTime": 1754720661345,
+          "endTime": 1754720670499,
+          "duration": 9154,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720661345-vu26664rh"
+          }
+        },
+        {
+          "id": "session-1754720670573-gjlg6ktua",
+          "startTime": 1754720670573,
+          "endTime": 1754720674752,
+          "duration": 4179,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720670573-gjlg6ktua"
+          }
+        },
+        {
+          "id": "session-1754720674792-ujc48w346",
+          "startTime": 1754720674792,
+          "endTime": 1754720695161,
+          "duration": 20369,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720674792-ujc48w346"
+          }
+        },
+        {
+          "id": "session-1754720695318-lwxqxvxwb",
+          "startTime": 1754720695318,
+          "endTime": 1754720726059,
+          "duration": 30741,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720695318-lwxqxvxwb"
+          }
+        },
+        {
+          "id": "session-1754720726241-cizmax9cp",
+          "startTime": 1754720726241,
+          "endTime": 1754720784979,
+          "duration": 58738,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720726241-cizmax9cp"
+          }
+        },
+        {
+          "id": "session-1754720802358-ocrip112n",
+          "startTime": 1754720802358,
+          "endTime": 1754720806860,
+          "duration": 4502,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720802358-ocrip112n"
+          }
+        },
+        {
+          "id": "session-1754720806992-hflypjqei",
+          "startTime": 1754720806992,
+          "endTime": 1754720819026,
+          "duration": 12034,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720806992-hflypjqei"
+          }
+        },
+        {
+          "id": "session-1754720819104-wfohta4vf",
+          "startTime": 1754720819104,
+          "endTime": 1754720836067,
+          "duration": 16963,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720819104-wfohta4vf"
+          }
+        },
+        {
+          "id": "session-1754720836155-z9zrfaluj",
+          "startTime": 1754720836155,
+          "endTime": 1754720854734,
+          "duration": 18579,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720836155-z9zrfaluj"
+          }
+        },
+        {
+          "id": "session-1754720854838-jtp7p9wzs",
+          "startTime": 1754720854838,
+          "endTime": 1754720857863,
+          "duration": 3025,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720854838-jtp7p9wzs"
+          }
+        },
+        {
+          "id": "session-1754720857957-qmy6k5ho4",
+          "startTime": 1754720857957,
+          "endTime": 1754720859944,
+          "duration": 1987,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720857957-qmy6k5ho4"
+          }
+        },
+        {
+          "id": "session-1754720860042-1khk0xb9s",
+          "startTime": 1754720860042,
+          "endTime": 1754720861458,
+          "duration": 1416,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720860042-1khk0xb9s"
+          }
+        },
+        {
+          "id": "session-1754720861539-iraxrnjjl",
+          "startTime": 1754720861539,
+          "endTime": 1754720863037,
+          "duration": 1498,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720861539-iraxrnjjl"
+          }
+        },
+        {
+          "id": "session-1754720863089-wobtnava3",
+          "startTime": 1754720863089,
+          "endTime": 1754720865015,
+          "duration": 1926,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720863089-wobtnava3"
+          }
+        },
+        {
+          "id": "session-1754720865151-x5lpq446d",
+          "startTime": 1754720865151,
+          "endTime": 1754720874857,
+          "duration": 9706,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720865151-x5lpq446d"
+          }
+        },
+        {
+          "id": "session-1754720874937-rv2huwoet",
+          "startTime": 1754720874937,
+          "endTime": 1754720878788,
+          "duration": 3851,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720874937-rv2huwoet"
+          }
+        },
+        {
+          "id": "session-1754720878904-bgt52hrmw",
+          "startTime": 1754720878904,
+          "endTime": 1754720887207,
+          "duration": 8303,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720878904-bgt52hrmw"
+          }
+        },
+        {
+          "id": "session-1754720887297-mk3m104h0",
+          "startTime": 1754720887297,
+          "endTime": 1754720897680,
+          "duration": 10383,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720887297-mk3m104h0"
+          }
+        },
+        {
+          "id": "session-1754720897745-y546hldh9",
+          "startTime": 1754720897745,
+          "endTime": 1754720902143,
+          "duration": 4398,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720897745-y546hldh9"
+          }
+        },
+        {
+          "id": "session-1754720902205-tquzs2tqm",
+          "startTime": 1754720902205,
+          "endTime": 1754720903513,
+          "duration": 1308,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720902205-tquzs2tqm"
+          }
+        },
+        {
+          "id": "session-1754720903575-r2ywby4vo",
+          "startTime": 1754720903575,
+          "endTime": 1754720920039,
+          "duration": 16464,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720903575-r2ywby4vo"
+          }
+        },
+        {
+          "id": "session-1754720920122-5v1xj91ux",
+          "startTime": 1754720920122,
+          "endTime": 1754720923497,
+          "duration": 3375,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720920122-5v1xj91ux"
+          }
+        },
+        {
+          "id": "session-1754720923589-nbi6idvmv",
+          "startTime": 1754720923589,
+          "endTime": 1754720930412,
+          "duration": 6823,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720923589-nbi6idvmv"
+          }
+        },
+        {
+          "id": "session-1754720930467-5udvp91r6",
+          "startTime": 1754720930467,
+          "endTime": 1754720937030,
+          "duration": 6563,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720930467-5udvp91r6"
+          }
+        },
+        {
+          "id": "session-1754720937115-41ob8mo87",
+          "startTime": 1754720937115,
+          "endTime": 1754720964124,
+          "duration": 27009,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720937115-41ob8mo87"
+          }
+        },
+        {
+          "id": "session-1754720964221-0y1ys9r2o",
+          "startTime": 1754720964221,
+          "endTime": 1754720971550,
+          "duration": 7329,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720964221-0y1ys9r2o"
+          }
+        },
+        {
+          "id": "session-1754720971627-40oe2343c",
+          "startTime": 1754720971627,
+          "endTime": 1754720972824,
+          "duration": 1197,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720971627-40oe2343c"
+          }
+        },
+        {
+          "id": "session-1754720972869-s8ifnk0mt",
+          "startTime": 1754720972869,
+          "endTime": 1754720975128,
+          "duration": 2259,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720972869-s8ifnk0mt"
+          }
+        },
+        {
+          "id": "session-1754720975206-7015wd905",
+          "startTime": 1754720975206,
+          "endTime": 1754720979353,
+          "duration": 4147,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754720975206-7015wd905"
+          }
+        },
+        {
+          "id": "session-1754720979419-18ymmyfyl",
+          "startTime": 1754720979419,
+          "endTime": 1754721015919,
+          "duration": 36500,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754720979419-18ymmyfyl"
+          }
+        },
+        {
+          "id": "session-1754721016010-rn08q2h6l",
+          "startTime": 1754721016010,
+          "endTime": 1754721021803,
+          "duration": 5793,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754721016010-rn08q2h6l"
+          }
+        },
+        {
+          "id": "session-1754721021916-poapgppoq",
+          "startTime": 1754721021916,
+          "endTime": 1754721030987,
+          "duration": 9071,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754721021916-poapgppoq"
+          }
+        },
+        {
+          "id": "session-1754721031063-6w0gavyo9",
+          "startTime": 1754721031063,
+          "endTime": 1754721032282,
+          "duration": 1219,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754721031063-6w0gavyo9"
+          }
+        },
+        {
+          "id": "session-1754721032367-57k74d627",
+          "startTime": 1754721032367,
+          "endTime": 1754721090716,
+          "duration": 58349,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754721032367-57k74d627"
+          }
+        },
+        {
+          "id": "session-1754721090933-mv9xkcpga",
+          "startTime": 1754721090933,
+          "endTime": 1754721184154,
+          "duration": 93221,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754721090933-mv9xkcpga"
+          }
+        },
+        {
+          "id": "session-1754721184485-6s46p43so",
+          "startTime": 1754721184485,
+          "endTime": 1754721218980,
+          "duration": 34495,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754721184485-6s46p43so"
+          }
+        },
+        {
+          "id": "session-1754721219086-1sbhvss03",
+          "startTime": 1754721219086,
+          "endTime": 1754721235263,
+          "duration": 16177,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754721219086-1sbhvss03"
+          }
+        },
+        {
+          "id": "session-1754721235375-1b5yy6tf7",
+          "startTime": 1754721235375,
+          "endTime": 1754721270258,
+          "duration": 34883,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754721235375-1b5yy6tf7"
+          }
+        },
+        {
+          "id": "session-1754721270483-dcq1nkt2s",
+          "startTime": 1754721270483,
+          "endTime": 1754721364741,
+          "duration": 94258,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754721270483-dcq1nkt2s"
+          }
+        },
+        {
+          "id": "session-1754721364844-z9b4mti56",
+          "startTime": 1754721364844,
+          "endTime": 1754721386934,
+          "duration": 22090,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754721364844-z9b4mti56"
+          }
+        },
+        {
+          "id": "session-1754721387089-gu1mxjmtu",
+          "startTime": 1754721387089,
+          "endTime": 1754721390204,
+          "duration": 3115,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754721387089-gu1mxjmtu"
+          }
+        },
+        {
+          "id": "session-1754721390338-23catpdaj",
+          "startTime": 1754721390338,
+          "endTime": 1754721395866,
+          "duration": 5528,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754721390338-23catpdaj"
+          }
+        },
+        {
+          "id": "session-1754721395959-qvav7mm3e",
+          "startTime": 1754721395959,
+          "endTime": 1754721403547,
+          "duration": 7588,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": false,
+          "metadata": {
+            "sessionId": "session-1754721395959-qvav7mm3e"
+          }
+        },
+        {
+          "id": "session-1754721403674-2dez2l03i",
+          "startTime": 1754721403674,
+          "endTime": 1754721414074,
+          "duration": 10400,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754721403674-2dez2l03i"
+          }
+        },
+        {
+          "id": "session-1754721414176-hgv2wjzsi",
+          "startTime": 1754721414176,
+          "endTime": 1754721416806,
+          "duration": 2630,
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "folderPath": "/",
+          "tags": [],
+          "category": "/",
+          "isActive": true,
+          "metadata": {
+            "sessionId": "session-1754721414176-hgv2wjzsi"
+          }
+        }
+      ],
+      "categoryStats": [
+        {
+          "category": "冬天玩雪好去处",
+          "totalTime": 35885,
+          "percentage": 0.3965815192459458,
+          "count": 2
+        },
+        {
+          "category": "/",
+          "totalTime": 7602802,
+          "percentage": 84.02203616235518,
+          "count": 136
+        },
+        {
+          "category": "Folders",
+          "totalTime": 1409894,
+          "percentage": 15.581382318398873,
+          "count": 2
+        }
+      ],
+      "fileStats": [
+        {
+          "filePath": "04-07.md",
+          "fileName": "04-07.md",
+          "totalTime": 35885,
+          "percentage": 0.3965815192459458,
+          "lastAccessed": 1754711451538,
+          "accessCount": 2
+        },
+        {
+          "filePath": "Demo.md",
+          "fileName": "Demo.md",
+          "totalTime": 258127,
+          "percentage": 2.8526793317095795,
+          "lastAccessed": 1754711729604,
+          "accessCount": 2
+        },
+        {
+          "filePath": "Folders/elevenlab-ai.md",
+          "fileName": "elevenlab-ai.md",
+          "totalTime": 1409894,
+          "percentage": 15.581382318398873,
+          "lastAccessed": 1754713394920,
+          "accessCount": 2
+        },
+        {
+          "filePath": "2025-07-21.md",
+          "fileName": "2025-07-21.md",
+          "totalTime": 7344675,
+          "percentage": 81.1693568306456,
+          "lastAccessed": 1754721416806,
+          "accessCount": 134
+        }
+      ],
+      "tagStats": [
+        {
+          "tag": "冬天玩雪好去处",
+          "totalTime": 71770,
+          "percentage": 200,
+          "fileCount": 1
+        },
+        {
+          "tag": "大悟无人谷",
+          "totalTime": 71770,
+          "percentage": 200,
+          "fileCount": 1
+        },
+        {
+          "tag": "奔赴一场雪的快乐",
+          "totalTime": 71770,
+          "percentage": 200,
+          "fileCount": 1
+        },
+        {
+          "tag": "notion",
+          "totalTime": 35885,
+          "percentage": 100,
+          "fileCount": 1
+        },
+        {
+          "tag": "notion入门",
+          "totalTime": 35885,
+          "percentage": 100,
+          "fileCount": 1
+        },
+        {
+          "tag": "notion技巧",
+          "totalTime": 35885,
+          "percentage": 100,
+          "fileCount": 1
+        },
+        {
+          "tag": "notion模版",
+          "totalTime": 35885,
+          "percentage": 100,
+          "fileCount": 1
+        }
+      ]
+    }
+  },
+  "settings": {
+    "enableTracking": true,
+    "enableView": true,
+    "language": "en",
+    "idleThreshold": 300,
+    "autoSaveInterval": 30,
+    "trackInactiveTime": false,
+    "enableTagTracking": true,
+    "enableFolderTracking": true,
+    "trackedFolders": [],
+    "excludedFolders": [
+      ".trash",
+      ".obsidian"
+    ],
+    "defaultChartType": "doughnut",
+    "timeFormat": "24h",
+    "showStatusBar": true,
+    "statusBarFormat": "{{time}} - {{category}}",
+    "dataRetentionDays": 90,
+    "enableDataExport": true,
+    "autoBackup": true,
+    "enableSyncToCloud": false,
+    "version": "1.0.0",
+    "lastUpdated": 1754644495349,
+    "dailyStats": {
+      "2025-08-08": {
+        "date": "2025-08-08",
+        "totalTime": 1640807,
+        "activeTime": 498513,
+        "idleTime": 1142294,
+        "entries": [
+          {
+            "id": "session-1754642439682-gapdyicsl",
+            "startTime": 1754642439682,
+            "endTime": 1754642460544,
+            "duration": 20862,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": false,
+            "metadata": {
+              "sessionId": "session-1754642439682-gapdyicsl"
+            }
+          },
+          {
+            "id": "session-1754642460623-8md8a3p7q",
+            "startTime": 1754642460623,
+            "endTime": 1754642467829,
+            "duration": 7206,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754642460623-8md8a3p7q"
+            }
+          },
+          {
+            "id": "session-1754642468985-9qy7lkzgb",
+            "startTime": 1754642468985,
+            "endTime": 1754642475642,
+            "duration": 6657,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754642468985-9qy7lkzgb"
+            }
+          },
+          {
+            "id": "session-1754642475675-rr5n1sqsc",
+            "startTime": 1754642475675,
+            "endTime": 1754643462946,
+            "duration": 987271,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": false,
+            "metadata": {
+              "sessionId": "session-1754642475675-rr5n1sqsc"
+            }
+          },
+          {
+            "id": "session-1754643464147-f6zwyud1z",
+            "startTime": 1754643464147,
+            "endTime": 1754643542782,
+            "duration": 78635,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": false,
+            "metadata": {
+              "sessionId": "session-1754643464147-f6zwyud1z"
+            }
+          },
+          {
+            "id": "session-1754643542871-tcj8trtuq",
+            "startTime": 1754643542871,
+            "endTime": 1754643560796,
+            "duration": 17925,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643542871-tcj8trtuq"
+            }
+          },
+          {
+            "id": "session-1754643560893-p9fq88m8e",
+            "startTime": 1754643560893,
+            "endTime": 1754643577571,
+            "duration": 16678,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643560893-p9fq88m8e"
+            }
+          },
+          {
+            "id": "session-1754643577676-yqnds7kj6",
+            "startTime": 1754643577676,
+            "endTime": 1754643593157,
+            "duration": 15481,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643577676-yqnds7kj6"
+            }
+          },
+          {
+            "id": "session-1754643593215-pnp562s87",
+            "startTime": 1754643593215,
+            "endTime": 1754643617562,
+            "duration": 24347,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643593215-pnp562s87"
+            }
+          },
+          {
+            "id": "session-1754643617763-hh2qqoexo",
+            "startTime": 1754643617763,
+            "endTime": 1754643633706,
+            "duration": 15943,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643617763-hh2qqoexo"
+            }
+          },
+          {
+            "id": "session-1754643633788-g8k2c81wx",
+            "startTime": 1754643633788,
+            "endTime": 1754643650507,
+            "duration": 16719,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": false,
+            "metadata": {
+              "sessionId": "session-1754643633788-g8k2c81wx"
+            }
+          },
+          {
+            "id": "session-1754643650623-1mo17bwdv",
+            "startTime": 1754643650623,
+            "endTime": 1754643685404,
+            "duration": 34781,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643650623-1mo17bwdv"
+            }
+          },
+          {
+            "id": "session-1754643685452-yzpaqq5ac",
+            "startTime": 1754643685452,
+            "endTime": 1754643701700,
+            "duration": 16248,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643685452-yzpaqq5ac"
+            }
+          },
+          {
+            "id": "session-1754643701759-roevqgmon",
+            "startTime": 1754643701759,
+            "endTime": 1754643717908,
+            "duration": 16149,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643701759-roevqgmon"
+            }
+          },
+          {
+            "id": "session-1754643718019-f39phr876",
+            "startTime": 1754643718019,
+            "endTime": 1754643734363,
+            "duration": 16344,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643718019-f39phr876"
+            }
+          },
+          {
+            "id": "session-1754643734440-fcriij4vi",
+            "startTime": 1754643734440,
+            "endTime": 1754643751235,
+            "duration": 16795,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": false,
+            "metadata": {
+              "sessionId": "session-1754643734440-fcriij4vi"
+            }
+          },
+          {
+            "id": "session-1754643751309-q20xtr332",
+            "startTime": 1754643751309,
+            "endTime": 1754643767709,
+            "duration": 16400,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643751309-q20xtr332"
+            }
+          },
+          {
+            "id": "session-1754643767802-hlr5c7rr6",
+            "startTime": 1754643767802,
+            "endTime": 1754643782872,
+            "duration": 15070,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643767802-hlr5c7rr6"
+            }
+          },
+          {
+            "id": "session-1754643782944-ser89pa13",
+            "startTime": 1754643782944,
+            "endTime": 1754643788690,
+            "duration": 5746,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643782944-ser89pa13"
+            }
+          },
+          {
+            "id": "session-1754643788725-zpm3s63eh",
+            "startTime": 1754643788725,
+            "endTime": 1754643797072,
+            "duration": 8347,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643788725-zpm3s63eh"
+            }
+          },
+          {
+            "id": "session-1754643797133-ifx7zu7rx",
+            "startTime": 1754643797133,
+            "endTime": 1754643799721,
+            "duration": 2588,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643797133-ifx7zu7rx"
+            }
+          },
+          {
+            "id": "session-1754643799804-m0hu6smcm",
+            "startTime": 1754643799804,
+            "endTime": 1754643810681,
+            "duration": 10877,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643799804-m0hu6smcm"
+            }
+          },
+          {
+            "id": "session-1754643810682-iwmw7d72x",
+            "startTime": 1754643810682,
+            "endTime": 1754643811492,
+            "duration": 810,
+            "filePath": "Apple Notes/大西线/大西线.md",
+            "fileName": "大西线.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643810682-iwmw7d72x"
+            }
+          },
+          {
+            "id": "session-1754643811492-9dqzpmm1c",
+            "startTime": 1754643811492,
+            "endTime": 1754643815442,
+            "duration": 3950,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643811492-9dqzpmm1c"
+            }
+          },
+          {
+            "id": "session-1754643815475-tbt6xabbj",
+            "startTime": 1754643815475,
+            "endTime": 1754643831098,
+            "duration": 15623,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643815475-tbt6xabbj"
+            }
+          },
+          {
+            "id": "session-1754643831145-1mc7nelep",
+            "startTime": 1754643831145,
+            "endTime": 1754643852236,
+            "duration": 21091,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643831145-1mc7nelep"
+            }
+          },
+          {
+            "id": "session-1754643852275-lq2m5y6i5",
+            "startTime": 1754643852275,
+            "endTime": 1754643865392,
+            "duration": 13117,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643852275-lq2m5y6i5"
+            }
+          },
+          {
+            "id": "session-1754643865428-n1deye9du",
+            "startTime": 1754643865428,
+            "endTime": 1754643881041,
+            "duration": 15613,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643865428-n1deye9du"
+            }
+          },
+          {
+            "id": "session-1754643881079-2nh41owys",
+            "startTime": 1754643881079,
+            "endTime": 1754643892799,
+            "duration": 11720,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": false,
+            "metadata": {
+              "sessionId": "session-1754643881079-2nh41owys"
+            }
+          },
+          {
+            "id": "session-1754643892924-vkotfamp7",
+            "startTime": 1754643892924,
+            "endTime": 1754643909732,
+            "duration": 16808,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643892924-vkotfamp7"
+            }
+          },
+          {
+            "id": "session-1754643909823-tfuoprrbt",
+            "startTime": 1754643909823,
+            "endTime": 1754643915458,
+            "duration": 5635,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643909823-tfuoprrbt"
+            }
+          },
+          {
+            "id": "session-1754643915526-raee7jqk0",
+            "startTime": 1754643915526,
+            "endTime": 1754643937609,
+            "duration": 22083,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643915526-raee7jqk0"
+            }
+          },
+          {
+            "id": "session-1754643937702-fmxsx0bnx",
+            "startTime": 1754643937702,
+            "endTime": 1754643949306,
+            "duration": 11604,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643937702-fmxsx0bnx"
+            }
+          },
+          {
+            "id": "session-1754643949406-dclwsty63",
+            "startTime": 1754643949406,
+            "endTime": 1754643956134,
+            "duration": 6728,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643949406-dclwsty63"
+            }
+          },
+          {
+            "id": "session-1754643956192-a2j1sner9",
+            "startTime": 1754643956192,
+            "endTime": 1754643958018,
+            "duration": 1826,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643956192-a2j1sner9"
+            }
+          },
+          {
+            "id": "session-1754643958057-hnialsgri",
+            "startTime": 1754643958057,
+            "endTime": 1754643974831,
+            "duration": 16774,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643958057-hnialsgri"
+            }
+          },
+          {
+            "id": "session-1754643974928-3fk4qr45u",
+            "startTime": 1754643974928,
+            "endTime": 1754643982373,
+            "duration": 7445,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643974928-3fk4qr45u"
+            }
+          },
+          {
+            "id": "session-1754643982439-h90hssvw5",
+            "startTime": 1754643982439,
+            "endTime": 1754644020146,
+            "duration": 37707,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754643982439-h90hssvw5"
+            }
+          },
+          {
+            "id": "session-1754644020225-e78s3tj6x",
+            "startTime": 1754644020225,
+            "endTime": 1754644070275,
+            "duration": 50050,
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754644020225-e78s3tj6x"
+            }
+          },
+          {
+            "id": "session-1754644070276-3vpiup2o5",
+            "startTime": 1754644070276,
+            "endTime": 1754644070452,
+            "duration": 176,
+            "filePath": "Apple Notes/大西线/攻略.md",
+            "fileName": "攻略.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754644070276-3vpiup2o5"
+            }
+          },
+          {
+            "id": "session-1754644070472-u6uu3ounj",
+            "startTime": 1754644070472,
+            "endTime": 1754644075158,
+            "duration": 4686,
+            "filePath": "Apple Notes/大西线/攻略.md",
+            "fileName": "攻略.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": true,
+            "metadata": {
+              "sessionId": "session-1754644070472-u6uu3ounj"
+            }
+          },
+          {
+            "id": "session-1754644485055-rf68pfg2x",
+            "startTime": 1754644485055,
+            "endTime": 1754644495347,
+            "duration": 10292,
+            "filePath": "Apple Notes/大西线/notion.md",
+            "fileName": "notion.md",
+            "folderPath": "Apple Notes/大西线",
+            "tags": [],
+            "category": "大西线",
+            "isActive": false,
+            "metadata": {
+              "sessionId": "session-1754644485055-rf68pfg2x"
+            }
+          }
+        ],
+        "categoryStats": [
+          {
+            "category": "大西线",
+            "totalTime": 1640807,
+            "percentage": 100,
+            "count": 42
+          }
+        ],
+        "fileStats": [
+          {
+            "filePath": "Apple Notes/大西线/电信电缆沟规划图_2025.md",
+            "fileName": "电信电缆沟规划图_2025.md",
+            "totalTime": 1624843,
+            "percentage": 99.02706412149631,
+            "lastAccessed": 1754644070275,
+            "accessCount": 38
+          },
+          {
+            "filePath": "Apple Notes/大西线/大西线.md",
+            "fileName": "大西线.md",
+            "totalTime": 810,
+            "percentage": 0.049365952241793215,
+            "lastAccessed": 1754643811492,
+            "accessCount": 1
+          },
+          {
+            "filePath": "Apple Notes/大西线/攻略.md",
+            "fileName": "攻略.md",
+            "totalTime": 4862,
+            "percentage": 0.2963176046908625,
+            "lastAccessed": 1754644075158,
+            "accessCount": 2
+          },
+          {
+            "filePath": "Apple Notes/大西线/notion.md",
+            "fileName": "notion.md",
+            "totalTime": 10292,
+            "percentage": 0.6272523215710318,
+            "lastAccessed": 1754644495347,
+            "accessCount": 1
+          }
+        ],
+        "tagStats": []
+      }
+    },
+    "settings": {
+      "enableTracking": true,
+      "enableView": true,
+      "language": "en",
+      "idleThreshold": 300,
+      "autoSaveInterval": 30,
+      "trackInactiveTime": false,
+      "enableTagTracking": true,
+      "enableFolderTracking": true,
+      "trackedFolders": [],
+      "excludedFolders": [
+        ".trash",
+        ".obsidian"
+      ],
+      "defaultChartType": "pie",
+      "timeFormat": "24h",
+      "showStatusBar": true,
+      "statusBarFormat": "{{time}} - {{category}}",
+      "dataRetentionDays": 365,
+      "enableDataExport": true,
+      "autoBackup": true,
+      "enableSyncToCloud": false
+    }
+  }
+}

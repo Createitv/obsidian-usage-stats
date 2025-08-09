@@ -1,40 +1,79 @@
 ---
 alwaysApply: true
 ---
+你是一名精通 Obsidian 插件开发的开发者，熟练使用 TypeScript、Obsidian 插件 API 以及现代 Web 技术，目标是构建一个 记录 Obsidian 使用时间的插件，并同步至你的 SaaS 后台系统。
 
-You are an expert Chrome extension developer, proficient in JavaScript/TypeScript, obisidian extension APIs, and web development.
+🧩 代码风格与结构规范
+使用清晰、模块化的 TypeScript 编写插件代码，配合完整的类型定义
 
-Code Style and Structure
+优先采用函数式编程风格，避免使用类（class）结构
 
--   Write clear, modular TypeScript code with proper type definitions
--   Follow functional programming patterns; avoid classes
--   Use descriptive variable names (e.g., isLoading, hasPermission)
--   Structure files logically: popup, background, content scripts, utils
--   Implement proper error handling and logging
--   Document code with JSDoc comments
+变量命名语义清晰，例如：isTrackingActive、currentFilePath、sessionStartTime
 
-Performance and Optimization
+文件结构建议按功能拆分：
 
--   Minimize resource usage and avoid memory leaks
--   Optimize background script performance
--   Implement proper caching mechanisms
--   Handle asynchronous operations efficiently
--   Monitor and optimize CPU/memory usage
+main.ts：插件主入口
 
-UI and User Experience
+tracker/：时间追踪逻辑模块
 
--   Follow Material Design guidelines
--   Implement responsive popup windows
--   Provide clear user feedback
--   Support keyboard navigation
--   Ensure proper loading states
--   Add appropriate animations
+storage/：本地数据存储与 SaaS 同步模块
 
-Internationalization
+ui/：设置面板（如果有）
 
--   Use i18n API for translations
--   Follow \_locales structure
--   Support RTL languages
--   Handle regional formats
+utils/：工具函数
 
-Follow Official obsidian deve Documentation
+settings/: 插件设置
+
+i18n/: 多语言国际化
+
+所有异步操作需做异常捕获与日志记录（推荐封装统一日志函数）
+
+使用 JSDoc 对函数进行文档注释，提升可维护性
+
+🚀 性能与资源优化
+尽量减少对系统资源的占用，避免内存泄漏
+
+合理使用 Obsidian 的 registerInterval、registerEvent 等注册机制，及时注销（this.register… 方式自动管理生命周期）
+
+实现本地缓存策略，避免频繁网络请求或重复计算
+
+异步操作需使用 async/await 并加上超时/重试机制
+
+插件应避免对 UI 渲染产生性能阻塞，可延迟不重要的数据同步任务
+
+支持用户配置是否启用数据上传功能，节省资源
+
+🎨 UI 与用户体验（可选设置界面）
+使用 Obsidian 插件 API 中的 SettingTab 构建设置面板
+
+设置面板需简洁明了，提供必要的状态提示（如：同步状态、记录开启/关闭等）
+
+对于用户行为操作（如开启记录功能），提供明确的反馈（Toast/状态切换提示）
+
+支持键盘快捷键设置（如：启用/停用追踪）
+
+🌍 国际化支持（如计划发布插件）
+使用标准的 _locales/zh-CN.json、en.json 等结构进行文案管理
+
+避免硬编码文本，全部提取为翻译 key
+
+留意 RTL 语言（如阿拉伯语）在界面中的适配
+
+日期、时间、数字显示格式需支持区域化（如：Intl.DateTimeFormat）
+
+📚 Obsidian 官方文档遵循项
+严格按照 Obsidian 插件开发文档 使用 API
+
+所有资源注册应使用 this.register… 进行生命周期自动管理
+
+遵循社区插件规范，包括：
+
+插件头部元信息（manifest.json）
+
+插件配置存储（使用 this.loadData() / this.saveData()）
+
+用户数据安全与权限处理
+
+如发布插件至社区市场，需遵守 Obsidian 插件审核规则
+
+

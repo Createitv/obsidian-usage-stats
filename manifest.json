@@ -1,9 +1,9 @@
 {
-	"id": "obsidian-plugin-starter",
-	"name": "Obsidian Plugin Template",
+	"id": "obsidian-usage-stats",
+	"name": "Obtime",
 	"version": "1.0.0",
 	"minAppVersion": "1.8.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
+	"description": "Track time spent in Obsidian with detailed statistics and beautiful charts.",
 	"author": "林逍遥",
 	"isDesktopOnly": true
 }
