@@ -26,8 +26,8 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 		// Page title
 		containerEl.createEl("h1", { text: t("settings.title") });
 
-		// Data & Privacy Settings Section
-		await this.renderDataSettings(containerEl);
+		// Account Settings Section (moved to top)
+		await this.renderAccountSettings(containerEl);
 
 		// General Settings Section
 		this.renderGeneralSettings(containerEl);
@@ -37,6 +37,9 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 
 		// Display Settings Section
 		this.renderDisplaySettings(containerEl);
+
+		// Data & Privacy Settings Section
+		await this.renderDataSettings(containerEl);
 
 		// Advanced Settings Section
 		this.renderAdvancedSettings(containerEl);
@@ -53,6 +56,30 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 			// 2. 直接使用 data.json 中的认证信息，不依赖 AuthService
 		} catch (error) {
 			// console.error("SettingsTab: Failed to sync user info:", error);
+		}
+	}
+
+	private async renderAccountSettings(
+		containerEl: HTMLElement
+	): Promise<void> {
+		containerEl.createEl("h2", { text: t("account.title") });
+
+		// User authentication status
+		await this.renderAuthSection(containerEl);
+
+		// Last sync time display
+		if (this.plugin.settings.lastSyncTime > 0) {
+			const lastSyncDate = new Date(this.plugin.settings.lastSyncTime);
+			const lastSyncText = lastSyncDate.toLocaleString();
+
+			new Setting(containerEl)
+				.setName(t("sync.lastSync"))
+				.setDesc(lastSyncText)
+				.addButton((button) =>
+					button.setButtonText(t("action.refresh")).onClick(() => {
+						this.display(); // Refresh the settings page
+					})
+				);
 		}
 	}
 
@@ -358,105 +385,6 @@ export class UsageStatsSettingsTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					})
 			);
-
-		// Cloud sync section header
-		containerEl.createEl("h3", { text: t("sync.cloudSync") });
-
-		// User authentication status
-		await this.renderAuthSection(containerEl);
-
-		// Cloud sync toggle
-		new Setting(containerEl)
-			.setName(t("sync.enableSync"))
-			.setDesc(t("sync.enableSync.desc"))
-			.addToggle((toggle) =>
-				toggle
-					.setValue(this.plugin.settings.enableSyncToCloud)
-					.setDisabled(!this.plugin.isAuthenticated())
-					.onChange(async (value) => {
-						this.plugin.settings.enableSyncToCloud = value;
-						await this.plugin.saveSettings();
-						this.plugin.updateSyncSettings();
-					})
-			);
-
-		// Auto sync settings (only if sync is enabled)
-		if (this.plugin.settings.enableSyncToCloud) {
-			new Setting(containerEl)
-				.setName(t("sync.autoSync"))
-				.setDesc(t("sync.autoSync.desc"))
-				.addToggle((toggle) =>
-					toggle
-						.setValue(this.plugin.settings.autoSync)
-						.onChange(async (value) => {
-							this.plugin.settings.autoSync = value;
-							await this.plugin.saveSettings();
-							this.plugin.updateSyncSettings();
-						})
-				);
-
-			// Sync interval
-			new Setting(containerEl)
-				.setName(t("sync.syncInterval"))
-				.setDesc(t("sync.syncInterval.desc"))
-				.addSlider((slider) =>
-					slider
-						.setLimits(15, 1440, 15) // 15 minutes to 24 hours
-						.setValue(this.plugin.settings.syncInterval)
-						.setDynamicTooltip()
-						.onChange(async (value) => {
-							this.plugin.settings.syncInterval = value;
-							await this.plugin.saveSettings();
-							this.plugin.updateSyncSettings();
-						})
-				);
-
-			// Manual sync button
-			new Setting(containerEl)
-				.setName(t("sync.syncNow"))
-				.setDesc(t("sync.syncNow.desc"))
-				.addButton((button) =>
-					button
-						.setButtonText(t("sync.syncNow"))
-						.setDisabled(this.plugin.isSyncInProgress())
-						.onClick(async () => {
-							button.setDisabled(true);
-							button.setButtonText(t("sync.syncInProgress"));
-							try {
-								await this.plugin.syncNow();
-								new Notice(t("sync.syncComplete"));
-							} catch (error) {
-								new Notice(
-									t("sync.syncError", {
-										error: error.message,
-									})
-								);
-							} finally {
-								button.setDisabled(false);
-								button.setButtonText(t("sync.syncNow"));
-							}
-						})
-				);
-
-			// Last sync time display
-			if (this.plugin.settings.lastSyncTime > 0) {
-				const lastSyncDate = new Date(
-					this.plugin.settings.lastSyncTime
-				);
-				const lastSyncText = lastSyncDate.toLocaleString();
-
-				new Setting(containerEl)
-					.setName(t("sync.lastSync"))
-					.setDesc(lastSyncText)
-					.addButton((button) =>
-						button
-							.setButtonText(t("action.refresh"))
-							.onClick(() => {
-								this.display(); // Refresh the settings page
-							})
-					);
-			}
-		}
 	}
 
 	private renderAdvancedSettings(containerEl: HTMLElement): void {

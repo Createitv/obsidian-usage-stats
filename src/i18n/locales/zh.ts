@@ -73,6 +73,7 @@ const translations: BaseMessage = {
 
 	// Settings
 	"settings.title": "使用统计设置",
+	"account.title": "账户设置",
 	"settings.general": "通用",
 	"settings.tracking": "追踪",
 	"settings.display": "显示",
@@ -117,8 +118,6 @@ const translations: BaseMessage = {
 	"settings.enableDataExport": "启用数据导出",
 	"settings.enableDataExport.desc": "允许将使用数据导出为各种格式",
 
-	"settings.enableSyncToCloud": "启用云端同步",
-	"settings.enableSyncToCloud.desc": "同步数据到云服务（即将推出）",
 	"settings.resetData": "重置所有数据",
 	"settings.resetData.desc": "永久删除所有使用统计数据",
 	"settings.resetData.button": "重置数据",
@@ -199,8 +198,7 @@ const translations: BaseMessage = {
 	"sync.cloudSync": "云端同步",
 	"sync.enableSync": "启用数据同步",
 	"sync.enableSync.desc": "与 Obtime 云服务同步使用数据",
-	"sync.syncNow": "立即同步",
-	"sync.syncNow.desc": "手动与云端服务同步数据",
+
 	"sync.syncInProgress": "同步进行中...",
 	"sync.syncComplete":
 		"同步完成：已上传 {{uploaded}} 条，已下载 {{downloaded}} 条",
@@ -208,10 +206,6 @@ const translations: BaseMessage = {
 	"sync.networkError": "网络错误。请检查您的连接。",
 	"sync.serverError": "服务器错误。请稍后重试。",
 	"sync.lastSync": "上次同步",
-	"sync.autoSync": "自动同步",
-	"sync.autoSync.desc": "定期自动同步数据",
-	"sync.syncInterval": "同步间隔",
-	"sync.syncInterval.desc": "自动同步数据的频率（分钟）",
 
 	// Upload
 	"upload.fileUploaded": "文件已上传：{{filename}}",

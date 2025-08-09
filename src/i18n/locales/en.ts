@@ -75,6 +75,7 @@ const translations: BaseMessage = {
 
 	// Settings
 	"settings.title": "Usage Statistics Settings",
+	"account.title": "Account Settings",
 	"settings.general": "General",
 	"settings.tracking": "Tracking",
 	"settings.display": "Display",
@@ -128,9 +129,6 @@ const translations: BaseMessage = {
 	"settings.enableDataExport.desc":
 		"Allow exporting usage data to various formats",
 
-	"settings.enableSyncToCloud": "Enable cloud sync",
-	"settings.enableSyncToCloud.desc":
-		"Sync data to cloud service (coming soon)",
 	"settings.resetData": "Reset all data",
 	"settings.resetData.desc": "Permanently delete all usage statistics",
 	"settings.resetData.button": "Reset data",
@@ -220,8 +218,7 @@ const translations: BaseMessage = {
 	"sync.cloudSync": "Cloud Synchronization",
 	"sync.enableSync": "Enable data synchronization",
 	"sync.enableSync.desc": "Sync usage data with Obtime cloud service",
-	"sync.syncNow": "Sync Now",
-	"sync.syncNow.desc": "Manually sync data with cloud service",
+
 	"sync.syncInProgress": "Sync in progress...",
 	"sync.syncComplete":
 		"Sync complete: {{uploaded}} uploaded, {{downloaded}} downloaded",
@@ -229,11 +226,6 @@ const translations: BaseMessage = {
 	"sync.networkError": "Network error. Please check your connection.",
 	"sync.serverError": "Server error. Please try again later.",
 	"sync.lastSync": "Last sync",
-	"sync.autoSync": "Auto sync",
-	"sync.autoSync.desc": "Automatically sync data at regular intervals",
-	"sync.syncInterval": "Sync interval",
-	"sync.syncInterval.desc":
-		"How often to automatically sync data (in minutes)",
 
 	// Upload
 	"upload.fileUploaded": "File uploaded: {{filename}}",

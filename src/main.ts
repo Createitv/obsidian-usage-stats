@@ -126,15 +126,9 @@ export default class UsageStatsPlugin extends Plugin {
 		if (this.settings.enableView) {
 			this.initializeView();
 		}
-
-		// Initialize sync settings
-		this.updateSyncSettings();
 	}
 
 	onunload() {
-		// Clean up sync interval
-		this.stopAutoSync();
-
 		// Clean up view
 		this.app.workspace.detachLeavesOfType(USAGE_STATS_VIEW_TYPE);
 		// console.log("Usage Statistics Plugin unloaded");
@@ -394,11 +388,6 @@ export default class UsageStatsPlugin extends Plugin {
 			await this.authService.handleCallback(code, state);
 			return;
 
-			// Auto-start sync if it's enabled
-			if (this.settings.enableSyncToCloud && this.settings.autoSync) {
-				this.updateSyncSettings();
-			}
-
 			// Verify cache integrity after authentication
 			const cacheValid = await this.authService.verifyCacheIntegrity();
 			if (!cacheValid) {
@@ -569,39 +558,6 @@ export default class UsageStatsPlugin extends Plugin {
 	}
 
 	// Sync methods
-	public updateSyncSettings(): void {
-		// Update sync settings and restart sync interval if needed
-		if (this.settings.enableSyncToCloud && this.settings.autoSync) {
-			this.startAutoSync();
-		} else {
-			this.stopAutoSync();
-		}
-	}
-
-	private syncIntervalId?: number;
-
-	private startAutoSync(): void {
-		if (this.syncIntervalId) {
-			clearInterval(this.syncIntervalId);
-		}
-
-		const intervalMs = this.settings.syncInterval * 60 * 1000; // Convert minutes to milliseconds
-		this.syncIntervalId = window.setInterval(async () => {
-			try {
-				await this.syncNow();
-			} catch (error) {
-				console.error("Auto sync failed:", error);
-			}
-		}, intervalMs);
-	}
-
-	private stopAutoSync(): void {
-		if (this.syncIntervalId) {
-			clearInterval(this.syncIntervalId);
-			this.syncIntervalId = undefined;
-		}
-	}
-
 	public isSyncInProgress(): boolean {
 		return this.apiService.isSyncInProgress();
 	}

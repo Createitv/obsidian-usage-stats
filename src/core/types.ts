@@ -31,9 +31,6 @@ export interface UsageStatsSettings {
 	enableDataExport: boolean;
 
 	// Cloud sync settings
-	enableSyncToCloud: boolean;
-	autoSync: boolean;
-	syncInterval: number; // in minutes
 	lastSyncTime: number;
 
 	// OAuth settings (stored in data.json)
@@ -51,7 +48,7 @@ export interface UsageStatsSettings {
 }
 
 export const DEFAULT_SETTINGS: UsageStatsSettings = {
-	enableTracking: false, // 默认禁用数据跟踪
+	enableTracking: true, // 默认禁用数据跟踪
 	enableView: true,
 	language: "en",
 
@@ -72,9 +69,6 @@ export const DEFAULT_SETTINGS: UsageStatsSettings = {
 	dataRetentionDays: 365,
 	enableDataExport: true,
 
-	enableSyncToCloud: false,
-	autoSync: false,
-	syncInterval: 60, // 1 hour
 	lastSyncTime: 0,
 
 	isAuthenticated: false,
