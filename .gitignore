@@ -25,11 +25,30 @@ data.json
 # Exclude Windows Explorer (Resource Manager) View States
 Thumbs.db
 
-# other
-*.bat
+# Build outputs and distribution
+dist/
 *.zip
-.env
-dist
+*.tar.gz
 
-backups
+# Environment and config
+.env
+.env.local
+.env.production
+
+# Runtime data
+data.json
 file-tracker.json
+backups/
+
+# OS generated files
+*.bat
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Release artifacts (should be created by CI/CD)
+release/
+releases/

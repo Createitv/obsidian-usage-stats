@@ -317,8 +317,8 @@ export class UsageStatsView extends ItemView {
 			return
 		}
 
-		// Show only last 10 sessions for readability
-		const recentSessions = timeline.slice(-10).reverse()
+		// Show only the most recent 10 sessions (timeline is already sorted with newest first)
+		const recentSessions = timeline.slice(0, 10)
 
 		const timelineContainer = timelineSection.createEl('div', {
 			cls: 'timeline-container',

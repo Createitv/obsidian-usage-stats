@@ -1,68 +1,163 @@
-name: Release Obsidian plugin
+name: Release
 
 on:
-    push:
-        tags:
-            - "[0-9]+.[0-9]+.[0-9]+*" # 匹配类似 1.0.0 或 1.0.0-beta.1 的格式
-
-permissions:
-    contents: write
-    discussions: write
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release (e.g., 1.0.0)"
+        required: true
+        type: string
 
 env:
-    PLUGIN_ID: obsidian-plugin-starter # 插件ID
+  PLUGIN_NAME: obsidian-usage-stats
 
 jobs:
-    build:
-        runs-on: ubuntu-22.04
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0 # 获取完整的git历史
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Use Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "18.x"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
 
-            - name: Prepare manifest
-              id: prepare_manifest
-              run: |
-                  if [[ ${{ github.ref }} == *"beta"* ]]; then
-                    cp manifest-beta.json manifest.json
-                  fi
+      - name: Install dependencies
+        run: npm ci
 
-            - name: Build
-              id: build
-              run: |
-                  npm install -g yarn
-                  yarn
-                  yarn run build --if-present
-                  mkdir ${{ env.PLUGIN_ID }}
-                  cp main.js manifest.json styles.css ${{ env.PLUGIN_ID }}
-                  zip -r ${{ env.PLUGIN_ID }}.zip ${{ env.PLUGIN_ID }}
-                  ls
-                  echo "tag_name=$(git tag --sort version:refname | tail -n 1)" >> $GITHUB_OUTPUT
+      - name: Run linting
+        run: npm run lint
 
-            - name: Create Release
-              id: create_release
-              uses: softprops/action-gh-release@v2
-              with:
-                  tag_name: ${{ github.ref_name }}
-                  name: ${{ github.ref_name }}
-                  draft: false
-                  prerelease: ${{ contains(github.ref, 'beta') }}
-                  generate_release_notes: true
-                  discussion_category_name: "Announcements"
-                  body: |
-                      ${{ contains(github.ref, 'beta') && '🚧 This is a beta release' || '🎉 This is a stable release' }}
+      - name: Run type checking
+        run: npx tsc --noEmit --skipLibCheck
 
-                      **Version:** ${{ github.ref_name }}
-                  files: |
-                      ${{ env.PLUGIN_ID }}.zip
-                      main.js
-                      manifest.json
-                      styles.css
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build plugin
+        run: npm run package
+
+      - name: Get version from tag
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update manifest version
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Remove 'v' prefix if present
+          VERSION=${VERSION#v}
+
+          # Update manifest.json
+          jq --arg version "$VERSION" '.version = $version' manifest.json > tmp.json && mv tmp.json manifest.json
+
+          # Update package.json
+          jq --arg version "$VERSION" '.version = $version' package.json > tmp.json && mv tmp.json package.json
+
+          echo "Updated version to: $VERSION"
+
+      - name: Rebuild with updated version
+        run: npm run package
+
+      - name: Create release archive
+        run: |
+          cd dist
+          zip -r "../${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip" .
+          cd ..
+
+      - name: Verify build output
+        run: |
+          echo "📦 Build artifacts:"
+          ls -la dist/
+          echo ""
+          echo "📄 Archive contents:"
+          unzip -l "${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: Release ${{ steps.version.outputs.version }}
+          body: |
+            ## 🎉 Obsidian 使用统计插件 v${{ steps.version.outputs.version }}
+
+            ### 📥 安装方法
+
+            1. 下载下面的 `${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip` 文件
+            2. 在 Obsidian 中打开设置 → 第三方插件 → 已安装插件
+            3. 点击"打开插件文件夹"
+            4. 创建文件夹 `obsidian-usage-stats`
+            5. 将压缩包内容解压到该文件夹
+            6. 重新加载插件或重启 Obsidian
+            7. 启用"Obtime"插件
+
+            ### 📋 包含文件
+
+            - `main.js` - 插件主要代码
+            - `manifest.json` - 插件清单文件
+            - `styles.css` - 样式文件
+            - `usage-stats.css` - 使用统计样式
+            - `view-styles.css` - 视图样式
+
+            ### 🐛 问题反馈
+
+            如遇到问题，请在 [Issues](https://github.com/${{ github.repository }}/issues) 中反馈。
+
+            ---
+
+            **完整更新日志请查看提交历史**
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset - Plugin ZIP
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip
+          asset_name: ${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset - main.js
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/main.js
+          asset_name: main.js
+          asset_content_type: application/javascript
+
+      - name: Upload Release Asset - manifest.json
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/manifest.json
+          asset_name: manifest.json
+          asset_content_type: application/json
+
+      - name: Upload Release Asset - styles.css
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/styles.css
+          asset_name: styles.css
+          asset_content_type: text/css
+        continue-on-error: true

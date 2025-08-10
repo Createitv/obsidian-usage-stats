@@ -1,26 +1,43 @@
 {
-	"name": "obsidian-plugin-template",
-	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"name": "obsidian-usage-stats",
+	"version": "1.0.1",
+	"description": "Track time spent in Obsidian with detailed statistics and beautiful charts.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node scripts/esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production",
 		"build:local": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production keep-console && node scripts/copy-to-vault.mjs",
-		"package": "node scripts/build-package.mjs",
+		"package": "node scripts/build-package.mjs --production",
+		"package:dev": "node scripts/build-package.mjs",
+		"package:dist": "node scripts/build-package.mjs --production --output=dist",
 		"version": "node scripts/version-bump.mjs",
-		"changelog:u": "conventional-changelog -p angular -i CHANGELOG.md -s -u -n ./scripts/changelog-option.js",
-		"changelog:all": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 -n ./scripts/changelog-option.js",
-		"release:pre": "npm run build && npm run version && npm run changelog:u",
+		"release": "node scripts/release.mjs",
+		"release:patch": "node scripts/release.mjs patch",
+		"release:minor": "node scripts/release.mjs minor",
+		"release:major": "node scripts/release.mjs major",
 		"release:tag": "node scripts/release-tag.mjs",
 		"lint": "eslint . --ext .ts,.tsx",
 		"lint:fix": "eslint . --ext .ts,.tsx --fix"
 	},
 	"keywords": [
-		"Obsidian Plugin"
+		"obsidian",
+		"obsidian-plugin",
+		"time-tracking",
+		"statistics",
+		"productivity",
+		"charts",
+		"analytics"
 	],
 	"author": "林逍遥",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/createitv/obsidian-usage-stats.git"
+	},
+	"bugs": {
+		"url": "https://github.com/createitv/obsidian-usage-stats/issues"
+	},
+	"homepage": "https://github.com/createitv/obsidian-usage-stats#readme",
 	"engines": {
 		"node": ">=18.x"
 	},

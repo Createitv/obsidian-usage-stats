@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Run type checking
+        run: npx tsc --noEmit --skipLibCheck
+
+      - name: Build plugin (development)
+        run: npm run package:dev
+
+      - name: Build plugin (production)
+        run: npm run package
+
+      - name: Verify build output
+        run: |
+          echo "📦 Build verification:"
+          ls -la dist/
+
+          # Check required files exist
+          test -f dist/main.js || (echo "❌ main.js not found" && exit 1)
+          test -f dist/manifest.json || (echo "❌ manifest.json not found" && exit 1)
+
+          echo "✅ All required files present"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        if: matrix.node-version == 18
+        with:
+          name: plugin-build-${{ github.sha }}
+          path: dist/
+          retention-days: 30
