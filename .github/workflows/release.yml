@@ -161,3 +161,25 @@ jobs:
           asset_name: styles.css
           asset_content_type: text/css
         continue-on-error: true
+
+      - name: Upload Release Asset - usage-stats.css
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/usage-stats.css
+          asset_name: usage-stats.css
+          asset_content_type: text/css
+        continue-on-error: true
+
+      - name: Upload Release Asset - view-styles.css
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/view-styles.css
+          asset_name: view-styles.css
+          asset_content_type: text/css
+        continue-on-error: true
