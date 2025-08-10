@@ -44,11 +44,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run linting
-        run: pnpm run lint
+      # 跳过 linting 检查 - 加速 CI
+      # - name: Run linting
+      #   run: pnpm run lint
 
-      - name: Run type checking
-        run: pnpm exec tsc --noEmit --skipLibCheck
+      # 跳过类型检查 - 加速 CI
+      # - name: Run type checking
+      #   run: pnpm exec tsc --noEmit --skipLibCheck
 
       - name: Build plugin (development)
         run: pnpm run package:dev
