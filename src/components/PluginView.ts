@@ -171,14 +171,28 @@ export class UsageStatsView extends ItemView {
 
 		chartSelect.addEventListener('change', (e) => {
 			this.currentChartType = (e.target as HTMLSelectElement).value as ChartType
-			this.renderChartsSection(
-				this.containerEl.querySelector('.usage-stats-content') as HTMLElement
-			)
+			// 重新渲染所有图表以应用新的图表类型
+			this.reRenderAllCharts()
 		})
 	}
 
 	private renderTodayOverview(container: HTMLElement): void {
-		const overview = container.createEl('div', { cls: 'today-overview' })
+		// Remove existing today overview to prevent duplicates
+		const existingOverview = container.querySelector('.today-overview')
+		if (existingOverview) {
+			existingOverview.remove()
+		}
+
+		// 确保 today-overview 添加到容器的开头，保持正确的顺序
+		const overview = document.createElement('div')
+		overview.className = 'today-overview'
+
+		// 插入到容器的第一个位置
+		if (container.firstChild) {
+			container.insertBefore(overview, container.firstChild)
+		} else {
+			container.appendChild(overview)
+		}
 
 		// Header with date
 		const headerEl = overview.createEl('div', { cls: 'today-header' })
@@ -193,13 +207,7 @@ export class UsageStatsView extends ItemView {
 			}),
 		})
 
-		// Debug info
-		console.log('PluginView.renderTodayOverview: Getting today stats...')
 		const todayStats = this.fileTrackerManager.getTodayStats()
-		console.log(
-			'PluginView.renderTodayOverview: Today stats received:',
-			todayStats
-		)
 
 		const cards = overview.createEl('div', { cls: 'stats-cards' })
 
@@ -338,11 +346,11 @@ export class UsageStatsView extends ItemView {
 			// Content
 			const contentEl = sessionEl.createEl('div', { cls: 'timeline-content' })
 
-			// File info
+			// File info (clickable)
 			const fileInfoEl = contentEl.createEl('div', {
-				cls: 'timeline-file-info',
+				cls: 'timeline-file-info clickable',
 			})
-			fileInfoEl.createEl('div', {
+			const fileNameEl = fileInfoEl.createEl('div', {
 				cls: 'timeline-filename',
 				text: session.fileName,
 			})
@@ -351,13 +359,27 @@ export class UsageStatsView extends ItemView {
 				text: session.folderPath === '/' ? 'Root' : session.folderPath,
 			})
 
-			// Session type badge
+			// Session type badge (clickable)
 			const badgeEl = contentEl.createEl('div', {
-				cls: `timeline-badge timeline-badge-${session.sessionType}`,
+				cls: `timeline-badge timeline-badge-${session.sessionType} clickable`,
 			})
 			badgeEl.setText(
 				session.sessionType === 'edit' ? t('timeline.edit') : t('timeline.view')
 			)
+
+			// Add click handlers to open the file
+			const openFile = async () => {
+				try {
+					await this.app.workspace.openLinkText(session.filePath, '')
+				} catch (error) {
+					console.error('Failed to open file:', session.filePath, error)
+					// 显示失败提示
+					new Notice(`${t('error.cannotOpenFile')}: ${session.fileName}`)
+				}
+			}
+
+			fileInfoEl.addEventListener('click', openFile)
+			badgeEl.addEventListener('click', openFile)
 
 			// Add connector line (except for last item)
 			if (index < recentSessions.length - 1) {
@@ -409,40 +431,54 @@ export class UsageStatsView extends ItemView {
 			cls: 'tab-contents',
 		})
 
+		// Pre-render all charts
+		const chartTabs = this.createAllChartTabs(tabButtons, tabContents, stats)
+
+		// Set up tab switching
+		this.setupTabSwitching(tabButtons, tabContents, chartTabs)
+	}
+
+	private createAllChartTabs(
+		tabButtons: HTMLElement,
+		tabContents: HTMLElement,
+		stats: any
+	): { [key: string]: HTMLElement } {
+		const tabs: { [key: string]: HTMLElement } = {}
+
 		// Categories tab
-		this.createChartTab(
+		tabs.categories = this.createPreRenderedChartTab(
 			tabButtons,
 			tabContents,
 			'categories',
 			t('chart.categories'),
 			() => {
-				const chartEl = tabContents.createEl('div', {
-					cls: 'chart-container',
-				})
+				const chartEl = document.createElement('div')
+				chartEl.className = 'chart-container'
 				const renderer = new ChartRenderer(chartEl, {
 					width: 400,
 					height: 300,
 				})
 				renderer.renderCategoryChart(this.currentChartType, stats.categoryStats)
+				return chartEl
 			},
 			true
 		)
 
 		// Files tab
-		this.createChartTab(
+		tabs.files = this.createPreRenderedChartTab(
 			tabButtons,
 			tabContents,
 			'files',
 			t('chart.files'),
 			() => {
-				const chartEl = tabContents.createEl('div', {
-					cls: 'chart-container',
-				})
+				const chartEl = document.createElement('div')
+				chartEl.className = 'chart-container'
 				const renderer = new ChartRenderer(chartEl, {
 					width: 400,
 					height: 300,
 				})
 				renderer.renderFileChart(this.currentChartType, stats.fileStats)
+				return chartEl
 			}
 		)
 
@@ -452,85 +488,97 @@ export class UsageStatsView extends ItemView {
 			stats.tagStats &&
 			stats.tagStats.length > 0
 		) {
-			this.createChartTab(
+			tabs.tags = this.createPreRenderedChartTab(
 				tabButtons,
 				tabContents,
 				'tags',
 				t('chart.tags'),
 				() => {
-					const chartEl = tabContents.createEl('div', {
-						cls: 'chart-container',
-					})
+					const chartEl = document.createElement('div')
+					chartEl.className = 'chart-container'
 					const renderer = new ChartRenderer(chartEl, {
 						width: 400,
 						height: 300,
 					})
 					renderer.renderTagChart(this.currentChartType, stats.tagStats)
+					return chartEl
 				}
 			)
 		}
 
 		// Daily trend tab (for non-today periods)
 		if (this.currentPeriod !== 'today') {
-			this.createChartTab(
+			tabs.daily = this.createPreRenderedChartTab(
 				tabButtons,
 				tabContents,
 				'daily',
 				t('chart.daily'),
 				() => {
-					const chartEl = tabContents.createEl('div', {
-						cls: 'chart-container',
-					})
-					chartEl.createEl('div', {
-						cls: 'no-data-message',
-						text: t('view.chartNotAvailable'),
-					})
+					const chartEl = document.createElement('div')
+					chartEl.className = 'chart-container'
+					chartEl.innerHTML = `<div class="no-data-message">${t(
+						'view.chartNotAvailable'
+					)}</div>`
+					return chartEl
 				}
 			)
 		}
+
+		return tabs
 	}
 
-	private createChartTab(
+	private createPreRenderedChartTab(
 		tabButtons: HTMLElement,
 		tabContents: HTMLElement,
 		id: string,
 		label: string,
-		renderFunction: () => void,
+		renderFunction: () => HTMLElement,
 		isActive: boolean = false
-	): void {
+	): HTMLElement {
+		// Create tab button
 		const button = tabButtons.createEl('button', {
 			cls: `tab-button ${isActive ? 'is-active' : ''}`,
 			text: label,
 			attr: { 'data-tab': id },
 		})
 
+		// Create tab content container
 		const content = tabContents.createEl('div', {
 			cls: `tab-content ${isActive ? 'is-active' : ''}`,
 			attr: { 'data-tab': id },
 		})
 
-		button.addEventListener('click', () => {
-			// Remove active class from all tabs
-			tabButtons
-				.querySelectorAll('.tab-button')
-				.forEach((btn) => btn.removeClass('is-active'))
-			tabContents
-				.querySelectorAll('.tab-content')
-				.forEach((content) => content.removeClass('is-active'))
+		// Pre-render the chart
+		const chartElement = renderFunction()
+		content.appendChild(chartElement)
 
-			// Add active class to clicked tab
-			button.addClass('is-active')
-			content.addClass('is-active')
+		return content
+	}
 
-			// Clear and render content
-			content.empty()
-			renderFunction()
+	private setupTabSwitching(
+		tabButtons: HTMLElement,
+		tabContents: HTMLElement,
+		chartTabs: { [key: string]: HTMLElement }
+	): void {
+		tabButtons.addEventListener('click', (e) => {
+			const target = e.target as HTMLElement
+			if (target.classList.contains('tab-button')) {
+				const tabId = target.getAttribute('data-tab')
+				if (tabId && chartTabs[tabId]) {
+					// Remove active class from all tabs
+					tabButtons
+						.querySelectorAll('.tab-button')
+						.forEach((btn) => btn.removeClass('is-active'))
+					tabContents
+						.querySelectorAll('.tab-content')
+						.forEach((content) => content.removeClass('is-active'))
+
+					// Add active class to clicked tab
+					target.addClass('is-active')
+					chartTabs[tabId].addClass('is-active')
+				}
+			}
 		})
-
-		// Render if active
-		if (isActive) {
-			renderFunction()
-		}
 	}
 
 	private renderStatisticsSection(container: HTMLElement): void {
@@ -586,7 +634,7 @@ export class UsageStatsView extends ItemView {
 			const fileList = filesEl.createEl('div', { cls: 'stats-items' })
 			stats.fileStats.slice(0, 10).forEach((file) => {
 				const item = fileList.createEl('div', {
-					cls: 'stats-item stats-file-item',
+					cls: 'stats-item stats-file-item clickable',
 				})
 
 				// File info container
@@ -607,7 +655,7 @@ export class UsageStatsView extends ItemView {
 				const statsInfo = item.createEl('div', { cls: 'stats-file-stats' })
 				statsInfo.createEl('span', {
 					cls: 'stats-time',
-					text: this.formatDuration(file.totalTime * 1000), // Convert to milliseconds
+					text: this.formatDuration(file.totalTime), // totalTime is already in milliseconds from getAggregatedStats
 				})
 				statsInfo.createEl('span', {
 					cls: 'stats-sessions',
@@ -618,6 +666,16 @@ export class UsageStatsView extends ItemView {
 				item.createEl('div', {
 					cls: 'stats-last-accessed',
 					text: new Date(file.lastAccessed).toLocaleDateString('zh-CN'),
+				})
+
+				// Add click handler to open the file
+				item.addEventListener('click', async () => {
+					try {
+						await this.app.workspace.openLinkText(file.filePath, '')
+					} catch (error) {
+						console.error('Failed to open file:', file.filePath, error)
+						new Notice(`${t('error.cannotOpenFile')}: ${file.fileName}`)
+					}
 				})
 			})
 		}
@@ -636,7 +694,7 @@ export class UsageStatsView extends ItemView {
 				})
 				item.createEl('span', {
 					cls: 'stats-time',
-					text: this.formatDuration(tag.totalTime * 1000), // Convert to milliseconds
+					text: this.formatDuration(tag.totalTime), // totalTime is already in milliseconds from getAggregatedStats
 				})
 			})
 		}
@@ -925,9 +983,13 @@ export class UsageStatsView extends ItemView {
 	private startAutoRefresh(): void {
 		// Refresh every 30 seconds
 		this.refreshInterval = setInterval(() => {
-			this.renderTodayOverview(
-				this.containerEl.querySelector('.usage-stats-content') as HTMLElement
-			)
+			// 只更新今天概览部分，不影响整体布局
+			const contentEl = this.containerEl.querySelector(
+				'.usage-stats-content'
+			) as HTMLElement
+			if (contentEl) {
+				this.renderTodayOverview(contentEl)
+			}
 		}, 30000)
 	}
 
@@ -950,8 +1012,116 @@ export class UsageStatsView extends ItemView {
 
 	public setChartType(type: ChartType): void {
 		this.currentChartType = type
-		this.renderChartsSection(
-			this.containerEl.querySelector('.usage-stats-content') as HTMLElement
-		)
+		this.reRenderAllCharts()
+	}
+
+	/**
+	 * 重新渲染所有图表内容，保持标签页结构但更新图表类型
+	 */
+	private reRenderAllCharts(): void {
+		// 保存当前滚动位置
+		const scrollTop = this.containerEl.scrollTop
+
+		const chartsSection = this.containerEl.querySelector('.charts-section')
+		if (!chartsSection) return
+
+		const stats = this.fileTrackerManager.getAggregatedStats(this.currentPeriod)
+		if (stats.totalTime === 0) return
+
+		// 更新每个图表标签页的内容
+		const tabContents = chartsSection.querySelector('.tab-contents')
+		if (!tabContents) return
+
+		// 清空并重新渲染所有标签页内容
+		const chartTabs = this.updateAllChartTabs(tabContents as HTMLElement, stats)
+
+		// 确保当前活跃的标签页保持活跃状态
+		const activeTab = tabContents.querySelector('.tab-content.is-active')
+		const activeTabId = activeTab?.getAttribute('data-tab')
+
+		if (activeTabId && chartTabs[activeTabId]) {
+			// 重新激活当前标签页
+			tabContents
+				.querySelectorAll('.tab-content')
+				.forEach((content) => content.removeClass('is-active'))
+			chartTabs[activeTabId].addClass('is-active')
+		}
+
+		// 恢复滚动位置
+		this.containerEl.scrollTop = scrollTop
+	}
+
+	/**
+	 * 更新所有图表标签页的内容
+	 */
+	private updateAllChartTabs(
+		tabContents: HTMLElement,
+		stats: any
+	): { [key: string]: HTMLElement } {
+		const tabs: { [key: string]: HTMLElement } = {}
+
+		// Categories tab
+		const categoriesTab = tabContents.querySelector(
+			'[data-tab="categories"]'
+		) as HTMLElement
+		if (categoriesTab) {
+			categoriesTab.empty()
+			const chartEl = document.createElement('div')
+			chartEl.className = 'chart-container'
+			const renderer = new ChartRenderer(chartEl, { width: 400, height: 300 })
+			renderer.renderCategoryChart(this.currentChartType, stats.categoryStats)
+			categoriesTab.appendChild(chartEl)
+			tabs.categories = categoriesTab
+		}
+
+		// Files tab
+		const filesTab = tabContents.querySelector(
+			'[data-tab="files"]'
+		) as HTMLElement
+		if (filesTab) {
+			filesTab.empty()
+			const chartEl = document.createElement('div')
+			chartEl.className = 'chart-container'
+			const renderer = new ChartRenderer(chartEl, { width: 400, height: 300 })
+			renderer.renderFileChart(this.currentChartType, stats.fileStats)
+			filesTab.appendChild(chartEl)
+			tabs.files = filesTab
+		}
+
+		// Tags tab
+		const tagsTab = tabContents.querySelector(
+			'[data-tab="tags"]'
+		) as HTMLElement
+		if (
+			tagsTab &&
+			this.settings.enableTagTracking &&
+			stats.tagStats &&
+			stats.tagStats.length > 0
+		) {
+			tagsTab.empty()
+			const chartEl = document.createElement('div')
+			chartEl.className = 'chart-container'
+			const renderer = new ChartRenderer(chartEl, { width: 400, height: 300 })
+			renderer.renderTagChart(this.currentChartType, stats.tagStats)
+			tagsTab.appendChild(chartEl)
+			tabs.tags = tagsTab
+		}
+
+		// Daily trend tab
+		const dailyTab = tabContents.querySelector(
+			'[data-tab="daily"]'
+		) as HTMLElement
+		if (dailyTab && this.currentPeriod !== 'today') {
+			dailyTab.empty()
+			const chartEl = document.createElement('div')
+			chartEl.className = 'chart-container'
+			chartEl.innerHTML = `<div class="no-data-message">${t(
+				'view.chartNotAvailable'
+			)}</div>`
+			dailyTab.appendChild(chartEl)
+			tabs.daily = dailyTab
+		}
+
+		return tabs
 	}
 }

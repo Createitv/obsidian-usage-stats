@@ -618,12 +618,10 @@ export default class UsageStatsPlugin extends Plugin {
 			throw new Error('Authentication required')
 		}
 
-		const todayStats = this.getTodayStats()
 		const allEntries = await this.dataManager.getAllEntries()
 
 		const payload: UsageDataPayload = {
 			entries: allEntries,
-			dailyStats: [todayStats],
 			lastSyncTime: this.settings.lastSyncTime,
 			pluginVersion: '1.0.0',
 		}

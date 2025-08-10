@@ -314,6 +314,9 @@ const translations: BaseMessage = {
 
 	// Comparison
 	'comparison.yesterdayVsToday': '与昨天对比',
+
+	// Error messages
+	'error.cannotOpenFile': '无法打开文件',
 }
 
 export default translations

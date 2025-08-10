@@ -512,6 +512,18 @@
 	flex: 1;
 }
 
+.timeline-file-info.clickable {
+	cursor: pointer;
+	transition: all 0.2s ease;
+	border-radius: 4px;
+	padding: 2px 4px;
+	margin: -2px -4px;
+}
+
+.timeline-file-info.clickable:hover {
+	background: var(--background-modifier-hover);
+}
+
 .timeline-filename {
 	font-size: 13px;
 	font-weight: 500;
@@ -530,6 +542,16 @@
 	font-size: 10px;
 	font-weight: 500;
 	text-transform: uppercase;
+	transition: all 0.2s ease;
+}
+
+.timeline-badge.clickable {
+	cursor: pointer;
+}
+
+.timeline-badge.clickable:hover {
+	opacity: 0.8;
+	transform: translateY(-1px);
 }
 
 .timeline-badge-edit {
@@ -695,6 +717,18 @@
 	gap: 12px;
 	align-items: center;
 	padding: 12px 0;
+}
+
+.stats-file-item.clickable {
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+	border-radius: 4px;
+	padding: 12px 8px;
+	margin: 0 -8px;
+}
+
+.stats-file-item.clickable:hover {
+	background: var(--background-modifier-hover);
 }
 
 .stats-file-info {

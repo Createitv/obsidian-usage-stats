@@ -16,7 +16,8 @@ import {
 export class FileTrackerManager extends Component {
 	private vault: Vault
 	private data: FileTrackerData | null = null
-	private readonly FILE_PATH = 'file-tracker.json'
+	private readonly FILE_PATH =
+		'.obsidian/plugins/obsidian-usage-stats/file-tracker.json'
 
 	constructor(vault: Vault) {
 		super()

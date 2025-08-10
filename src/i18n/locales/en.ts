@@ -328,6 +328,9 @@ const translations: BaseMessage = {
 
 	// Comparison
 	'comparison.yesterdayVsToday': 'Compared to Yesterday',
+
+	// Error messages
+	'error.cannotOpenFile': 'Cannot open file',
 }
 
 export default translations
