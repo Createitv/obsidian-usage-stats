@@ -2,7 +2,7 @@
  * Data storage and management for usage statistics
  */
 
-import { Component, Vault } from "obsidian";
+import { Component, Vault } from 'obsidian'
 import {
 	TimeEntry,
 	DailyStats,
@@ -11,115 +11,124 @@ import {
 	TagStats,
 	UsageStatsSettings,
 	ViewPeriod,
-} from "../core/types";
+} from '../core/types'
 
 export interface StorageData {
-	version: string;
-	lastUpdated: number;
-	dailyStats: Record<string, DailyStats>; // key: YYYY-MM-DD
-	settings: UsageStatsSettings;
+	version: string
+	lastUpdated: number
+	dailyStats: Record<string, DailyStats> // key: YYYY-MM-DD
+	settings: UsageStatsSettings
 }
 
 export class DataManager extends Component {
-	private vault: Vault;
-	private settings: UsageStatsSettings;
-	private data: StorageData;
-	private saveTimer?: NodeJS.Timeout;
+	private vault: Vault
+	private settings: UsageStatsSettings
+	private data: StorageData
+	private saveTimer?: NodeJS.Timeout
 	private readonly DATA_FILE_PATH =
-		".obsidian/plugins/obsidian-usage-stats/data.json";
+		'.obsidian/plugins/obsidian-usage-stats/data.json'
 
 	constructor(vault: Vault, settings: UsageStatsSettings) {
-		super();
-		this.vault = vault;
-		this.settings = settings;
-		this.data = this.getDefaultData();
+		super()
+		this.vault = vault
+		this.settings = settings
+		this.data = this.getDefaultData()
 	}
 
 	onload(): void {
-		this.loadData();
-		this.startAutoSave();
+		this.loadData()
+		this.startAutoSave()
 	}
 
 	onunload(): void {
-		this.stopAutoSave();
-		this.saveData();
+		this.stopAutoSave()
+		this.saveData()
 	}
 
 	// Core data operations
 	public async loadData(): Promise<void> {
 		try {
-			const content = await this.vault.adapter.read(this.DATA_FILE_PATH);
-			const parsedData = JSON.parse(content) as StorageData;
+			const content = await this.vault.adapter.read(this.DATA_FILE_PATH)
+			const parsedData = JSON.parse(content) as StorageData
 
 			// Validate and migrate data if necessary
-			this.data = this.validateAndMigrateData(parsedData);
+			this.data = this.validateAndMigrateData(parsedData)
 		} catch (error) {
 			// No existing data file found, starting with default data
-			this.data = this.getDefaultData();
+			this.data = this.getDefaultData()
 		}
 	}
 
 	public async saveData(): Promise<void> {
 		try {
-			this.data.lastUpdated = Date.now();
-			const content = JSON.stringify(this.data, null, 2);
+			this.data.lastUpdated = Date.now()
+			const content = JSON.stringify(this.data, null, 2)
 
 			// Ensure directory exists
-			await this.ensureDataDirectory();
+			await this.ensureDataDirectory()
 
 			// Save main data file
-			await this.vault.adapter.write(this.DATA_FILE_PATH, content);
+			await this.vault.adapter.write(this.DATA_FILE_PATH, content)
 		} catch (error) {
-			console.error("Failed to save usage statistics data:", error);
+			console.error('Failed to save usage statistics data:', error)
 		}
 	}
 
 	public async addTimeEntry(entry: TimeEntry): Promise<void> {
 		// 检查是否启用了跟踪功能
 		if (!this.settings.enableTracking) {
-			return;
+			return
 		}
 
-		const dateKey = this.getDateKey(entry.startTime);
+		const dateKey = this.getDateKey(entry.startTime)
 
 		// Initialize daily stats if not exists
 		if (!this.data.dailyStats[dateKey]) {
-			this.data.dailyStats[dateKey] = this.createEmptyDailyStats(dateKey);
+			this.data.dailyStats[dateKey] = this.createEmptyDailyStats(dateKey)
 		}
 
-		const dailyStats = this.data.dailyStats[dateKey];
+		const dailyStats = this.data.dailyStats[dateKey]
 
 		// Add entry
-		dailyStats.entries.push(entry);
+		dailyStats.entries.push(entry)
 
 		// Update totals
-		dailyStats.totalTime += entry.duration;
+		dailyStats.totalTime += entry.duration
 		if (entry.isActive) {
-			dailyStats.activeTime += entry.duration;
+			dailyStats.activeTime += entry.duration
 		} else {
-			dailyStats.idleTime += entry.duration;
+			dailyStats.idleTime += entry.duration
 		}
 
 		// Update category stats
-		this.updateCategoryStats(dailyStats, entry);
+		this.updateCategoryStats(dailyStats, entry)
 
 		// Update file stats
-		this.updateFileStats(dailyStats, entry);
+		this.updateFileStats(dailyStats, entry)
 
 		// Update tag stats
-		this.updateTagStats(dailyStats, entry);
+		this.updateTagStats(dailyStats, entry)
 
 		// Schedule save
-		this.scheduleSave();
+		this.scheduleSave()
+	}
+
+	// Event listener for TimeTracker events
+	public setupTimeTrackerIntegration(timeTracker: any): void {
+		timeTracker.addEventListener((event: any) => {
+			if (event.type === 'time_entry_created' && event.data?.entry) {
+				this.addTimeEntry(event.data.entry)
+			}
+		})
 	}
 
 	public getDailyStats(date: string): DailyStats | undefined {
-		return this.data.dailyStats[date];
+		return this.data.dailyStats[date]
 	}
 
 	public getTodayStats(): DailyStats {
-		const today = this.getDateKey(Date.now());
-		return this.data.dailyStats[today] || this.createEmptyDailyStats(today);
+		const today = this.getDateKey(Date.now())
+		return this.data.dailyStats[today] || this.createEmptyDailyStats(today)
 	}
 
 	public getStatsForPeriod(
@@ -127,11 +136,10 @@ export class DataManager extends Component {
 		startDate?: string,
 		endDate?: string
 	): DailyStats[] {
-		const dates = this.getDateRangeForPeriod(period, startDate, endDate);
+		const dates = this.getDateRangeForPeriod(period, startDate, endDate)
 		return dates.map(
-			(date) =>
-				this.data.dailyStats[date] || this.createEmptyDailyStats(date)
-		);
+			(date) => this.data.dailyStats[date] || this.createEmptyDailyStats(date)
+		)
 	}
 
 	public getAggregatedStats(
@@ -139,62 +147,60 @@ export class DataManager extends Component {
 		startDate?: string,
 		endDate?: string
 	): DailyStats {
-		const dailyStats = this.getStatsForPeriod(period, startDate, endDate);
-		return this.aggregateDailyStats(dailyStats);
+		const dailyStats = this.getStatsForPeriod(period, startDate, endDate)
+		return this.aggregateDailyStats(dailyStats)
 	}
 
 	// Category statistics
-	public getCategoryStats(period: ViewPeriod = "today"): CategoryStats[] {
-		const stats = this.getAggregatedStats(period);
-		return stats.categoryStats.sort((a, b) => b.totalTime - a.totalTime);
+	public getCategoryStats(period: ViewPeriod = 'today'): CategoryStats[] {
+		const stats = this.getAggregatedStats(period)
+		return stats.categoryStats.sort((a, b) => b.totalTime - a.totalTime)
 	}
 
 	// File statistics
-	public getFileStats(period: ViewPeriod = "today"): FileStats[] {
-		const stats = this.getAggregatedStats(period);
-		return stats.fileStats.sort((a, b) => b.totalTime - a.totalTime);
+	public getFileStats(period: ViewPeriod = 'today'): FileStats[] {
+		const stats = this.getAggregatedStats(period)
+		return stats.fileStats.sort((a, b) => b.totalTime - a.totalTime)
 	}
 
 	// Tag statistics
-	public getTagStats(period: ViewPeriod = "today"): TagStats[] {
-		const stats = this.getAggregatedStats(period);
-		return stats.tagStats.sort((a, b) => b.totalTime - a.totalTime);
+	public getTagStats(period: ViewPeriod = 'today'): TagStats[] {
+		const stats = this.getAggregatedStats(period)
+		return stats.tagStats.sort((a, b) => b.totalTime - a.totalTime)
 	}
 
 	// Get all entries for sync
 	public async getAllEntries(): Promise<TimeEntry[]> {
-		const allEntries: TimeEntry[] = [];
+		const allEntries: TimeEntry[] = []
 
 		for (const dateKey in this.data.dailyStats) {
-			const dailyStats = this.data.dailyStats[dateKey];
+			const dailyStats = this.data.dailyStats[dateKey]
 			if (dailyStats.entries) {
-				allEntries.push(...dailyStats.entries);
+				allEntries.push(...dailyStats.entries)
 			}
 		}
 
-		return allEntries.sort((a, b) => a.startTime - b.startTime);
+		return allEntries.sort((a, b) => a.startTime - b.startTime)
 	}
 
 	// Data cleanup
 	public async cleanupOldData(): Promise<void> {
-		if (this.settings.dataRetentionDays <= 0) return;
+		if (this.settings.dataRetentionDays <= 0) return
 
-		const cutoffDate = new Date();
-		cutoffDate.setDate(
-			cutoffDate.getDate() - this.settings.dataRetentionDays
-		);
-		const cutoffKey = this.getDateKey(cutoffDate.getTime());
+		const cutoffDate = new Date()
+		cutoffDate.setDate(cutoffDate.getDate() - this.settings.dataRetentionDays)
+		const cutoffKey = this.getDateKey(cutoffDate.getTime())
 
 		const keysToDelete = Object.keys(this.data.dailyStats).filter(
 			(key) => key < cutoffKey
-		);
+		)
 
 		for (const key of keysToDelete) {
-			delete this.data.dailyStats[key];
+			delete this.data.dailyStats[key]
 		}
 
 		if (keysToDelete.length > 0) {
-			await this.saveData();
+			await this.saveData()
 		}
 	}
 
@@ -203,57 +209,57 @@ export class DataManager extends Component {
 	 */
 	public async clearAllTrackingData(): Promise<void> {
 		// 清空所有跟踪数据，但保留其他设置
-		this.data.dailyStats = {};
-		this.data.lastUpdated = Date.now();
+		this.data.dailyStats = {}
+		this.data.lastUpdated = Date.now()
 
-		await this.saveData();
+		await this.saveData()
 	}
 
 	// Export functionality
 	public async exportData(
-		format: "json" | "csv" | "markdown",
+		format: 'json' | 'csv' | 'markdown',
 		period: ViewPeriod,
 		filePath?: string
 	): Promise<string> {
-		const stats = this.getStatsForPeriod(period);
+		const stats = this.getStatsForPeriod(period)
 
 		switch (format) {
-			case "json":
-				return this.exportAsJson(stats);
-			case "csv":
-				return this.exportAsCsv(stats);
-			case "markdown":
-				return this.exportAsMarkdown(stats);
+			case 'json':
+				return this.exportAsJson(stats)
+			case 'csv':
+				return this.exportAsCsv(stats)
+			case 'markdown':
+				return this.exportAsMarkdown(stats)
 			default:
-				throw new Error(`Unsupported export format: ${format}`);
+				throw new Error(`Unsupported export format: ${format}`)
 		}
 	}
 
 	// Private helper methods
 	private getDefaultData(): StorageData {
 		return {
-			version: "1.0.0",
+			version: '1.0.0',
 			lastUpdated: Date.now(),
 			dailyStats: {},
 			settings: this.settings,
-		};
+		}
 	}
 
 	private validateAndMigrateData(data: any): StorageData {
 		// Basic validation
-		if (!data || typeof data !== "object") {
-			return this.getDefaultData();
+		if (!data || typeof data !== 'object') {
+			return this.getDefaultData()
 		}
 
 		// Ensure required properties exist
-		if (!data.dailyStats) data.dailyStats = {};
-		if (!data.version) data.version = "1.0.0";
-		if (!data.lastUpdated) data.lastUpdated = Date.now();
+		if (!data.dailyStats) data.dailyStats = {}
+		if (!data.version) data.version = '1.0.0'
+		if (!data.lastUpdated) data.lastUpdated = Date.now()
 
 		// Migrate data if necessary based on version
 		// (Future versions can add migration logic here)
 
-		return data as StorageData;
+		return data as StorageData
 	}
 
 	private createEmptyDailyStats(date: string): DailyStats {
@@ -266,16 +272,13 @@ export class DataManager extends Component {
 			categoryStats: [],
 			fileStats: [],
 			tagStats: [],
-		};
+		}
 	}
 
-	private updateCategoryStats(
-		dailyStats: DailyStats,
-		entry: TimeEntry
-	): void {
+	private updateCategoryStats(dailyStats: DailyStats, entry: TimeEntry): void {
 		let categoryStats = dailyStats.categoryStats.find(
 			(stat) => stat.category === entry.category
-		);
+		)
 
 		if (!categoryStats) {
 			categoryStats = {
@@ -283,27 +286,27 @@ export class DataManager extends Component {
 				totalTime: 0,
 				percentage: 0,
 				count: 0,
-			};
-			dailyStats.categoryStats.push(categoryStats);
+			}
+			dailyStats.categoryStats.push(categoryStats)
 		}
 
-		categoryStats.totalTime += entry.duration;
-		categoryStats.count += 1;
+		categoryStats.totalTime += entry.duration
+		categoryStats.count += 1
 		categoryStats.percentage =
-			(categoryStats.totalTime / dailyStats.totalTime) * 100;
+			(categoryStats.totalTime / dailyStats.totalTime) * 100
 
 		// Recalculate all percentages
 		dailyStats.categoryStats.forEach((stat) => {
-			stat.percentage = (stat.totalTime / dailyStats.totalTime) * 100;
-		});
+			stat.percentage = (stat.totalTime / dailyStats.totalTime) * 100
+		})
 	}
 
 	private updateFileStats(dailyStats: DailyStats, entry: TimeEntry): void {
-		if (!entry.filePath || !entry.fileName) return;
+		if (!entry.filePath || !entry.fileName) return
 
 		let fileStats = dailyStats.fileStats.find(
 			(stat) => stat.filePath === entry.filePath
-		);
+		)
 
 		if (!fileStats) {
 			fileStats = {
@@ -313,30 +316,26 @@ export class DataManager extends Component {
 				percentage: 0,
 				lastAccessed: entry.endTime,
 				accessCount: 0,
-			};
-			dailyStats.fileStats.push(fileStats);
+			}
+			dailyStats.fileStats.push(fileStats)
 		}
 
-		fileStats.totalTime += entry.duration;
-		fileStats.lastAccessed = Math.max(
-			fileStats.lastAccessed,
-			entry.endTime
-		);
-		fileStats.accessCount += 1;
-		fileStats.percentage =
-			(fileStats.totalTime / dailyStats.totalTime) * 100;
+		fileStats.totalTime += entry.duration
+		fileStats.lastAccessed = Math.max(fileStats.lastAccessed, entry.endTime)
+		fileStats.accessCount += 1
+		fileStats.percentage = (fileStats.totalTime / dailyStats.totalTime) * 100
 
 		// Recalculate all percentages
 		dailyStats.fileStats.forEach((stat) => {
-			stat.percentage = (stat.totalTime / dailyStats.totalTime) * 100;
-		});
+			stat.percentage = (stat.totalTime / dailyStats.totalTime) * 100
+		})
 	}
 
 	private updateTagStats(dailyStats: DailyStats, entry: TimeEntry): void {
-		if (!entry.tags || entry.tags.length === 0) return;
+		if (!entry.tags || entry.tags.length === 0) return
 
 		entry.tags.forEach((tag) => {
-			let tagStats = dailyStats.tagStats.find((stat) => stat.tag === tag);
+			let tagStats = dailyStats.tagStats.find((stat) => stat.tag === tag)
 
 			if (!tagStats) {
 				tagStats = {
@@ -344,117 +343,116 @@ export class DataManager extends Component {
 					totalTime: 0,
 					percentage: 0,
 					fileCount: 0,
-				};
-				dailyStats.tagStats.push(tagStats);
+				}
+				dailyStats.tagStats.push(tagStats)
 			}
 
-			tagStats.totalTime += entry.duration;
-			tagStats.percentage =
-				(tagStats.totalTime / dailyStats.totalTime) * 100;
+			tagStats.totalTime += entry.duration
+			tagStats.percentage = (tagStats.totalTime / dailyStats.totalTime) * 100
 
 			// Update file count
-			const uniqueFiles = new Set();
+			const uniqueFiles = new Set()
 			dailyStats.entries
 				.filter((e) => e.tags.includes(tag))
-				.forEach((e) => e.filePath && uniqueFiles.add(e.filePath));
-			tagStats.fileCount = uniqueFiles.size;
-		});
+				.forEach((e) => e.filePath && uniqueFiles.add(e.filePath))
+			tagStats.fileCount = uniqueFiles.size
+		})
 
 		// Recalculate all percentages
 		dailyStats.tagStats.forEach((stat) => {
-			stat.percentage = (stat.totalTime / dailyStats.totalTime) * 100;
-		});
+			stat.percentage = (stat.totalTime / dailyStats.totalTime) * 100
+		})
 	}
 
 	private aggregateDailyStats(dailyStatsList: DailyStats[]): DailyStats {
-		const aggregated = this.createEmptyDailyStats("aggregated");
-		const categoryMap = new Map<string, CategoryStats>();
-		const fileMap = new Map<string, FileStats>();
-		const tagMap = new Map<string, TagStats>();
+		const aggregated = this.createEmptyDailyStats('aggregated')
+		const categoryMap = new Map<string, CategoryStats>()
+		const fileMap = new Map<string, FileStats>()
+		const tagMap = new Map<string, TagStats>()
 
 		dailyStatsList.forEach((dailyStats) => {
-			aggregated.totalTime += dailyStats.totalTime;
-			aggregated.activeTime += dailyStats.activeTime;
-			aggregated.idleTime += dailyStats.idleTime;
-			aggregated.entries.push(...dailyStats.entries);
+			aggregated.totalTime += dailyStats.totalTime
+			aggregated.activeTime += dailyStats.activeTime
+			aggregated.idleTime += dailyStats.idleTime
+			aggregated.entries.push(...dailyStats.entries)
 
 			// Aggregate category stats
 			dailyStats.categoryStats.forEach((stat) => {
-				const existing = categoryMap.get(stat.category);
+				const existing = categoryMap.get(stat.category)
 				if (existing) {
-					existing.totalTime += stat.totalTime;
-					existing.count += stat.count;
+					existing.totalTime += stat.totalTime
+					existing.count += stat.count
 				} else {
-					categoryMap.set(stat.category, { ...stat });
+					categoryMap.set(stat.category, { ...stat })
 				}
-			});
+			})
 
 			// Aggregate file stats
 			dailyStats.fileStats.forEach((stat) => {
-				const existing = fileMap.get(stat.filePath);
+				const existing = fileMap.get(stat.filePath)
 				if (existing) {
-					existing.totalTime += stat.totalTime;
+					existing.totalTime += stat.totalTime
 					existing.lastAccessed = Math.max(
 						existing.lastAccessed,
 						stat.lastAccessed
-					);
-					existing.accessCount += stat.accessCount;
+					)
+					existing.accessCount += stat.accessCount
 				} else {
-					fileMap.set(stat.filePath, { ...stat });
+					fileMap.set(stat.filePath, { ...stat })
 				}
-			});
+			})
 
 			// Aggregate tag stats
 			dailyStats.tagStats.forEach((stat) => {
-				const existing = tagMap.get(stat.tag);
+				const existing = tagMap.get(stat.tag)
 				if (existing) {
-					existing.totalTime += stat.totalTime;
+					existing.totalTime += stat.totalTime
 				} else {
-					tagMap.set(stat.tag, { ...stat });
+					tagMap.set(stat.tag, { ...stat })
 				}
-			});
-		});
+			})
+		})
 
 		// Convert maps back to arrays and recalculate percentages
-		aggregated.categoryStats = Array.from(categoryMap.values());
-		aggregated.fileStats = Array.from(fileMap.values());
-		aggregated.tagStats = Array.from(tagMap.values());
+		aggregated.categoryStats = Array.from(categoryMap.values())
+		aggregated.fileStats = Array.from(fileMap.values())
+		aggregated.tagStats = Array.from(tagMap.values())
 
 		// Recalculate percentages
 		aggregated.categoryStats.forEach((stat) => {
 			stat.percentage =
 				aggregated.totalTime > 0
 					? (stat.totalTime / aggregated.totalTime) * 100
-					: 0;
-		});
+					: 0
+		})
 		aggregated.fileStats.forEach((stat) => {
 			stat.percentage =
 				aggregated.totalTime > 0
 					? (stat.totalTime / aggregated.totalTime) * 100
-					: 0;
-		});
+					: 0
+		})
 		aggregated.tagStats.forEach((stat) => {
 			stat.percentage =
 				aggregated.totalTime > 0
 					? (stat.totalTime / aggregated.totalTime) * 100
-					: 0;
-		});
+					: 0
+		})
 
 		// Update tag file counts
 		aggregated.tagStats.forEach((tagStat) => {
-			const uniqueFiles = new Set();
+			const uniqueFiles = new Set()
 			aggregated.entries
 				.filter((e) => e.tags.includes(tagStat.tag))
-				.forEach((e) => e.filePath && uniqueFiles.add(e.filePath));
-			tagStat.fileCount = uniqueFiles.size;
-		});
+				.forEach((e) => e.filePath && uniqueFiles.add(e.filePath))
+			tagStat.fileCount = uniqueFiles.size
+		})
 
-		return aggregated;
+		return aggregated
 	}
 
 	private getDateKey(timestamp: number): string {
-		const date = new Date(timestamp);
-		return date.toISOString().split("T")[0]; // YYYY-MM-DD
+		const date = new Date(timestamp)
+		return date.toISOString().split('T')[0] // YYYY-MM-DD
 	}
 
 	private getDateRangeForPeriod(
@@ -462,88 +460,88 @@ export class DataManager extends Component {
 		startDate?: string,
 		endDate?: string
 	): string[] {
-		const dates: string[] = [];
-		const today = new Date();
-		let start: Date;
-		let end: Date;
+		const dates: string[] = []
+		const today = new Date()
+		let start: Date
+		let end: Date
 
 		switch (period) {
-			case "today":
-				return [this.getDateKey(today.getTime())];
+			case 'today':
+				return [this.getDateKey(today.getTime())]
 
-			case "week":
-				start = new Date(today);
-				start.setDate(today.getDate() - 6);
-				end = today;
-				break;
+			case 'week':
+				start = new Date(today)
+				start.setDate(today.getDate() - 6)
+				end = today
+				break
 
-			case "month":
-				start = new Date(today.getFullYear(), today.getMonth(), 1);
-				end = today;
-				break;
+			case 'month':
+				start = new Date(today.getFullYear(), today.getMonth(), 1)
+				end = today
+				break
 
-			case "year":
-				start = new Date(today.getFullYear(), 0, 1);
-				end = today;
-				break;
+			case 'year':
+				start = new Date(today.getFullYear(), 0, 1)
+				end = today
+				break
 
-			case "all":
-				return Object.keys(this.data.dailyStats).sort();
+			case 'all':
+				return Object.keys(this.data.dailyStats).sort()
 
 			default:
 				if (startDate && endDate) {
-					start = new Date(startDate);
-					end = new Date(endDate);
+					start = new Date(startDate)
+					end = new Date(endDate)
 				} else {
-					return [this.getDateKey(today.getTime())];
+					return [this.getDateKey(today.getTime())]
 				}
 		}
 
-		const current = new Date(start);
+		const current = new Date(start)
 		while (current <= end) {
-			dates.push(this.getDateKey(current.getTime()));
-			current.setDate(current.getDate() + 1);
+			dates.push(this.getDateKey(current.getTime()))
+			current.setDate(current.getDate() + 1)
 		}
 
-		return dates;
+		return dates
 	}
 
 	// Auto-save functionality
 	private startAutoSave(): void {
 		if (this.settings.autoSaveInterval > 0) {
 			this.saveTimer = setInterval(() => {
-				this.saveData();
-			}, this.settings.autoSaveInterval * 1000);
+				this.saveData()
+			}, this.settings.autoSaveInterval * 1000)
 		}
 	}
 
 	private stopAutoSave(): void {
 		if (this.saveTimer) {
-			clearInterval(this.saveTimer);
-			this.saveTimer = undefined;
+			clearInterval(this.saveTimer)
+			this.saveTimer = undefined
 		}
 	}
 
 	private scheduleSave(): void {
 		// Debounced save - only save after a period of inactivity
 		if (this.saveTimer) {
-			clearTimeout(this.saveTimer);
+			clearTimeout(this.saveTimer)
 		}
 
 		this.saveTimer = setTimeout(() => {
-			this.saveData();
-		}, 5000); // Save after 5 seconds of inactivity
+			this.saveData()
+		}, 5000) // Save after 5 seconds of inactivity
 	}
 
 	// Data directory management
 	private async ensureDataDirectory(): Promise<void> {
 		const dataDir = this.DATA_FILE_PATH.substring(
 			0,
-			this.DATA_FILE_PATH.lastIndexOf("/")
-		);
+			this.DATA_FILE_PATH.lastIndexOf('/')
+		)
 
 		try {
-			await this.vault.adapter.mkdir(dataDir);
+			await this.vault.adapter.mkdir(dataDir)
 		} catch (error) {
 			// Directory might already exist, which is fine
 		}
@@ -551,81 +549,73 @@ export class DataManager extends Component {
 
 	// Export methods
 	private exportAsJson(stats: DailyStats[]): string {
-		return JSON.stringify(stats, null, 2);
+		return JSON.stringify(stats, null, 2)
 	}
 
 	private exportAsCsv(stats: DailyStats[]): string {
 		const headers = [
-			"Date",
-			"Total Time (ms)",
-			"Active Time (ms)",
-			"Idle Time (ms)",
-			"Entry Count",
-		];
+			'Date',
+			'Total Time (ms)',
+			'Active Time (ms)',
+			'Idle Time (ms)',
+			'Entry Count',
+		]
 		const rows = stats.map((stat) => [
 			stat.date,
 			stat.totalTime.toString(),
 			stat.activeTime.toString(),
 			stat.idleTime.toString(),
 			stat.entries.length.toString(),
-		]);
+		])
 
-		return [headers, ...rows].map((row) => row.join(",")).join("\n");
+		return [headers, ...rows].map((row) => row.join(',')).join('\n')
 	}
 
 	private exportAsMarkdown(stats: DailyStats[]): string {
-		let markdown = "# Usage Statistics Report\n\n";
+		let markdown = '# Usage Statistics Report\n\n'
 
 		stats.forEach((stat) => {
-			markdown += `## ${stat.date}\n\n`;
-			markdown += `- **Total Time**: ${this.formatDuration(
-				stat.totalTime
-			)}\n`;
-			markdown += `- **Active Time**: ${this.formatDuration(
-				stat.activeTime
-			)}\n`;
-			markdown += `- **Idle Time**: ${this.formatDuration(
-				stat.idleTime
-			)}\n`;
-			markdown += `- **Sessions**: ${stat.entries.length}\n\n`;
+			markdown += `## ${stat.date}\n\n`
+			markdown += `- **Total Time**: ${this.formatDuration(stat.totalTime)}\n`
+			markdown += `- **Active Time**: ${this.formatDuration(stat.activeTime)}\n`
+			markdown += `- **Idle Time**: ${this.formatDuration(stat.idleTime)}\n`
+			markdown += `- **Sessions**: ${stat.entries.length}\n\n`
 
 			if (stat.categoryStats.length > 0) {
-				markdown += "### Categories\n\n";
+				markdown += '### Categories\n\n'
 				stat.categoryStats.forEach((category) => {
-					markdown += `- **${
-						category.category
-					}**: ${this.formatDuration(
+					markdown += `- **${category.category}**: ${this.formatDuration(
 						category.totalTime
-					)} (${category.percentage.toFixed(1)}%)\n`;
-				});
-				markdown += "\n";
+					)} (${category.percentage.toFixed(1)}%)\n`
+				})
+				markdown += '\n'
 			}
-		});
+		})
 
-		return markdown;
+		return markdown
 	}
 
 	private formatDuration(milliseconds: number): string {
-		const seconds = Math.floor(milliseconds / 1000);
-		const minutes = Math.floor(seconds / 60);
-		const hours = Math.floor(minutes / 60);
+		const seconds = Math.floor(milliseconds / 1000)
+		const minutes = Math.floor(seconds / 60)
+		const hours = Math.floor(minutes / 60)
 
 		if (hours > 0) {
-			return `${hours}h ${minutes % 60}m`;
+			return `${hours}h ${minutes % 60}m`
 		} else if (minutes > 0) {
-			return `${minutes}m ${seconds % 60}s`;
+			return `${minutes}m ${seconds % 60}s`
 		} else {
-			return `${seconds}s`;
+			return `${seconds}s`
 		}
 	}
 
 	// Settings updates
 	public updateSettings(newSettings: UsageStatsSettings): void {
-		this.settings = newSettings;
-		this.data.settings = newSettings;
+		this.settings = newSettings
+		this.data.settings = newSettings
 
 		// Update auto-save interval
-		this.stopAutoSave();
-		this.startAutoSave();
+		this.stopAutoSave()
+		this.startAutoSave()
 	}
 }
