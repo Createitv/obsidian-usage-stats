@@ -480,14 +480,6 @@ export class DataManager extends Component {
 				end = today
 				break
 
-			case 'year':
-				start = new Date(today.getFullYear(), 0, 1)
-				end = today
-				break
-
-			case 'all':
-				return Object.keys(this.data.dailyStats).sort()
-
 			default:
 				if (startDate && endDate) {
 					start = new Date(startDate)

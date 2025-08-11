@@ -52,3 +52,4 @@ temp/
 # Release artifacts (should be created by CI/CD)
 release/
 releases/
+obsidian-releases/

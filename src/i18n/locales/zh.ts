@@ -35,14 +35,13 @@ const translations: BaseMessage = {
 	'view.today': '今天',
 	'view.week': '本周',
 	'view.month': '本月',
-	'view.year': '今年',
-	'view.all': '全部时间',
 	'view.noData': '该时间段暂无数据',
 	'view.timeline': '最近活动',
 	'view.noTimelineData': '暂无活动数据',
 	'view.sessionAnalysis': '会话分析',
 	'view.noAnalysisData': '暂无分析数据',
 	'view.chartNotAvailable': '该时间段无图表数据',
+	'view.lastUpdated': '最后更新',
 
 	// Charts
 	'chart.totalTime': '总时间',
@@ -250,6 +249,8 @@ const translations: BaseMessage = {
 	'notification.dataExported': '数据导出成功',
 	'notification.dataReset': '所有数据已重置',
 	'notification.settingsSaved': '设置已保存',
+	'notification.dataRefreshed': '数据刷新成功',
+	'notification.lastUpdatedFixed': '最后更新时间修复成功',
 
 	// Errors
 	'error.exportFailed': '数据导出失败',
@@ -257,6 +258,8 @@ const translations: BaseMessage = {
 	'error.dataSaveFailed': '保存使用数据失败',
 	'error.invalidTimeFormat': '无效的时间格式',
 	'error.invalidSettings': '无效的设置配置',
+	'error.refreshFailed': '数据刷新失败',
+	'error.fixFailed': '修复最后更新时间失败',
 
 	// Export
 	'export.title': '导出使用数据',

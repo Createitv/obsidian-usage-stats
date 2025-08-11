@@ -134,7 +134,7 @@ export interface TagStats {
 // Chart and visualization types
 export type ChartType = 'pie' | 'bar' | 'line' | 'doughnut'
 export type TimeFormat = '12h' | '24h'
-export type ViewPeriod = 'today' | 'week' | 'month' | 'year' | 'all'
+export type ViewPeriod = 'today' | 'week' | 'month'
 
 export interface ChartData {
 	labels: string[]

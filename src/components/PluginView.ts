@@ -15,6 +15,7 @@ export class UsageStatsView extends ItemView {
 	private currentPeriod: ViewPeriod = 'today'
 	private currentChartType: ChartType = 'pie'
 	private refreshInterval?: NodeJS.Timeout
+	private lastDataUpdateTime: number = 0
 
 	constructor(
 		leaf: WorkspaceLeaf,
@@ -49,6 +50,13 @@ export class UsageStatsView extends ItemView {
 			)
 			await this.fileTrackerManager.initialize()
 		}
+
+		// 设置初始的更新时间
+		const currentData = this.fileTrackerManager.getRawData()
+		if (currentData) {
+			this.lastDataUpdateTime = currentData.lastUpdated
+		}
+
 		this.renderView()
 		this.startAutoRefresh()
 	}
@@ -102,6 +110,12 @@ export class UsageStatsView extends ItemView {
 			cls: 'usage-stats-title',
 		})
 
+		// 显示最后更新时间
+		const lastUpdateEl = header.createEl('div', {
+			cls: 'last-update-info',
+		})
+		this.updateLastUpdateInfo(lastUpdateEl)
+
 		// Quick action buttons
 		const actions = header.createEl('div', { cls: 'usage-stats-actions' })
 
@@ -111,8 +125,29 @@ export class UsageStatsView extends ItemView {
 		})
 		refreshBtn.createEl('span', { cls: 'lucide-refresh-cw' })
 		refreshBtn.addEventListener('click', async () => {
-			await this.fileTrackerManager.refresh()
-			this.renderView()
+			// 显示刷新状态
+			refreshBtn.addClass('is-loading')
+
+			try {
+				// 先修复最后更新时间
+				await this.fileTrackerManager.fixLastUpdated()
+
+				// 然后刷新数据
+				await this.fileTrackerManager.refresh()
+
+				// 更新最后更新时间
+				const currentData = this.fileTrackerManager.getRawData()
+				if (currentData) {
+					this.lastDataUpdateTime = currentData.lastUpdated
+				}
+				this.renderView()
+				new Notice(t('notification.dataRefreshed'))
+			} catch (error) {
+				console.error('PluginView: Error refreshing data:', error)
+				new Notice(t('error.refreshFailed'))
+			} finally {
+				refreshBtn.removeClass('is-loading')
+			}
 		})
 
 		const exportBtn = actions.createEl('button', {
@@ -135,7 +170,7 @@ export class UsageStatsView extends ItemView {
 		const periodSelect = periodGroup.createEl('select', {
 			cls: 'dropdown',
 		})
-		const periods: ViewPeriod[] = ['today', 'week', 'month', 'year', 'all']
+		const periods: ViewPeriod[] = ['today', 'week', 'month']
 
 		periods.forEach((period) => {
 			const option = periodSelect.createEl('option', {
@@ -196,18 +231,65 @@ export class UsageStatsView extends ItemView {
 
 		// Header with date
 		const headerEl = overview.createEl('div', { cls: 'today-header' })
-		headerEl.createEl('h3', { text: t('view.today') })
+		headerEl.createEl('h3', { text: t(`view.${this.currentPeriod}`) })
+
+		// 根据当前时段显示相应的日期信息
+		let dateText = ''
+		switch (this.currentPeriod) {
+			case 'today':
+				dateText = new Date().toLocaleDateString('zh-CN', {
+					weekday: 'long',
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+				})
+				break
+			case 'week':
+				const weekStart = new Date()
+				weekStart.setDate(weekStart.getDate() - 7)
+				const weekEnd = new Date()
+				dateText = `${weekStart.toLocaleDateString('zh-CN', {
+					month: 'long',
+					day: 'numeric',
+				})} - ${weekEnd.toLocaleDateString('zh-CN', {
+					month: 'long',
+					day: 'numeric',
+				})}`
+				break
+			case 'month':
+				const monthStart = new Date()
+				monthStart.setDate(monthStart.getDate() - 30)
+				const monthEnd = new Date()
+				dateText = `${monthStart.toLocaleDateString('zh-CN', {
+					month: 'long',
+					day: 'numeric',
+				})} - ${monthEnd.toLocaleDateString('zh-CN', {
+					month: 'long',
+					day: 'numeric',
+				})}`
+				break
+		}
+
 		headerEl.createEl('div', {
 			cls: 'today-date',
-			text: new Date().toLocaleDateString('zh-CN', {
-				weekday: 'long',
-				year: 'numeric',
-				month: 'long',
-				day: 'numeric',
-			}),
+			text: dateText,
 		})
 
-		const todayStats = this.fileTrackerManager.getTodayStats()
+		// 根据当前时段获取相应的统计数据
+		let periodStats: any
+		if (this.currentPeriod === 'today') {
+			periodStats = this.fileTrackerManager.getTodayStats()
+		} else {
+			const stats = this.fileTrackerManager.getAggregatedStats(
+				this.currentPeriod
+			)
+			periodStats = {
+				totalTimeSpent: stats.totalTime / 1000, // 转换回秒
+				totalFiles: stats.fileStats.length,
+				totalFolders: stats.categoryStats.length,
+				lastActiveFile: stats.fileStats[0]?.fileName || '',
+			}
+		}
 
 		const cards = overview.createEl('div', { cls: 'stats-cards' })
 
@@ -217,7 +299,7 @@ export class UsageStatsView extends ItemView {
 		})
 		totalCard.createEl('div', {
 			cls: 'stat-value',
-			text: this.formatDuration(todayStats.totalTimeSpent * 1000), // Convert seconds to milliseconds
+			text: this.formatDuration(periodStats.totalTimeSpent * 1000), // Convert seconds to milliseconds
 		})
 		totalCard.createEl('div', {
 			cls: 'stat-label',
@@ -228,7 +310,7 @@ export class UsageStatsView extends ItemView {
 		const filesCard = cards.createEl('div', { cls: 'stat-card' })
 		filesCard.createEl('div', {
 			cls: 'stat-value',
-			text: todayStats.totalFiles.toString(),
+			text: periodStats.totalFiles.toString(),
 		})
 		filesCard.createEl('div', {
 			cls: 'stat-label',
@@ -239,7 +321,7 @@ export class UsageStatsView extends ItemView {
 		const foldersCard = cards.createEl('div', { cls: 'stat-card' })
 		foldersCard.createEl('div', {
 			cls: 'stat-value',
-			text: todayStats.totalFolders.toString(),
+			text: periodStats.totalFolders.toString(),
 		})
 		foldersCard.createEl('div', {
 			cls: 'stat-label',
@@ -247,17 +329,15 @@ export class UsageStatsView extends ItemView {
 		})
 
 		// Sessions count
-		const timeline = this.fileTrackerManager.getTimeline()
-		const todaySessions = timeline.filter((session) => {
-			const sessionDate = new Date(session.startTime).toDateString()
-			const today = new Date().toDateString()
-			return sessionDate === today
-		})
+		const timeline = this.fileTrackerManager.getTimelineForPeriod(
+			this.currentPeriod
+		)
+		const periodSessions = timeline
 
 		const sessionsCard = cards.createEl('div', { cls: 'stat-card' })
 		sessionsCard.createEl('div', {
 			cls: 'stat-value',
-			text: todaySessions.length.toString(),
+			text: periodSessions.length.toString(),
 		})
 		sessionsCard.createEl('div', {
 			cls: 'stat-label',
@@ -266,9 +346,9 @@ export class UsageStatsView extends ItemView {
 
 		// Average session time
 		const avgSessionTime =
-			todaySessions.length > 0
-				? todaySessions.reduce((sum, s) => sum + s.duration, 0) /
-				  todaySessions.length
+			periodSessions.length > 0
+				? periodSessions.reduce((sum, s) => sum + s.duration, 0) /
+				  periodSessions.length
 				: 0
 
 		const avgCard = cards.createEl('div', { cls: 'stat-card' })
@@ -282,14 +362,14 @@ export class UsageStatsView extends ItemView {
 		})
 
 		// Last active file card (if available)
-		if (todayStats.lastActiveFile) {
+		if (periodStats.lastActiveFile) {
 			const fileCard = cards.createEl('div', {
 				cls: 'stat-card stat-card-wide',
 			})
 			const fileInfo = fileCard.createEl('div', { cls: 'stat-file-info' })
 			fileInfo.createEl('div', {
 				cls: 'stat-value stat-value-small',
-				text: todayStats.lastActiveFile,
+				text: periodStats.lastActiveFile,
 			})
 			fileInfo.createEl('div', {
 				cls: 'stat-label',
@@ -297,8 +377,10 @@ export class UsageStatsView extends ItemView {
 			})
 		}
 
-		// Add comparison with yesterday if available
-		this.renderDayComparison(overview, todayStats)
+		// Add comparison with yesterday if available (only for today view)
+		if (this.currentPeriod === 'today') {
+			this.renderDayComparison(overview, periodStats)
+		}
 	}
 
 	private renderTimelineSection(container: HTMLElement): void {
@@ -307,7 +389,9 @@ export class UsageStatsView extends ItemView {
 		})
 		timelineSection.createEl('h3', { text: t('view.timeline') })
 
-		const timeline = this.fileTrackerManager.getTimeline()
+		const timeline = this.fileTrackerManager.getTimelineForPeriod(
+			this.currentPeriod
+		)
 
 		if (timeline.length === 0) {
 			timelineSection.createEl('div', {
@@ -707,7 +791,9 @@ export class UsageStatsView extends ItemView {
 		analysisSection.createEl('h3', { text: t('view.sessionAnalysis') })
 
 		const stats = this.fileTrackerManager.getAggregatedStats(this.currentPeriod)
-		const timeline = this.fileTrackerManager.getTimeline()
+		const timeline = this.fileTrackerManager.getTimelineForPeriod(
+			this.currentPeriod
+		)
 
 		if (timeline.length === 0) {
 			analysisSection.createEl('div', {
@@ -758,7 +844,11 @@ export class UsageStatsView extends ItemView {
 		const activityCard = analysisGrid.createEl('div', { cls: 'analysis-card' })
 		activityCard.createEl('h4', { text: t('analysis.fileActivity') })
 
-		const fileStats = this.fileTrackerManager.getFileStats()
+		const fileStats = stats.fileStats.map((f) => ({
+			fileName: f.fileName,
+			totalTime: f.totalTime / 1000, // 转换回秒
+			sessionCount: f.accessCount,
+		}))
 		const topFiles = fileStats.slice(0, 5)
 
 		const activityData = activityCard.createEl('div', { cls: 'analysis-data' })
@@ -782,7 +872,11 @@ export class UsageStatsView extends ItemView {
 		const folderCard = analysisGrid.createEl('div', { cls: 'analysis-card' })
 		folderCard.createEl('h4', { text: t('analysis.folderActivity') })
 
-		const folderStats = this.fileTrackerManager.getFolderStats()
+		const folderStats = stats.categoryStats.map((c) => ({
+			folderPath: c.category,
+			totalTime: c.totalTime / 1000, // 转换回秒
+			fileCount: c.count,
+		}))
 		const topFolders = folderStats.slice(0, 5)
 
 		const folderData = folderCard.createEl('div', { cls: 'analysis-data' })
@@ -792,7 +886,7 @@ export class UsageStatsView extends ItemView {
 			})
 			folderItem.createEl('div', {
 				cls: 'analysis-folder-name',
-				text: folder.folderPath === '/' ? 'Root' : folder.folderPath,
+				text: folder.folderPath === 'Root' ? 'Root' : folder.folderPath,
 			})
 			folderItem.createEl('div', {
 				cls: 'analysis-folder-stats',
@@ -802,7 +896,7 @@ export class UsageStatsView extends ItemView {
 			})
 		})
 
-		// Time distribution by hour
+		// Time distribution by hour (only for today and week views)
 		if (this.currentPeriod === 'today' || this.currentPeriod === 'week') {
 			const timeCard = analysisGrid.createEl('div', {
 				cls: 'analysis-card analysis-card-wide',
@@ -853,7 +947,7 @@ export class UsageStatsView extends ItemView {
 		console.log('Show full timeline modal')
 	}
 
-	private renderDayComparison(container: HTMLElement, todayStats: any): void {
+	private renderDayComparison(container: HTMLElement, periodStats: any): void {
 		// Get yesterday's date
 		const yesterday = new Date()
 		yesterday.setDate(yesterday.getDate() - 1)
@@ -877,7 +971,8 @@ export class UsageStatsView extends ItemView {
 		})
 
 		// Time comparison
-		const timeChange = todayStats.totalTimeSpent - yesterdayStats.totalTimeSpent
+		const timeChange =
+			periodStats.totalTimeSpent - yesterdayStats.totalTimeSpent
 		const timeChangePercent =
 			yesterdayStats.totalTimeSpent > 0
 				? (timeChange / yesterdayStats.totalTimeSpent) * 100
@@ -892,7 +987,7 @@ export class UsageStatsView extends ItemView {
 		)
 
 		// Files comparison
-		const filesChange = todayStats.totalFiles - yesterdayStats.totalFiles
+		const filesChange = periodStats.totalFiles - yesterdayStats.totalFiles
 		const filesChangePercent =
 			yesterdayStats.totalFiles > 0
 				? (filesChange / yesterdayStats.totalFiles) * 100
@@ -908,7 +1003,7 @@ export class UsageStatsView extends ItemView {
 		)
 
 		// Folders comparison
-		const foldersChange = todayStats.totalFolders - yesterdayStats.totalFolders
+		const foldersChange = periodStats.totalFolders - yesterdayStats.totalFolders
 		const foldersChangePercent =
 			yesterdayStats.totalFolders > 0
 				? (foldersChange / yesterdayStats.totalFolders) * 100
@@ -981,16 +1076,57 @@ export class UsageStatsView extends ItemView {
 	}
 
 	private startAutoRefresh(): void {
-		// Refresh every 30 seconds
-		this.refreshInterval = setInterval(() => {
-			// 只更新今天概览部分，不影响整体布局
-			const contentEl = this.containerEl.querySelector(
-				'.usage-stats-content'
-			) as HTMLElement
-			if (contentEl) {
-				this.renderTodayOverview(contentEl)
+		// Refresh every 10 seconds for more responsive updates
+		this.refreshInterval = setInterval(async () => {
+			// 检查数据是否有更新
+			const hasDataChanged = await this.checkDataUpdates()
+
+			if (hasDataChanged) {
+				console.log('PluginView: Data updated, refreshing view...')
+				// 数据有更新，重新渲染整个视图
+				this.renderView()
+			} else {
+				// 数据没有更新，只更新今天概览部分
+				const contentEl = this.containerEl.querySelector(
+					'.usage-stats-content'
+				) as HTMLElement
+				if (contentEl) {
+					this.renderTodayOverview(contentEl)
+				}
 			}
-		}, 30000)
+		}, 10000)
+	}
+
+	/**
+	 * 检查数据是否有更新
+	 */
+	private async checkDataUpdates(): Promise<boolean> {
+		try {
+			// 先修复最后更新时间
+			await this.fileTrackerManager.fixLastUpdated()
+
+			// 重新加载数据
+			await this.fileTrackerManager.refresh()
+
+			// 获取当前数据的最后更新时间
+			const currentData = this.fileTrackerManager.getRawData()
+			if (!currentData) return false
+
+			// 检查最后更新时间是否有变化
+			if (currentData.lastUpdated > this.lastDataUpdateTime) {
+				this.lastDataUpdateTime = currentData.lastUpdated
+				console.log(
+					'PluginView: Data update detected, lastUpdated:',
+					new Date(currentData.lastUpdated).toLocaleString()
+				)
+				return true
+			}
+
+			return false
+		} catch (error) {
+			console.error('PluginView: Error checking data updates:', error)
+			return false
+		}
 	}
 
 	private stopAutoRefresh(): void {
@@ -1003,6 +1139,59 @@ export class UsageStatsView extends ItemView {
 	// Public methods for external updates
 	public refresh(): void {
 		this.renderView()
+	}
+
+	/**
+	 * 强制刷新数据并重新渲染视图
+	 */
+	public async forceRefresh(): Promise<void> {
+		try {
+			await this.fileTrackerManager.refresh()
+			// 更新最后更新时间
+			const currentData = this.fileTrackerManager.getRawData()
+			if (currentData) {
+				this.lastDataUpdateTime = currentData.lastUpdated
+			}
+			this.renderView()
+			new Notice(t('notification.dataRefreshed'))
+		} catch (error) {
+			console.error('PluginView: Error force refreshing data:', error)
+			new Notice(t('error.refreshFailed'))
+		}
+	}
+
+	/**
+	 * 修复最后更新时间
+	 */
+	public async fixLastUpdated(): Promise<void> {
+		try {
+			await this.fileTrackerManager.fixLastUpdated()
+			// 更新最后更新时间
+			const currentData = this.fileTrackerManager.getRawData()
+			if (currentData) {
+				this.lastDataUpdateTime = currentData.lastUpdated
+			}
+			this.renderView()
+			new Notice(t('notification.lastUpdatedFixed'))
+		} catch (error) {
+			console.error('PluginView: Error fixing last updated time:', error)
+			new Notice(t('error.fixFailed'))
+		}
+	}
+
+	/**
+	 * 更新最后更新时间信息
+	 */
+	private updateLastUpdateInfo(container: HTMLElement): void {
+		const currentData = this.fileTrackerManager.getRawData()
+		if (currentData) {
+			const lastUpdate = new Date(currentData.lastUpdated)
+			container.setText(
+				`${t('view.lastUpdated')}: ${lastUpdate.toLocaleString('zh-CN')}`
+			)
+		} else {
+			container.setText(t('view.lastUpdated') + ': ' + t('view.noData'))
+		}
 	}
 
 	public setPeriod(period: ViewPeriod): void {

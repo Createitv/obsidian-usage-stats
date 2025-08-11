@@ -95,7 +95,7 @@ jobs:
       - name: Create release archive
         run: |
           cd dist
-          zip -r "../${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip" .
+          zip -r "../${{ env.PLUGIN_NAME }}.zip" .
           cd ..
 
       - name: Verify build output
@@ -104,23 +104,21 @@ jobs:
           ls -la dist/
           echo ""
           echo "📄 Archive contents:"
-          unzip -l "${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip"
+          unzip -l "${{ env.PLUGIN_NAME }}.zip"
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.version.outputs.version }}
-          release_name: Release ${{ steps.version.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
           body: |
             ## 🎉 Obsidian 使用统计插件 v${{ steps.version.outputs.version }}
 
             ### 📥 安装方法
 
             **方法一：下载完整插件包（推荐）**
-            1. 下载 `${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip`
+            1. 下载 `${{ env.PLUGIN_NAME }}.zip`
             2. 在 Obsidian 中打开设置 → 第三方插件 → 已安装插件
             3. 点击"打开插件文件夹"
             4. 创建文件夹 `obsidian-usage-stats`
@@ -147,68 +145,12 @@ jobs:
             ---
 
             **完整更新日志请查看提交历史**
+          files: |
+            ${{ env.PLUGIN_NAME }}.zip
+            dist/main.js
+            dist/manifest.json
+            dist/styles.css
+            dist/usage-stats.css
+            dist/view-styles.css
           draft: false
           prerelease: false
-
-      - name: Upload Release Asset - Plugin ZIP
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip
-          asset_name: ${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Release Asset - main.js
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/main.js
-          asset_name: main.js
-          asset_content_type: application/javascript
-
-      - name: Upload Release Asset - manifest.json
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/manifest.json
-          asset_name: manifest.json
-          asset_content_type: application/json
-
-      - name: Upload Release Asset - styles.css
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/styles.css
-          asset_name: styles.css
-          asset_content_type: text/css
-        continue-on-error: true
-
-      - name: Upload Release Asset - usage-stats.css
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/usage-stats.css
-          asset_name: usage-stats.css
-          asset_content_type: text/css
-        continue-on-error: true
-
-      - name: Upload Release Asset - view-styles.css
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/view-styles.css
-          asset_name: view-styles.css
-          asset_content_type: text/css
-        continue-on-error: true

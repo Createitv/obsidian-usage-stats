@@ -135,9 +135,12 @@ export default class UsageStatsPlugin extends Plugin {
 		// Setup integration between TimeTracker and DataManager
 		this.dataManager.setupTimeTrackerIntegration(this.timeTracker)
 
-		// Initialize view if enabled
+		// Initialize view if enabled (with a small delay to ensure workspace is ready)
 		if (this.settings.enableView) {
-			this.initializeView()
+			// Use setTimeout to ensure workspace is fully initialized
+			setTimeout(() => {
+				this.initializeView()
+			}, 100)
 		}
 	}
 
@@ -217,7 +220,33 @@ export default class UsageStatsPlugin extends Plugin {
 			USAGE_STATS_VIEW_TYPE
 		)
 		if (existingView.length === 0) {
-			const leaf = this.app.workspace.getRightLeaf(false)
+			// Try to get right leaf, but handle null case gracefully
+			let leaf = this.app.workspace.getRightLeaf(false)
+
+			// If right leaf is not available, try alternative approaches
+			if (!leaf) {
+				// Try to get any available leaf or create a new one
+				const activeLeaf = this.app.workspace.activeLeaf
+				if (activeLeaf) {
+					// Split the active leaf to create a new one
+					leaf = this.app.workspace.createLeafBySplit(
+						activeLeaf,
+						'vertical',
+						true
+					)
+				} else {
+					// Fallback: try to get any leaf or create a new one
+					const leaves = this.app.workspace.getLeavesOfType('markdown')
+					if (leaves.length > 0) {
+						leaf = this.app.workspace.createLeafBySplit(
+							leaves[0],
+							'vertical',
+							true
+						)
+					}
+				}
+			}
+
 			if (leaf) {
 				leaf.setViewState({
 					type: USAGE_STATS_VIEW_TYPE,
@@ -236,7 +265,25 @@ export default class UsageStatsPlugin extends Plugin {
 			return
 		}
 
-		const leaf = workspace.getRightLeaf(false)
+		// Try to get right leaf, but handle null case gracefully
+		let leaf = workspace.getRightLeaf(false)
+
+		// If right leaf is not available, try alternative approaches
+		if (!leaf) {
+			// Try to get any available leaf or create a new one
+			const activeLeaf = workspace.activeLeaf
+			if (activeLeaf) {
+				// Split the active leaf to create a new one
+				leaf = workspace.createLeafBySplit(activeLeaf, 'vertical', true)
+			} else {
+				// Fallback: try to get any leaf or create a new one
+				const leaves = workspace.getLeavesOfType('markdown')
+				if (leaves.length > 0) {
+					leaf = workspace.createLeafBySplit(leaves[0], 'vertical', true)
+				}
+			}
+		}
+
 		if (leaf) {
 			leaf.setViewState({
 				type: USAGE_STATS_VIEW_TYPE,

@@ -36,14 +36,13 @@ const translations: BaseMessage = {
 	'view.today': 'Today',
 	'view.week': 'This week',
 	'view.month': 'This month',
-	'view.year': 'This year',
-	'view.all': 'All time',
 	'view.noData': 'No data available for this period',
 	'view.timeline': 'Recent Activity',
 	'view.noTimelineData': 'No activity data available',
 	'view.sessionAnalysis': 'Session Analysis',
 	'view.noAnalysisData': 'No analysis data available',
 	'view.chartNotAvailable': 'Chart not available for this period',
+	'view.lastUpdated': 'Last updated',
 
 	// Charts
 	'chart.totalTime': 'Total time',
@@ -264,6 +263,8 @@ const translations: BaseMessage = {
 	'notification.dataExported': 'Data exported successfully',
 	'notification.dataReset': 'All data has been reset',
 	'notification.settingsSaved': 'Settings saved',
+	'notification.dataRefreshed': 'Data refreshed successfully',
+	'notification.lastUpdatedFixed': 'Last updated time fixed successfully',
 
 	// Errors
 	'error.exportFailed': 'Failed to export data',
@@ -271,6 +272,8 @@ const translations: BaseMessage = {
 	'error.dataSaveFailed': 'Failed to save usage data',
 	'error.invalidTimeFormat': 'Invalid time format',
 	'error.invalidSettings': 'Invalid settings configuration',
+	'error.refreshFailed': 'Failed to refresh data',
+	'error.fixFailed': 'Failed to fix last updated time',
 
 	// Export
 	'export.title': 'Export Usage Data',

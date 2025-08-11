@@ -376,11 +376,40 @@ export class FileTrackerManager extends Component {
 	}
 
 	/**
+	 * 根据时间段获取筛选后的时间线数据
+	 */
+	getTimelineForPeriod(period: 'today' | 'week' | 'month'): TimelineEntry[] {
+		if (!this.data) return []
+
+		const now = new Date()
+		let startDate: Date
+
+		switch (period) {
+			case 'today':
+				startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+				break
+			case 'week':
+				startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+				break
+			case 'month':
+				startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+				break
+			default:
+				return this.data.timeline || []
+		}
+
+		const endDate = new Date(now.getTime() + 24 * 60 * 60 * 1000) // 包含今天
+
+		return (this.data.timeline || []).filter((entry) => {
+			const entryDate = new Date(entry.startTime)
+			return entryDate >= startDate && entryDate <= endDate
+		})
+	}
+
+	/**
 	 * 获取指定时间段的统计数据
 	 */
-	getStatsForPeriod(
-		period: 'today' | 'week' | 'month' | 'year' | 'all'
-	): DailySummary[] {
+	getStatsForPeriod(period: 'today' | 'week' | 'month'): DailySummary[] {
 		if (!this.data) return []
 
 		const now = new Date()
@@ -396,11 +425,6 @@ export class FileTrackerManager extends Component {
 			case 'month':
 				startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
 				break
-			case 'year':
-				startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000)
-				break
-			case 'all':
-				return Object.values(this.data.summary)
 			default:
 				return [this.getTodayStats()]
 		}
@@ -423,19 +447,22 @@ export class FileTrackerManager extends Component {
 	/**
 	 * 获取聚合统计数据（兼容 PluginView 期望的格式）
 	 */
-	getAggregatedStats(period: 'today' | 'week' | 'month' | 'year' | 'all') {
+	getAggregatedStats(period: 'today' | 'week' | 'month') {
 		const periodStats = this.getStatsForPeriod(period)
-		const fileStats = this.getFileStats()
-		const folderStats = this.getFolderStats()
-		const tagStats = this.getTagStats()
+		const timeline = this.getTimelineForPeriod(period)
 
 		// 计算总时间
 		const totalTime =
 			periodStats.reduce((sum, stat) => sum + (stat.totalTimeSpent || 0), 0) *
 			1000 // 转换为毫秒
 
+		// 根据时间段筛选文件、文件夹和标签数据
+		const filteredFileStats = this.getFileStatsForPeriod(period, timeline)
+		const filteredFolderStats = this.getFolderStatsForPeriod(period, timeline)
+		const filteredTagStats = this.getTagStatsForPeriod(period, timeline)
+
 		// 为了兼容现有的 PluginView，我们需要将数据转换为期望的格式
-		const categoryStats = folderStats.map((folder, index) => ({
+		const categoryStats = filteredFolderStats.map((folder, index) => ({
 			category: folder.folderPath === '/' ? 'Root' : folder.folderPath,
 			totalTime: folder.totalTime * 1000, // 转换为毫秒
 			percentage:
@@ -443,7 +470,7 @@ export class FileTrackerManager extends Component {
 			count: folder.fileCount,
 		}))
 
-		const convertedFileStats = fileStats.map((file) => ({
+		const convertedFileStats = filteredFileStats.map((file) => ({
 			filePath: file.filePath,
 			fileName: file.fileName,
 			totalTime: file.totalTime * 1000, // 转换为毫秒
@@ -453,7 +480,7 @@ export class FileTrackerManager extends Component {
 			accessCount: file.sessionCount,
 		}))
 
-		const convertedTagStats = tagStats.map((tag) => ({
+		const convertedTagStats = filteredTagStats.map((tag) => ({
 			tag: tag.tagName,
 			totalTime: tag.totalTime * 1000, // 转换为毫秒
 			percentage:
@@ -466,8 +493,67 @@ export class FileTrackerManager extends Component {
 			categoryStats,
 			fileStats: convertedFileStats,
 			tagStats: convertedTagStats,
-			folderStats: folderStats, // 保留原始文件夹统计
+			folderStats: filteredFolderStats, // 保留原始文件夹统计
 		}
+	}
+
+	/**
+	 * 根据时间段获取筛选后的文件统计
+	 */
+	private getFileStatsForPeriod(
+		period: 'today' | 'week' | 'month',
+		timeline: TimelineEntry[]
+	): FileTrackingStats[] {
+		if (!this.data) return []
+
+		// 获取时间段内涉及的文件路径
+		const filePathsInPeriod = new Set(timeline.map((entry) => entry.filePath))
+
+		// 筛选出时间段内的文件统计
+		return Object.values(this.data.files)
+			.filter((file) => filePathsInPeriod.has(file.filePath))
+			.sort((a, b) => b.totalTime - a.totalTime)
+	}
+
+	/**
+	 * 根据时间段获取筛选后的文件夹统计
+	 */
+	private getFolderStatsForPeriod(
+		period: 'today' | 'week' | 'month',
+		timeline: TimelineEntry[]
+	): FolderTrackingStats[] {
+		if (!this.data) return []
+
+		// 获取时间段内涉及的文件夹路径
+		const folderPathsInPeriod = new Set(
+			timeline.map((entry) => entry.folderPath)
+		)
+
+		// 筛选出时间段内的文件夹统计
+		return Object.values(this.data.folders)
+			.filter((folder) => folderPathsInPeriod.has(folder.folderPath))
+			.sort((a, b) => b.totalTime - a.totalTime)
+	}
+
+	/**
+	 * 根据时间段获取筛选后的标签统计
+	 */
+	private getTagStatsForPeriod(
+		period: 'today' | 'week' | 'month',
+		timeline: TimelineEntry[]
+	): TagTrackingStats[] {
+		if (!this.data) return []
+
+		// 获取时间段内涉及的所有标签
+		const tagsInPeriod = new Set<string>()
+		timeline.forEach((entry) => {
+			entry.tags.forEach((tag) => tagsInPeriod.add(tag))
+		})
+
+		// 筛选出时间段内的标签统计
+		return Object.values(this.data.tags)
+			.filter((tag) => tagsInPeriod.has(tag.tagName))
+			.sort((a, b) => b.totalTime - a.totalTime)
 	}
 
 	/**
@@ -548,6 +634,73 @@ export class FileTrackerManager extends Component {
 	 */
 	async refresh(): Promise<void> {
 		await this.loadData()
+
+		// 如果数据存在，更新最后更新时间
+		if (this.data) {
+			// 找到最新的时间戳
+			const latestTimestamp = this.findLatestTimestamp()
+			if (latestTimestamp > this.data.lastUpdated) {
+				this.data.lastUpdated = latestTimestamp
+				await this.saveData()
+				console.log(
+					'FileTrackerManager: Updated lastUpdated to',
+					new Date(latestTimestamp).toLocaleString()
+				)
+			}
+		}
+	}
+
+	/**
+	 * 找到数据中最新的时间戳
+	 */
+	private findLatestTimestamp(): number {
+		if (!this.data) return Date.now()
+
+		let latestTimestamp = this.data.lastUpdated
+
+		// 检查时间线中的最新时间
+		if (this.data.timeline && this.data.timeline.length > 0) {
+			const timelineLatest = Math.max(
+				...this.data.timeline.map((entry) => entry.endTime)
+			)
+			latestTimestamp = Math.max(latestTimestamp, timelineLatest)
+		}
+
+		// 检查文件中的最新访问时间
+		if (this.data.files) {
+			const filesLatest = Math.max(
+				...Object.values(this.data.files).map((file) => file.lastAccessed)
+			)
+			latestTimestamp = Math.max(latestTimestamp, filesLatest)
+		}
+
+		// 检查文件夹中的最新访问时间
+		if (this.data.folders) {
+			const foldersLatest = Math.max(
+				...Object.values(this.data.folders).map((folder) => folder.lastAccessed)
+			)
+			latestTimestamp = Math.max(latestTimestamp, foldersLatest)
+		}
+
+		// 检查标签中的最新使用时间
+		if (this.data.tags) {
+			const tagsLatest = Math.max(
+				...Object.values(this.data.tags).map((tag) => tag.lastUsed)
+			)
+			latestTimestamp = Math.max(latestTimestamp, tagsLatest)
+		}
+
+		// 检查摘要中的最新更新时间
+		if (this.data.summary) {
+			const summaryLatest = Math.max(
+				...Object.values(this.data.summary).map(
+					(summary) => summary.lastUpdated
+				)
+			)
+			latestTimestamp = Math.max(latestTimestamp, summaryLatest)
+		}
+
+		return latestTimestamp
 	}
 
 	/**
@@ -561,6 +714,32 @@ export class FileTrackerManager extends Component {
 			console.log('FileTrackerManager: Successfully imported existing data')
 		} catch (error) {
 			console.error('FileTrackerManager: Failed to import data:', error)
+		}
+	}
+
+	/**
+	 * 修复最后更新时间
+	 */
+	async fixLastUpdated(): Promise<void> {
+		if (!this.data) {
+			console.warn('FileTrackerManager: No data to fix')
+			return
+		}
+
+		const latestTimestamp = this.findLatestTimestamp()
+		const oldTimestamp = this.data.lastUpdated
+
+		if (latestTimestamp > oldTimestamp) {
+			this.data.lastUpdated = latestTimestamp
+			await this.saveData()
+			console.log(
+				'FileTrackerManager: Fixed lastUpdated from',
+				new Date(oldTimestamp).toLocaleString(),
+				'to',
+				new Date(latestTimestamp).toLocaleString()
+			)
+		} else {
+			console.log('FileTrackerManager: lastUpdated is already correct')
 		}
 	}
 }
