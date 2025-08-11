@@ -1,5 +1,5 @@
 {
-	"name": "obsidian-usage-stats",
+	"name": "usage-stats",
 	"version": "1.0.12",
 	"description": "Track time spent in Obsidian with detailed statistics and beautiful charts.",
 	"main": "main.js",
