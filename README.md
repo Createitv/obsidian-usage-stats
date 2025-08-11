@@ -1,158 +1,150 @@
-# Obsidian Plugin Starter
+# Obtime - Obsidian Usage Statistics
 
-一个现代化的 Obsidian 插件模板，具有模块化架构和丰富的视图界面功能。
+[English](README.md) | [中文](README_CN.md)
 
-## 功能特性
+A powerful time tracking plugin for Obsidian that helps you monitor and analyze your note-taking habits with detailed statistics and beautiful charts.
 
-### 🎯 核心功能
+## ✨ Features
 
--   **模块化架构**: 清晰的代码组织结构，易于维护和扩展
--   **插件视图**: 完整的侧边栏视图界面，支持多视图管理
--   **现代化 UI**: 基于 Obsidian 设计系统的美观界面
--   **国际化支持**: 内置 i18n 支持，可轻松添加多语言
+### 📊 Time Tracking
+- **Automatic tracking**: Seamlessly tracks time spent in Obsidian without manual intervention
+- **Session management**: Records individual study/work sessions with start and end times
+- **File-level tracking**: Monitor time spent on specific notes and files
+- **Real-time updates**: See your current session progress in the status bar
 
-### 🖥️ 视图功能
+### 📈 Analytics & Visualization
+- **Beautiful charts**: Interactive charts showing daily, weekly, and monthly usage patterns
+- **Detailed statistics**: Comprehensive analytics including total time, average session length, and productivity trends
+- **Custom date ranges**: Filter and analyze data for any time period
+- **Export capabilities**: Export your usage data for further analysis
 
--   **多视图管理**: 创建、编辑、删除多个视图
--   **实时编辑**: 直接在界面中编辑视图内容
--   **视图切换**: 快速在不同视图间切换
--   **数据持久化**: 自动保存视图数据
+### 🔄 Data Synchronization
+- **Cloud sync**: Sync your usage data across multiple devices via SaaS backend
+- **Local storage**: All data is stored locally first, ensuring privacy and offline access
+- **Automatic backup**: Regular data synchronization to prevent data loss
+- **Cross-platform**: Works seamlessly across Windows, macOS, and Linux
 
-### ⚙️ 设置系统
+## 🚀 Installation
 
--   **完整设置界面**: 分类清晰的设置选项
--   **实时预览**: 设置更改立即生效
--   **默认值管理**: 智能的默认设置处理
+### From Obsidian Community Plugins
+1. Open Obsidian Settings
+2. Go to Community Plugins
+3. Turn off Safe mode
+4. Click Browse and search for "Obtime"
+5. Click Install, then Enable
 
-### 🎮 命令系统
+### Manual Installation
+1. Download the latest release from [GitHub Releases](https://github.com/createitv/obsidian-usage-stats/releases)
+2. Extract the plugin folder to your Obsidian vault's plugins folder
+3. Enable the plugin in Obsidian Settings > Community Plugins
 
--   **多种命令类型**: 简单命令、编辑器命令、复杂命令
--   **条件执行**: 基于应用状态的智能命令执行
--   **快捷键支持**: 完整的键盘快捷键支持
+## 📖 Usage
 
-## 项目结构
+### Getting Started
+1. **Enable tracking**: The plugin starts tracking automatically when enabled
+2. **View status**: Check the status bar for current session information
+3. **Open dashboard**: Use the command palette or click the plugin icon to open the main view
 
+### Main Features
+
+#### Time Tracking Dashboard
+- View your daily, weekly, and monthly usage statistics
+- See current session progress and total time today
+- Access detailed charts and analytics
+
+#### Session Management
+- Start/stop tracking manually if needed
+- View active session information
+- Review historical session data
+
+#### Data Export
+- Export usage data in various formats
+- Share statistics with productivity tools
+- Backup your tracking history
+
+### Commands
+- `Obtime: Open Dashboard` - Open the main statistics view
+- `Obtime: Start Tracking` - Manually start a new session
+- `Obtime: Stop Tracking` - End the current session
+- `Obtime: Export Data` - Export your usage statistics
+
+## 🛠️ Configuration
+
+### General Settings
+- **Auto-start tracking**: Automatically begin tracking when Obsidian opens
+- **Session timeout**: Set how long to wait before considering a session inactive
+- **Data retention**: Configure how long to keep historical data
+
+### Privacy Settings
+- **Sync preferences**: Choose what data to sync with the cloud
+- **Local storage only**: Keep all data local if preferred
+- **Data sharing**: Control what analytics are shared
+
+### Display Settings
+- **Status bar format**: Customize what appears in the status bar
+- **Chart themes**: Choose chart colors and styles
+- **Notification preferences**: Set up alerts and reminders
+
+## 🔧 Development
+
+### Prerequisites
+- Node.js 18.x or higher
+- TypeScript knowledge
+- Obsidian plugin development experience
+
+### Setup
+```bash
+# Clone the repository
+git clone https://github.com/createitv/obsidian-usage-stats.git
+cd obsidian-usage-stats
+
+# Install dependencies
+pnpm install
+
+# Start development
+pnpm dev
 ```
-src/
-├── main.ts                 # 主插件文件
-├── types.ts               # 类型定义
-├── index.ts               # 导出索引
-├── components/            # UI 组件
-│   ├── PluginView.ts     # 插件视图组件
-│   ├── Modal.ts          # 模态框组件
-│   └── SettingsTab.ts    # 设置标签页
-├── commands/              # 命令管理
-│   └── CommandManager.ts  # 命令管理器
-└── i18n/                 # 国际化
-    ├── i18n.ts           # i18n 核心
-    ├── types.ts          # i18n 类型
-    └── locales/          # 语言文件
-        ├── en.ts         # 英文
-        ├── zh.ts         # 中文
-        └── zh-TW.ts      # 繁体中文
+
+### Building
+```bash
+# Build for production
+pnpm build
+
+# Create plugin package
+pnpm package
 ```
 
-## 开发指南
+## 🤝 Contributing
 
-### 添加新功能
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-1. **添加新组件**:
+### Development Workflow
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-    ```typescript
-    // src/components/NewComponent.ts
-    export class NewComponent {
-    	// 组件实现
-    }
-    ```
+## 📄 License
 
-2. **添加新命令**:
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-    ```typescript
-    // src/commands/CommandManager.ts
-    this.plugin.addCommand({
-    	id: "new-command",
-    	name: "New Command",
-    	callback: () => {
-    		// 命令实现
-    	},
-    });
-    ```
+## 🙏 Acknowledgments
 
-3. **添加新设置**:
-    ```typescript
-    // src/types.ts
-    interface MyPluginSettings {
-    	newSetting: string;
-    }
-    ```
+- Built with [Obsidian Plugin API](https://github.com/obsidianmd/obsidian-api)
+- Charts powered by modern web technologies
+- Icons from [Lucide React](https://lucide.dev/)
 
-### 样式定制
+## 📞 Support
 
-所有样式都在 `style/` 目录中：
+- **Issues**: [GitHub Issues](https://github.com/createitv/obsidian-usage-stats/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/createitv/obsidian-usage-stats/discussions)
+- **Email**: [Contact via GitHub](https://github.com/createitv)
 
--   `styles.css`: 基础样式
--   `view-styles.css`: 视图相关样式
+## 🔄 Changelog
 
-### 国际化
+See [CHANGELOG.md](CHANGELOG.md) for a complete list of changes and updates.
 
-在 `src/i18n/locales/` 中添加新的语言文件：
+---
 
-```typescript
-// src/i18n/locales/ja.ts
-export default {
-	"plugin.name": "プラグイン名",
-	"plugin.description": "プラグインの説明",
-};
-```
-
-## 使用方法
-
-### 安装插件
-
-1. 下载插件文件
-2. 将插件文件夹放入 Obsidian 插件目录
-3. 在 Obsidian 中启用插件
-
-### 基本操作
-
-1. **打开插件视图**: 点击左侧工具栏的骰子图标
-2. **添加新视图**: 在插件视图中点击 "Add New View" 按钮
-3. **编辑视图**: 点击视图列表中的项目进行编辑
-4. **删除视图**: 点击视图项目右侧的 "×" 按钮
-
-### 命令面板
-
--   `Open Plugin View`: 打开插件视图
--   `Toggle Plugin View`: 切换插件视图显示
--   `Add New View`: 添加新视图
--   `Open sample modal (simple)`: 打开简单模态框
--   `Sample editor command`: 执行编辑器命令
-
-## 技术栈
-
--   **TypeScript**: 类型安全的 JavaScript
--   **Obsidian API**: 官方插件 API
--   **CSS Variables**: 主题适配的样式系统
--   **模块化架构**: 清晰的代码组织
-
-## 贡献指南
-
-1. Fork 项目
-2. 创建功能分支
-3. 提交更改
-4. 推送到分支
-5. 创建 Pull Request
-
-## 许可证
-
-MIT License
-
-## 更新日志
-
-### v1.0.0
-
--   初始版本
--   模块化架构重构
--   完整的视图界面功能
--   现代化 UI 设计
--   国际化支持
+**Made with ❤️ for the Obsidian community**
